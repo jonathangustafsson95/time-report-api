@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\tamar\\source\\repos\\NewRepo2\\time-report-api\\time report api\\time report api.csproj": {}
+    "C:\\Users\\tamar\\source\\repos\\NewRepo2\\time-report-api\\Data\\Data.csproj": {}
   },
   "projects": {
-    "C:\\Users\\tamar\\source\\repos\\NewRepo2\\time-report-api\\time report api\\time report api.csproj": {
+    "C:\\Users\\tamar\\source\\repos\\NewRepo2\\time-report-api\\Data\\Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\tamar\\source\\repos\\NewRepo2\\time-report-api\\time report api\\time report api.csproj",
-        "projectName": "time report api",
-        "projectPath": "C:\\Users\\tamar\\source\\repos\\NewRepo2\\time-report-api\\time report api\\time report api.csproj",
+        "projectUniqueName": "C:\\Users\\tamar\\source\\repos\\NewRepo2\\time-report-api\\Data\\Data.csproj",
+        "projectName": "Data",
+        "projectPath": "C:\\Users\\tamar\\source\\repos\\NewRepo2\\time-report-api\\Data\\Data.csproj",
         "packagesPath": "C:\\Users\\tamar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\tamar\\source\\repos\\NewRepo2\\time-report-api\\time report api\\obj\\",
+        "outputPath": "C:\\Users\\tamar\\source\\repos\\NewRepo2\\time-report-api\\Data\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\tamar\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -48,9 +48,6 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
