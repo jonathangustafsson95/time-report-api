@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "time report api", "time report api\time report api.csproj", "{58098D08-18D4-4091-85D0-73149A923F82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "time report api", "time report api\time report api.csproj", "{58098D08-18D4-4091-85D0-73149A923F82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{100F8E49-739D-4AE1-8A09-8CCB52BAF5DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{58098D08-18D4-4091-85D0-73149A923F82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58098D08-18D4-4091-85D0-73149A923F82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58098D08-18D4-4091-85D0-73149A923F82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{100F8E49-739D-4AE1-8A09-8CCB52BAF5DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{100F8E49-739D-4AE1-8A09-8CCB52BAF5DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{100F8E49-739D-4AE1-8A09-8CCB52BAF5DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{100F8E49-739D-4AE1-8A09-8CCB52BAF5DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
