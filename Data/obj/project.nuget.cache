@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "fRzd5ArCheeoPJ4cULDmpVfF4RQ0dgZmSqzot6MqGiDkjkP9d0VvIxwb2IhtfhHUKuYETb0Ww71jDNv+1HHEBw==",
+  "dgSpecHash": "yWa+McPytRR13XE9wYEUFRtfzLVZ5PlJHcHQr65gc2g1CAXvCbtVuGhinnePy0fy5RJJ4HL0aimjAGGJCaqKUg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\tamar\\source\\repos\\NewRepo2\\time-report-api\\Data\\Data.csproj",
+  "projectFilePath": "D:\\Visualstudiocode\\timerepport\\time-report-api\\Data\\Data.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
