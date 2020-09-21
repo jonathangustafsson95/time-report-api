@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\imcha\\source\\repos\\time report api\\time report api\\time report api.csproj": {}
+    "D:\\Visualstudiocode\\timerepport\\time-report-api\\time report api\\time report api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\imcha\\source\\repos\\time report api\\time report api\\time report api.csproj": {
+    "D:\\Visualstudiocode\\timerepport\\time-report-api\\time report api\\time report api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\imcha\\source\\repos\\time report api\\time report api\\time report api.csproj",
+        "projectUniqueName": "D:\\Visualstudiocode\\timerepport\\time-report-api\\time report api\\time report api.csproj",
         "projectName": "time report api",
-        "projectPath": "C:\\Users\\imcha\\source\\repos\\time report api\\time report api\\time report api.csproj",
-        "packagesPath": "C:\\Users\\imcha\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\imcha\\source\\repos\\time report api\\time report api\\obj\\",
+        "projectPath": "D:\\Visualstudiocode\\timerepport\\time-report-api\\time report api\\time report api.csproj",
+        "packagesPath": "C:\\Users\\denny\\.nuget\\packages\\",
+        "outputPath": "D:\\Visualstudiocode\\timerepport\\time-report-api\\time report api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\imcha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\denny\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -55,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
