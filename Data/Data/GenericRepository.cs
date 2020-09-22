@@ -10,7 +10,7 @@ namespace Data.Data
     {
         private readonly DbContext _context = null;
         private readonly DbSet<T> _table = null;
-        public GenericRepository(DataContext context)
+        public GenericRepository(BulbasaurContext context)
         {
             this._context = context;
             _table = context.Set<T>();
