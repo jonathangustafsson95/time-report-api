@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Database.Migrations
+namespace time_report_api.Migrations
 {
     public partial class MyFirstMigration : Migration
     {

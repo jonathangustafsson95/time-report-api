@@ -10,11 +10,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-
+using Data.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 namespace time_report_api
 {
     public class Startup
     {
+        //hårdkodad connection string for now
+        private string connection = "Server=(localdb)\\mssqllocaldb;Database=DataContext;Trusted_Connection=True;MultipleActiveResultSets=true";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -26,6 +30,8 @@ namespace time_report_api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddDbContext<DataContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("time report api")));
+           //options.UseSqlServer(Configuration.GetConnectionString("DataContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

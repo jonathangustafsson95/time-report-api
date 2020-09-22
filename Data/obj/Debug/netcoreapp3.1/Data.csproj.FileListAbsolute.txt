@@ -2,8 +2,6 @@ D:\Visualstudiocode\timerepport\time-report-api\Data\bin\Debug\netcoreapp3.1\Dat
 D:\Visualstudiocode\timerepport\time-report-api\Data\obj\Debug\netcoreapp3.1\Data.csprojAssemblyReference.cache
 D:\Visualstudiocode\timerepport\time-report-api\Data\obj\Debug\netcoreapp3.1\Data.AssemblyInfoInputs.cache
 D:\Visualstudiocode\timerepport\time-report-api\Data\obj\Debug\netcoreapp3.1\Data.AssemblyInfo.cs
-D:\Visualstudiocode\timerepport\time-report-api\Data\bin\Debug\netcoreapp3.1\appsettings.Development.json
-D:\Visualstudiocode\timerepport\time-report-api\Data\bin\Debug\netcoreapp3.1\appsettings.json
 D:\Visualstudiocode\timerepport\time-report-api\Data\bin\Debug\netcoreapp3.1\Data.deps.json
 D:\Visualstudiocode\timerepport\time-report-api\Data\bin\Debug\netcoreapp3.1\Data.runtimeconfig.json
 D:\Visualstudiocode\timerepport\time-report-api\Data\bin\Debug\netcoreapp3.1\Data.runtimeconfig.dev.json
