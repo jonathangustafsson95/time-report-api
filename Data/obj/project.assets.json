@@ -5650,19 +5650,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\denny\\.nuget\\packages\\": {}
+    "C:\\Users\\ricka\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Visualstudiocode\\timerepport\\time-report-api\\Data\\Data.csproj",
+      "projectUniqueName": "C:\\Users\\ricka\\time-report-api\\Data\\Data.csproj",
       "projectName": "Data",
-      "projectPath": "D:\\Visualstudiocode\\timerepport\\time-report-api\\Data\\Data.csproj",
-      "packagesPath": "C:\\Users\\denny\\.nuget\\packages\\",
-      "outputPath": "D:\\Visualstudiocode\\timerepport\\time-report-api\\Data\\obj\\",
+      "projectPath": "C:\\Users\\ricka\\time-report-api\\Data\\Data.csproj",
+      "packagesPath": "C:\\Users\\ricka\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ricka\\time-report-api\\Data\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\denny\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ricka\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
