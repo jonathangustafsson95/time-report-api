@@ -4,14 +4,16 @@ using Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace time_report_api.Migrations
 {
     [DbContext(typeof(BulbasaurContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200922145057_Bulbasaur")]
+    partial class Bulbasaur
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

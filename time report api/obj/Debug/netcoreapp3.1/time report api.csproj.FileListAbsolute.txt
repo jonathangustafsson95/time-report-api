@@ -18,3 +18,67 @@ C:\Users\ricka\time-report-api\time report api\obj\Debug\netcoreapp3.1\staticweb
 C:\Users\ricka\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.dll
 C:\Users\ricka\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.pdb
 C:\Users\ricka\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.genruntimeconfig.cache
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Abstractions.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Memory.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Binder.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Abstractions.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Identity.Client.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\System.Runtime.Caching.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\Microsoft.Data.SqlClient.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\Microsoft.Data.SqlClient.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\sni.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\sni.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Data.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Data.pdb
+D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.csprojAssemblyReference.cache
+D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.AssemblyInfoInputs.cache
+D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.AssemblyInfo.cs
+D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.csproj.CoreCompileInputs.cache
+D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.MvcApplicationPartsAssemblyInfo.cache
+D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.RazorTargetAssemblyInfo.cache
+D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.csproj.CopyComplete
+D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.pdb
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\appsettings.Development.json
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Data.exe
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\appsettings.json
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\time report api.exe
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\time report api.deps.json
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\time report api.runtimeconfig.json
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\time report api.runtimeconfig.dev.json
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\time report api.dll
+D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\time report api.pdb
+D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\staticwebassets\time report api.StaticWebAssets.Manifest.cache
+D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\staticwebassets\time report api.StaticWebAssets.xml
+D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.genruntimeconfig.cache

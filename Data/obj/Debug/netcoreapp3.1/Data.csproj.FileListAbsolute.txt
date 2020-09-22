@@ -82,3 +82,4 @@ C:\Users\tamar\source\repos\NewRepo2\time-report-api\Data\bin\Debug\netcoreapp3.
 C:\Users\tamar\source\repos\NewRepo2\time-report-api\Data\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
 C:\Users\tamar\source\repos\NewRepo2\time-report-api\Data\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
 C:\Users\tamar\source\repos\NewRepo2\time-report-api\Data\obj\Debug\netcoreapp3.1\Data.csproj.CopyComplete
+D:\Visualstudiocode\timerepport\time-report-api\Data\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
