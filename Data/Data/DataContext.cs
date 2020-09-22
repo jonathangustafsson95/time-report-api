@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworCore;
 using Data.Model;
 namespace Data.Data
 {
-    class DataContext: DbContext
+    public class DataContext: DbContext
     {
         public DataContext(DbContextOptions<DataContext>options):base(options)
         {
@@ -22,6 +22,8 @@ namespace Data.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<FavoriteMission>().HasKey(f => new { f.userId, f.missionId });
+            modelBuilder.Entity<Task>().HasKey(t => new { t.taskId, t.userId });
 
         }
     }
