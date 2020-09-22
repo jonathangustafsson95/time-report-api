@@ -13,6 +13,7 @@ namespace Data.Model
         public int taskId { get; set; }
         [ForeignKey("userId")]
         public int userId { get; set; }
+        public string? description { get; set; }
         public double hours { get; set; }
         public DateTime created { get; set; }
         public DateTime date { get; set; }

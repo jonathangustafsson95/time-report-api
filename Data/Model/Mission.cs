@@ -16,11 +16,11 @@ namespace Data.Model
         [ForeignKey("CustNo")]
         public int custNo { get; set; }
         public string missionName;
-        public string? description { get; set; }//ha kvar? enum/string
+        public string description { get; set; }//ha kvar? enum/string
         [ForeignKey("Owner")]
-        public int owner { get; set; }
+        public string owner { get; set; }
         public DateTime start { get; set; }
-        public DateTime finished { get; set; }
+        public DateTime? finished { get; set; }
         public DateTime created { get; set; }
         public int status { get; set; }
     }
