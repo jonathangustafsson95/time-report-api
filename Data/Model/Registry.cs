@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Data.Model
 {
-    class Registry
+    public class Registry
     {
         [Key]
         public int reqistryId { get; set; }

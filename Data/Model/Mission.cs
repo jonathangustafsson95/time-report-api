@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Data.Model
 {
-    class Mission
+    public class Mission
     {
         [Key]
         public int missionId { get; set; }

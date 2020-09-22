@@ -9,7 +9,7 @@ namespace Data.Model
         invoicable,
         notInvoicable
     }
-    class Task
+    public class Task
     {
         [Key]
         public int taskId { get; set; }

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.EntityFrameworCore;
+using Microsoft.EntityFrameworkCore;
 using Data.Model;
+
 namespace Data.Data
 {
     public class DataContext: DbContext

@@ -62,3 +62,67 @@ D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcor
 D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
 D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.csproj.CoreCompileInputs.cache
 D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\appsettings.Development.json
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\appsettings.json
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Data.exe
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\time report api.exe
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\time report api.deps.json
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\time report api.runtimeconfig.json
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\time report api.runtimeconfig.dev.json
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\time report api.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\time report api.pdb
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Binder.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.Identity.Client.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\System.Runtime.Caching.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\Microsoft.Data.SqlClient.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\Microsoft.Data.SqlClient.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\sni.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\sni.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Data.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\bin\Debug\netcoreapp3.1\Data.pdb
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.csprojAssemblyReference.cache
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.AssemblyInfoInputs.cache
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.AssemblyInfo.cs
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.RazorTargetAssemblyInfo.cache
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.csproj.CopyComplete
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\obj\Debug\netcoreapp3.1\staticwebassets\time report api.StaticWebAssets.Manifest.cache
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\obj\Debug\netcoreapp3.1\staticwebassets\time report api.StaticWebAssets.xml
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.dll
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.pdb
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.genruntimeconfig.cache
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.csproj.CoreCompileInputs.cache
+C:\Users\tamar\source\repos\NewRepo2\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.MvcApplicationPartsAssemblyInfo.cache

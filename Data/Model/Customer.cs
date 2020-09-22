@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Data.Model
 {
-    class Customer
+    public class Customer
     {
         [Key]
         public int customerId { get; set; }
