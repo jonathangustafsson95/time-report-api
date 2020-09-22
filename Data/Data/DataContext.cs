@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworCore;
 using Data.Model;
 namespace Data.Data
 {
