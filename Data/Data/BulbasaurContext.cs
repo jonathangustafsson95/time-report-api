@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Data.Model;
+
 namespace Data.Data
 {
     public class BulbasaurContext: DbContext

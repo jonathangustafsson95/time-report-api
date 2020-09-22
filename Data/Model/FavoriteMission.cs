@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Model
 {
-    class FavoriteMission
+    public class FavoriteMission
     {
         [Key]
         [ForeignKey("userId")]

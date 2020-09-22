@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Model
 {
-    class MissionMember
+    public class MissionMember
     {
         [Key]
         public int missionMemberId { get; set; }// räcker det inte att ha userId och mission Id som compositekey
