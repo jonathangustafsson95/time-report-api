@@ -1,0 +1,20 @@
+C:\Users\ricka\time-report-api\time report api\bin\Debug\netcoreapp3.1\appsettings.Development.json
+C:\Users\ricka\time-report-api\time report api\bin\Debug\netcoreapp3.1\appsettings.json
+C:\Users\ricka\time-report-api\time report api\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
+C:\Users\ricka\time-report-api\time report api\bin\Debug\netcoreapp3.1\time report api.exe
+C:\Users\ricka\time-report-api\time report api\bin\Debug\netcoreapp3.1\time report api.deps.json
+C:\Users\ricka\time-report-api\time report api\bin\Debug\netcoreapp3.1\time report api.runtimeconfig.json
+C:\Users\ricka\time-report-api\time report api\bin\Debug\netcoreapp3.1\time report api.runtimeconfig.dev.json
+C:\Users\ricka\time-report-api\time report api\bin\Debug\netcoreapp3.1\time report api.dll
+C:\Users\ricka\time-report-api\time report api\bin\Debug\netcoreapp3.1\time report api.pdb
+C:\Users\ricka\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.csprojAssemblyReference.cache
+C:\Users\ricka\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.AssemblyInfoInputs.cache
+C:\Users\ricka\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.AssemblyInfo.cs
+C:\Users\ricka\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.csproj.CoreCompileInputs.cache
+C:\Users\ricka\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\ricka\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.RazorTargetAssemblyInfo.cache
+C:\Users\ricka\time-report-api\time report api\obj\Debug\netcoreapp3.1\staticwebassets\time report api.StaticWebAssets.Manifest.cache
+C:\Users\ricka\time-report-api\time report api\obj\Debug\netcoreapp3.1\staticwebassets\time report api.StaticWebAssets.xml
+C:\Users\ricka\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.dll
+C:\Users\ricka\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.pdb
+C:\Users\ricka\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.genruntimeconfig.cache
