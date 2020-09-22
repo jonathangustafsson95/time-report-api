@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "time report api", "time report api\time report api.csproj", "{58098D08-18D4-4091-85D0-73149A923F82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{100F8E49-739D-4AE1-8A09-8CCB52BAF5DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{100F8E49-739D-4AE1-8A09-8CCB52BAF5DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

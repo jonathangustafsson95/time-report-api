@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ricka\\time-report-api\\Data\\Data.csproj": {}
+    "D:\\Visualstudiocode\\timerepport\\time-report-api\\Data\\Data.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ricka\\time-report-api\\Data\\Data.csproj": {
+    "D:\\Visualstudiocode\\timerepport\\time-report-api\\Data\\Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ricka\\time-report-api\\Data\\Data.csproj",
+        "projectUniqueName": "D:\\Visualstudiocode\\timerepport\\time-report-api\\Data\\Data.csproj",
         "projectName": "Data",
-        "projectPath": "C:\\Users\\ricka\\time-report-api\\Data\\Data.csproj",
-        "packagesPath": "C:\\Users\\ricka\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ricka\\time-report-api\\Data\\obj\\",
+        "projectPath": "D:\\Visualstudiocode\\timerepport\\time-report-api\\Data\\Data.csproj",
+        "packagesPath": "C:\\Users\\denny\\.nuget\\packages\\",
+        "outputPath": "D:\\Visualstudiocode\\timerepport\\time-report-api\\Data\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ricka\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\denny\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -37,6 +37,12 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.8, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
