@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "time report api", "time report api\time report api.csproj", "{58098D08-18D4-4091-85D0-73149A923F82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{100F8E49-739D-4AE1-8A09-8CCB52BAF5DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{100F8E49-739D-4AE1-8A09-8CCB52BAF5DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{F21B66D4-421E-420C-98E2-DCCB0A6608B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{100F8E49-739D-4AE1-8A09-8CCB52BAF5DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{100F8E49-739D-4AE1-8A09-8CCB52BAF5DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{100F8E49-739D-4AE1-8A09-8CCB52BAF5DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F21B66D4-421E-420C-98E2-DCCB0A6608B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F21B66D4-421E-420C-98E2-DCCB0A6608B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F21B66D4-421E-420C-98E2-DCCB0A6608B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F21B66D4-421E-420C-98E2-DCCB0A6608B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
