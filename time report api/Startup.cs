@@ -10,9 +10,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using System.Reflection;
+using System.IO;
+using Microsoft.OpenApi.Models;
+using DataAccessLayer;
+
 namespace time_report_api
 {
     public class Startup
@@ -32,6 +36,7 @@ namespace time_report_api
             services.AddControllers();
             services.AddDbContext<BulbasaurContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("time report api")));
             //options.UseSqlServer(Configuration.GetConnectionString("BulbasaurContext")));
+            //services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,11 +52,7 @@ namespace time_report_api
             app.UseRouting();
 
             app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+           
         }
     }
 }

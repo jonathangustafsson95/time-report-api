@@ -7,13 +7,13 @@ namespace Data.Model
 {
     class DateInterval: Iproduct
     {
-        DateTime start;
-        DateTime End;
-
+        DateTime startDay;
+        DateTime EndDay;
+        List<DateTime> Days;
         public DateInterval(DateTime start, DateTime End)
         {
-            this.start = start;
-            this.End = End;
+            this.startDay = start;
+            this.EndDay = End;
         }
         //aasda
 

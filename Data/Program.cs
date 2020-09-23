@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Data.Data;
+using Data.Model;
+using System;
 
 namespace Data
 {
@@ -7,6 +9,7 @@ namespace Data
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+            
         }
     }
 }
