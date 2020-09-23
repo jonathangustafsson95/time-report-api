@@ -4,14 +4,16 @@ using Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace time_report_api.Migrations
 {
     [DbContext(typeof(BulbasaurContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200923070408_BulbasaurSeed")]
+    partial class BulbasaurSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -162,9 +164,6 @@ namespace time_report_api.Migrations
                     b.Property<double>("hours")
                         .HasColumnType("float");
 
-                    b.Property<int>("invoice")
-                        .HasColumnType("int");
-
                     b.Property<int>("taskId")
                         .HasColumnType("int");
 
@@ -182,7 +181,6 @@ namespace time_report_api.Migrations
                             created = new DateTime(2021, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             date = new DateTime(2020, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             hours = 8.0,
-                            invoice = 0,
                             taskId = 1,
                             userId = 1
                         });
