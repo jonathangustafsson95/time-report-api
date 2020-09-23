@@ -15,6 +15,7 @@ namespace Data.Data
         void Delete(object id);
         void Save();
         bool Exists(object id);
+        
 
     }
 }
