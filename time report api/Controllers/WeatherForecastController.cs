@@ -34,6 +34,7 @@ namespace time_report_api.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
+
         }
     }
 }
