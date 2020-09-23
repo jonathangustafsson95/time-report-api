@@ -63,8 +63,6 @@ D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcor
 D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.csprojAssemblyReference.cache
 D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.AssemblyInfoInputs.cache
 D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.AssemblyInfo.cs
-D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.csproj.CoreCompileInputs.cache
-D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.MvcApplicationPartsAssemblyInfo.cache
 D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.RazorTargetAssemblyInfo.cache
 D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.csproj.CopyComplete
 D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.dll
@@ -82,3 +80,5 @@ D:\Visualstudiocode\timerepport\time-report-api\time report api\bin\Debug\netcor
 D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\staticwebassets\time report api.StaticWebAssets.Manifest.cache
 D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\staticwebassets\time report api.StaticWebAssets.xml
 D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.genruntimeconfig.cache
+D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.csproj.CoreCompileInputs.cache
+D:\Visualstudiocode\timerepport\time-report-api\time report api\obj\Debug\netcoreapp3.1\time report api.MvcApplicationPartsAssemblyInfo.cache

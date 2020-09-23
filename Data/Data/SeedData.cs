@@ -9,37 +9,41 @@ namespace Data.Model
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Customer>().HasData(new Customer { customerId=0, created=new DateTime(2020,9,21), custNo=0, name="Bobby"});
+            modelBuilder.Entity<Customer>().HasData(new Customer { customerId=1, created=new DateTime(2020,9,21), name="Bobby"});
             modelBuilder.Entity<Mission>().HasData(
                 new Mission 
                 { 
                     created=new DateTime(2020,8,5),
-                    custNo=0, 
+                   
                     description="Make cool stuffs",
                     finished=null,
-                    missionId=0,
+                    missionId=1,
                     missionName="Operation Cool Stuffs",
                     start=new DateTime(2020,8,6),
-                    status=0, 
-                    userId=0
+                    status=1, 
+                    userId=1,
+                    customerId=1
                 },
                 new Mission 
                 {
                     created = new DateTime(2020, 9, 5), 
-                    custNo = 0, description = "Lorem Ipsum ", 
+                  
+                    description = "Lorem Ipsum ", 
                     finished = new DateTime(2020,10,1),
-                    missionId = 1, missionName = "dolor sit amet", 
+                    missionId = 2,
+                    missionName = "dolor sit amet", 
                     start = new DateTime(2020, 8, 6), 
-                    status = 0,
-                    userId = 0 
+                    status = 1,
+                    userId = 1,
+                    customerId=1
                 });
-            modelBuilder.Entity<User>().HasData(new User {userId=0, password="abc123", eMail="hej@lol.com", userName="John" });
+            modelBuilder.Entity<User>().HasData(new User {userId=1, password="abc123", eMail="hej@lol.com", userName="John" });
             modelBuilder.Entity<Task>().HasData(
                 new Task 
                 {
-                    taskId=0, 
-                    userId=0, 
-                    missionId=0, 
+                    taskId=1, 
+                    userId=1, 
+                    missionId=1, 
                     status=0, 
                     actualHours=null, 
                     created=new DateTime(2020,10,5), 
@@ -49,13 +53,14 @@ namespace Data.Model
                     name="work", 
                     start=new DateTime(2020,10,6),
                     finished=null
+                    
 
                 },
                 new Task
                 {
-                    taskId = 1,
-                    userId = 0,
-                    missionId = 0,
+                    taskId = 2,
+                    userId = 1,
+                    missionId = 1,
                     status = 0,
                     actualHours = null,
                     created = new DateTime(2020, 10, 5),
@@ -67,9 +72,9 @@ namespace Data.Model
                     finished = new DateTime(2020, 11, 7)
                 }
                 );
-            modelBuilder.Entity<MissionMember>().HasData(new MissionMember { missionId=0, userId=0 , missionMemberId=0});
-            modelBuilder.Entity<Registry>().HasData(new Registry { created=new DateTime(2021, 1,1), date=new DateTime(2020,12,5), description=null, hours=8, reqistryId=0, taskId=0, userId=0});
-            modelBuilder.Entity<FavoriteMission>().HasData(new FavoriteMission { userId=0, missionId=0});
+            modelBuilder.Entity<MissionMember>().HasData(new MissionMember { missionId=1, userId=1 , missionMemberId=1});
+            modelBuilder.Entity<Registry>().HasData(new Registry { created=new DateTime(2021, 1,1), date=new DateTime(2020,12,5), description=null, hours=8, reqistryId=1, taskId=1, userId=1, invoice=InvoiceType.invoicable});
+            modelBuilder.Entity<FavoriteMission>().HasData(new FavoriteMission { userId=1, missionId=1});
 
 
         }

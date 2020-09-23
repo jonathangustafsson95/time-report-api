@@ -17,6 +17,7 @@ namespace Data.Model
         public double hours { get; set; }
         public DateTime created { get; set; }
         public DateTime date { get; set; }
+        public InvoiceType invoice { get; set; }
 
     }
 }

@@ -13,8 +13,8 @@ namespace Data.Model
 
         [ForeignKey("UserId")]
         public int userId { get; set; }
-        [ForeignKey("CustNo")]
-        public int custNo { get; set; }
+        [ForeignKey("CustomerId")]
+        public int customerId { get; set; }
         public string missionName;
         public string description { get; set; }//ha kvar? enum/string
         [ForeignKey("Owner")]

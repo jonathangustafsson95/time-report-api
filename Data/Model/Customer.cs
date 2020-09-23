@@ -9,7 +9,6 @@ namespace Data.Model
     {
         [Key]
         public int customerId { get; set; }
-        public int custNo { get; set; }
         public string name { get; set; }
         public DateTime created { get; set; }
 
