@@ -47,10 +47,10 @@ namespace Data.Data
             T model = _table.Find(id);
             return model != null;
         }
-        public List<T> LikeSearch<T>(List<T> list, Func<T, string> getKey, string searchString)
-        {
-            return list.Where(x => getKey(x).Contains(searchString)).ToList();
-        }
+        //public List<T> LikeSearch(List<T> list, Func<T, string> getKey, string searchString)
+        //{
+        //    return list.Where(x => getKey(x).Contains(searchString)).ToList();
+        //}
 
 
 
