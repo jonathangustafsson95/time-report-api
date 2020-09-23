@@ -6,9 +6,9 @@ using Data.Model;
 
 namespace Data.Data
 {
-    public class DataContext: DbContext
+    public class BulbasaurContext: DbContext
     {
-        public DataContext(DbContextOptions<DataContext>options):base(options)
+        public BulbasaurContext(DbContextOptions<BulbasaurContext>options):base(options)
         {
 
         }
@@ -25,7 +25,7 @@ namespace Data.Data
         {
             modelBuilder.Entity<FavoriteMission>().HasKey(f => new { f.userId, f.missionId });
             modelBuilder.Entity<Task>().HasKey(t => new { t.taskId, t.userId });
-
+            modelBuilder.Seed();
         }
     }
 }

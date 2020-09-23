@@ -18,7 +18,6 @@ namespace Data.Model
         public string missionName;
         public string description { get; set; }//ha kvar? enum/string
         [ForeignKey("Owner")]
-        public string owner { get; set; }
         public DateTime start { get; set; }
         public DateTime? finished { get; set; }
         public DateTime created { get; set; }

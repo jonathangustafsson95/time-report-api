@@ -26,9 +26,8 @@ namespace Data.Model
         public double? actualHours { get; set; }
         public InvoiceType invoice { get; set; }
         public DateTime created { get; set; }
-
+        public DateTime start { get; set; }
         public DateTime? finished { get; set; }
-        public DateTime start { get; set; } // sample data är int? vf?
         public int status { get; set; }
     }
 }

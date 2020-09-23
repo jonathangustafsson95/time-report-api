@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace time_report_api.Migrations
 {
-    [DbContext(typeof(DataContext))]
+    [DbContext(typeof(BulbasaurContext))]
     [Migration("20200922065826_MyFirstMigration")]
     partial class MyFirstMigration
     {
