@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Visualstudiocode\\timerepport\\time-report-api\\time report api\\time report api.csproj": {}
+    "C:\\Users\\tamar\\source\\repos\\NewRepo2\\time-report-api\\time report api\\time report api.csproj": {}
   },
   "projects": {
-    "D:\\Visualstudiocode\\timerepport\\time-report-api\\Data\\Data.csproj": {
+    "C:\\Users\\tamar\\source\\repos\\NewRepo2\\time-report-api\\Data\\Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Visualstudiocode\\timerepport\\time-report-api\\Data\\Data.csproj",
+        "projectUniqueName": "C:\\Users\\tamar\\source\\repos\\NewRepo2\\time-report-api\\Data\\Data.csproj",
         "projectName": "Data",
-        "projectPath": "D:\\Visualstudiocode\\timerepport\\time-report-api\\Data\\Data.csproj",
-        "packagesPath": "C:\\Users\\denny\\.nuget\\packages\\",
-        "outputPath": "D:\\Visualstudiocode\\timerepport\\time-report-api\\Data\\obj\\",
+        "projectPath": "C:\\Users\\tamar\\source\\repos\\NewRepo2\\time-report-api\\Data\\Data.csproj",
+        "packagesPath": "C:\\Users\\tamar\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\tamar\\source\\repos\\NewRepo2\\time-report-api\\Data\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\denny\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\tamar\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -72,17 +72,17 @@
         }
       }
     },
-    "D:\\Visualstudiocode\\timerepport\\time-report-api\\time report api\\time report api.csproj": {
+    "C:\\Users\\tamar\\source\\repos\\NewRepo2\\time-report-api\\time report api\\time report api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Visualstudiocode\\timerepport\\time-report-api\\time report api\\time report api.csproj",
+        "projectUniqueName": "C:\\Users\\tamar\\source\\repos\\NewRepo2\\time-report-api\\time report api\\time report api.csproj",
         "projectName": "time report api",
-        "projectPath": "D:\\Visualstudiocode\\timerepport\\time-report-api\\time report api\\time report api.csproj",
-        "packagesPath": "C:\\Users\\denny\\.nuget\\packages\\",
-        "outputPath": "D:\\Visualstudiocode\\timerepport\\time-report-api\\time report api\\obj\\",
+        "projectPath": "C:\\Users\\tamar\\source\\repos\\NewRepo2\\time-report-api\\time report api\\time report api.csproj",
+        "packagesPath": "C:\\Users\\tamar\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\tamar\\source\\repos\\NewRepo2\\time-report-api\\time report api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\denny\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\tamar\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -95,8 +95,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "D:\\Visualstudiocode\\timerepport\\time-report-api\\Data\\Data.csproj": {
-                "projectPath": "D:\\Visualstudiocode\\timerepport\\time-report-api\\Data\\Data.csproj"
+              "C:\\Users\\tamar\\source\\repos\\NewRepo2\\time-report-api\\Data\\Data.csproj": {
+                "projectPath": "C:\\Users\\tamar\\source\\repos\\NewRepo2\\time-report-api\\Data\\Data.csproj"
               }
             }
           }
@@ -111,6 +111,10 @@
         "netcoreapp3.1": {
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Analyzers": {
               "target": "Package",
               "version": "[3.1.8, )"
             },
