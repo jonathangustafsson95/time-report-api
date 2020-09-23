@@ -25,7 +25,7 @@ namespace Data.Data
         {
             modelBuilder.Entity<FavoriteMission>().HasKey(f => new { f.userId, f.missionId });
             modelBuilder.Entity<Task>().HasKey(t => new { t.taskId, t.userId });
-
+            modelBuilder.Seed();
         }
     }
 }
