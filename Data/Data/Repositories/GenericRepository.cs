@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,6 +47,12 @@ namespace Data.Data
             T model = _table.Find(id);
             return model != null;
         }
+        public List<T> LikeSearch<T>(List<T> list, Func<T, string> getKey, string searchString)
+        {
+            return list.Where(x => getKey(x).Contains(searchString)).ToList();
+        }
+
+
 
     }
 }
