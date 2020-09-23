@@ -6,5 +6,6 @@ namespace Data.Factories
 {
     interface Iproduct
     {
+        
     }
 }
