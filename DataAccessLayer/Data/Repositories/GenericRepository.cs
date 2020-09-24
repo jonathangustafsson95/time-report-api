@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
+using DataAccessLayer.Data.IRepositories;
 using Microsoft.EntityFrameworkCore;
-using DataAccessLayer;
-using DataAccessLayer.IReppositories;
 
-namespace DataAccessLayer.Repositories
+namespace DataAccessLayer.Data.Repositories
 {
     public class GenericRepository<T>:IGenericRepository<T> where T:class
     {

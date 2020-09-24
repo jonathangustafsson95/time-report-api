@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using CommonLibrary.Model;
-using DataAccessLayer.IReppositories;
 
 namespace DataAccessLayer.Data.IRepositories
 {

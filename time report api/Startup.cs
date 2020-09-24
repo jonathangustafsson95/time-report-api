@@ -16,6 +16,7 @@ using System.Reflection;
 using System.IO;
 using Microsoft.OpenApi.Models;
 using DataAccessLayer;
+using DataAccessLayer.Data;
 
 namespace time_report_api
 {

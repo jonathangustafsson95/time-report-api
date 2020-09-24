@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using CommonLibrary.Model;
 using DataAccessLayer.Data.IRepositories;
-using DataAccessLayer.Repositories;
 
 namespace DataAccessLayer.Data.Repositories
 {
-    class RegistryRepository : GenericRepository<Registry>, IRegistryRepository
+    public class RegistryRepository : GenericRepository<Registry>, IRegistryRepository
     {
 
         public RegistryRepository(BulbasaurContext context)
