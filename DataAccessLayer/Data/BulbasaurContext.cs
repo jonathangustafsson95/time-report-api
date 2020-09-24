@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
-using CommonLibrary;
-using CommonLibrary.Model;
+﻿using CommonLibrary.Model;
 using Data.Model;
+using Microsoft.EntityFrameworkCore;
 
-namespace DataAccessLayer
+namespace DataAccessLayer.Data
 {
     public class BulbasaurContext: DbContext
     {

@@ -7,7 +7,7 @@ using DataAccessLayer.Data.IRepositories;
 
 namespace DataAccessLayer.Data.Repositories
 {
-    class RegistryRepository : GenericRepository<Registry>, IRegistryRepository
+    public class RegistryRepository : GenericRepository<Registry>, IRegistryRepository
     {
 
         public RegistryRepository(BulbasaurContext context)

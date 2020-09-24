@@ -4,7 +4,7 @@ using System.Text;
 using CommonLibrary;
 using CommonLibrary.Model;
 using Data.Model;
-using DataAccessLayer.IReppositories;
+using DataAccessLayer.Data.IRepositories;
 
 namespace DataAccessLayer.UnitOfWork
 {
