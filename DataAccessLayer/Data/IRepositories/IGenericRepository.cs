@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DataAccessLayer.Data.IReppositories
 {
@@ -11,7 +12,11 @@ namespace DataAccessLayer.Data.IReppositories
         void Delete(object id);
         void Save();
         bool Exists(object id);
-       
+        List<T> Search<T>(/*List<T> list,*/ Func<T, string> getKey, string searchString);
+        List<T> Search<T>(/*List<T> list,*/ Func<T, int> getKey, int searchId);
+        List<T> Search<T>(/*List<T> list,*/ Func<T, DateTime> getKey, DateTime searchDate); 
+
+
 
     }
 }
