@@ -40,6 +40,20 @@ namespace time_report_api.Controllers
            // var DbRegistries = unitOfWork.RegistryRepository.
             try
             {
+                for (int i = 0; i <= newRegistries.registries.Count; i++)
+                {
+                    // En int kan aldrig  vara  null, så om vi skickar nya registries
+                    // bör vi hantera det på något sätt i JSON, typ  sätta regID  till 0?
+                    if (newRegistries.registries[i].registryId == 0)
+                    {
+                        // Add new registry
+                    }
+
+                    if (newRegistries.registries[i].registryId != 0)
+                    {
+                        // Change  a existing registry
+                    }
+                }
                 return BadRequest("");
             }
             catch (Exception)
