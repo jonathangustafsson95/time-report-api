@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Data
 {
-    public class BulbasaurContext: DbContext
+    public class BulbasaurDevContext: DbContext
     {
-        public BulbasaurContext(DbContextOptions<BulbasaurContext>options):base(options)
+        public BulbasaurDevContext(DbContextOptions<BulbasaurDevContext>options):base(options)
         {
 
         }

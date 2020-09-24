@@ -13,7 +13,7 @@ namespace DataAccessLayer.UnitOfWork
 {
     public class UnitOfWork: IUnitOfWork
     {
-        private readonly BulbasaurContext _context;
+        private readonly BulbasaurDevContext _context;
         public IGenericRepository<Customer> CustomerRepository { get; }
         public IFavoriteMissionRepository FavoriteMissionRepository { get; }
         public IGenericRepository<Mission> MissionRepository { get; }
@@ -22,7 +22,7 @@ namespace DataAccessLayer.UnitOfWork
         public IGenericRepository<Task> TaskRepository { get; }
         public IGenericRepository<User> UserRepository { get; }
 
-        public UnitOfWork(BulbasaurContext context)
+        public UnitOfWork(BulbasaurDevContext context)
         {
             this._context = context;
             CustomerRepository = new GenericRepository<Customer>(context);

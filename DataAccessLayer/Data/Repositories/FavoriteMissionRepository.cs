@@ -9,7 +9,7 @@ namespace DataAccessLayer.Data.Repositories
 {
     public class FavoriteMissionRepository : GenericRepository<FavoriteMission>, IFavoriteMissionRepository
     {
-        public FavoriteMissionRepository(BulbasaurContext context) : base(context)
+        public FavoriteMissionRepository(BulbasaurDevContext context) : base(context)
         {
         }
 

@@ -15,7 +15,5 @@ namespace DataAccessLayer.Data
         DbSet<Registry> registries { get; set; }
         DbSet<Task> tasks { get; set; }
         DbSet<User> users { get; set; }
-            
-        
     }
 }

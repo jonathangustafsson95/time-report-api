@@ -23,6 +23,7 @@ namespace time_report_api.Controllers
         private readonly UnitOfWork unitOfWork;
         public ReportingController(UnitOfWork unitOfWork)
         {
+            this.unitOfWork = unitOfWork;
             user = new User()
             {
                 userId = 1,
@@ -46,18 +47,15 @@ namespace time_report_api.Controllers
                 return StatusCode(500, "Something went wrong!");
             }
         }
+
         [HttpGet]
         [Route("GetWeek/{dateTime}")]
-        public ActionResult<Registries> GetWeek(DateTime dateTime)
+        public ActionResult<List<Registry>> GetWeek(DateTime dateTime)
         {
             DateTime startDate = GetWeekStartDate(dateTime, DayOfWeek.Monday);
             DateTime endDate = startDate.AddDays(7);
 
-            //unitOfWork.RegistryRepository.GetRegistrieByDate()
-
-            return new Registries()
-            {
-            };
+            return unitOfWork.RegistryRepository.GetRegistriesByDate(startDate, endDate, user.userId);
         }
         private DateTime GetWeekStartDate(DateTime dateTime, DayOfWeek startDay)
         {

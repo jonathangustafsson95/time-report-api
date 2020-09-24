@@ -25,7 +25,7 @@ namespace Database_UnitTest
 
             //arrange
             var testObject = new MissionMember();
-            var context = new Mock<BulbasaurContext>();
+            var context = new Mock<BulbasaurDevContext>();
             var dbSetMock = new Mock<DbSet<MissionMember>>();
             context.Setup(x => x.Set<MissionMember>()).Returns(dbSetMock.Object);
             dbSetMock.Setup(x => x.Add(It.IsAny<MissionMember>()).Entity).Returns(testObject);

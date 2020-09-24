@@ -10,7 +10,7 @@ namespace DataAccessLayer.Data.Repositories
     public class RegistryRepository : GenericRepository<Registry>, IRegistryRepository
     {
 
-        public RegistryRepository(BulbasaurContext context)
+        public RegistryRepository(BulbasaurDevContext context)
             : base(context)
         {
 
@@ -47,7 +47,7 @@ namespace DataAccessLayer.Data.Repositories
             IEnumerable<Registry> all = GetAll();
             IEnumerable<Registry> allRegistriesBetweenDates = from a in all
                                                               where a.userId == userId
-                                                              && (a.created <= endDate && a.created >= startDate)
+                                                              && (a.date <= endDate && a.date >= startDate)
                                                               select a;
             return allRegistriesBetweenDates != null ? allRegistriesBetweenDates.ToList() : new List<Registry>();
         }

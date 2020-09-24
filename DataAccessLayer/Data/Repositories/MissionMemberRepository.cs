@@ -10,7 +10,7 @@ namespace DataAccessLayer.Data.Repositories
 {
     public class MissionMemberRepository : GenericRepository<MissionMember>, IMissionMember
     {
-        public MissionMemberRepository(BulbasaurContext context)
+        public MissionMemberRepository(BulbasaurDevContext context)
             :base(context)
         {
 
