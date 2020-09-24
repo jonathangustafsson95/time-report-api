@@ -5,6 +5,7 @@ using CommonLibrary;
 using CommonLibrary.Model;
 using Data.Model;
 using DataAccessLayer.Data.IRepositories;
+using DataAccessLayer.Data.IReppositories;
 
 namespace DataAccessLayer.UnitOfWork
 {
