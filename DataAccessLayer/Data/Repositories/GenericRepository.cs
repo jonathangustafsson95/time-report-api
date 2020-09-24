@@ -56,16 +56,19 @@ namespace DataAccessLayer.Data.Repositories
             T model = _table.Find(id);
             return model != null;
         }
-        public List<T> Search<T>(List<T> list, Func<T, string> getKey, string searchString)
+        public List<T> Search<T>(/*List<T> list,*/ Func<T, string> getKey, string searchString)
         {
+            IEnumerable<T> list = (IEnumerable<T>)GetAll();
             return list.Where(x => getKey(x).Contains(searchString)).ToList();
         }
-        public List<T> Search<T>(List<T> list, Func<T, int> getKey, int searchId)
+        public List<T> Search<T>(/*List<T> list,*/ Func<T, int> getKey, int searchId)
         {
+            IEnumerable<T> list = (IEnumerable<T>)GetAll();
             return list.Where(x => getKey(x).Equals(searchId)).ToList();
         }
-        public List<T> Search<T>(List<T> list, Func<T, DateTime> getKey, DateTime searchDate)
+        public List<T> Search<T>(/*List<T> list,*/ Func<T, DateTime> getKey, DateTime searchDate)
         {
+            IEnumerable<T> list = (IEnumerable<T>)GetAll();
             return list.Where(x => getKey(x).Equals(searchDate)).ToList();
         }
 
