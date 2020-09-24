@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonLibrary", "CommonLibr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{D8F32216-8873-4A16-8641-3F9ADDE1D12C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database UnitTest", "Database UnitTest\Database UnitTest.csproj", "{6A7A76D4-902A-4165-BF1C-9164A35B7396}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{D8F32216-8873-4A16-8641-3F9ADDE1D12C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8F32216-8873-4A16-8641-3F9ADDE1D12C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8F32216-8873-4A16-8641-3F9ADDE1D12C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A7A76D4-902A-4165-BF1C-9164A35B7396}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A7A76D4-902A-4165-BF1C-9164A35B7396}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A7A76D4-902A-4165-BF1C-9164A35B7396}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A7A76D4-902A-4165-BF1C-9164A35B7396}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
