@@ -7,28 +7,37 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using DataAccessLayer.UnitOfWork;
 using CommonLibrary.Model;
+using time_report_api.Models;
 
 namespace time_report_api.Controllers
 {
     [Route("api/[controller]")]
     // Kalla på Authorize vid specifika metoder för att begränsa dem,
     // sätter man Authorize på hela kontrollern blir alla metoder begränsade och kräver login
-    [Authorize]
+    //[Authorize]
     [ApiController]
     public class ReportingController : ControllerBase
     {
-
-        private UnitOfWork unitOfWork;
+        private readonly User user;
+        private readonly UnitOfWork unitOfWork;
         public ReportingController(UnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
+            user = new User()
+            {
+                userId = 1,
+                userName = "John",
+                password = "abc123",
+                eMail = "hej@lol.com"
+            };
         }
 
         [HttpPost]
-        [Authorize]
         [Route("AddTimeReport")]
-        public ActionResult<User> AddTimeReport( )
+        public ActionResult<User> AddTimeReport([FromBody] Registries newRegistries)
         {
+
+           // var DbRegistries = unitOfWork.RegistryRepository.
             try
             {
                 return BadRequest("");
@@ -38,12 +47,13 @@ namespace time_report_api.Controllers
                 return StatusCode(500, "Something went wrong!");
             }
         }
-
         [HttpGet]
-        [Route("Bajs")]
-        public ActionResult Bajs()
+        [Route("GetWeek/{dateTime}")]
+        public ActionResult<Registries> GetWeek(DateTime dateTime)
         {
-            return StatusCode(500, "Something went wrong!");
+            return new Registries()
+            {
+            };
         }
     }
 }
