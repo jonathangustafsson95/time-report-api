@@ -30,7 +30,7 @@ namespace DataAccessLayer.Data.Repositories
             List<Registry> registries = GetAllByRegistryId(id);
             var enumerable = registries.ToList();
             enumerable.OrderBy(d => d.date);
-            return (List<Registry>)enumerable.Take(days);
+            return (List<Registry>)enumerable.Take(7);
 
 
 
