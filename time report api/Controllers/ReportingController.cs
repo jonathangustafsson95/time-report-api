@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using DataAccessLayer.UnitOfWork;
 using CommonLibrary.Model;
 using time_report_api.Models;
+using DataAccessLayer.Data;
 
 namespace time_report_api.Controllers
 {
@@ -35,7 +36,6 @@ namespace time_report_api.Controllers
         [Route("AddTimeReport")]
         public ActionResult<User> AddTimeReport([FromBody] Registries newRegistries)
         {
-
            // var DbRegistries = unitOfWork.RegistryRepository.
             try
             {
@@ -50,9 +50,23 @@ namespace time_report_api.Controllers
         [Route("GetWeek/{dateTime}")]
         public ActionResult<Registries> GetWeek(DateTime dateTime)
         {
+            DateTime startDate = GetWeekStartDate(dateTime, DayOfWeek.Monday);
+            DateTime endDate = startDate.AddDays(7);
+
+            //unitOfWork.RegistryRepository.GetRegistrieByDate()
+
             return new Registries()
             {
             };
+        }
+        private DateTime GetWeekStartDate(DateTime dateTime, DayOfWeek startDay)
+        {
+            DateTime startDate = dateTime;
+            while (startDate.DayOfWeek != startDay)
+            {
+                startDate = startDate.AddDays(-1);
+            }
+            return startDate;
         }
     }
 }
