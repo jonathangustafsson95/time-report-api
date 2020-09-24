@@ -22,9 +22,6 @@ namespace DataAccessLayer.Data.Repositories
             var enumerable = registries.ToList();
             enumerable.OrderBy(d => d.date);
             return (List<Registry>)enumerable.Take(7);
-
-
-
         }
     }
     
