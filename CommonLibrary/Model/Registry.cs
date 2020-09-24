@@ -8,12 +8,11 @@ namespace CommonLibrary.Model
     public class Registry
     {
         [Key]
-        public int reqistryId { get; set; }
+        public int registryId { get; set; }
         [ForeignKey("TaskId")]
         public int taskId { get; set; }
         [ForeignKey("userId")]
         public int userId { get; set; }
-        public string description { get; set; }
         public double hours { get; set; }
         public DateTime created { get; set; }
         public DateTime date { get; set; }

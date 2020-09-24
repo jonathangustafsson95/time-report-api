@@ -19,12 +19,13 @@ namespace DataAccessLayer.Data.Repositories
         {
             IEnumerable<Registry> all = GetAll();
             IEnumerable<Registry> allByRegistryById= from a in all
-                                               where a.reqistryId == id
+                                               where a.registryId == id
                                                select a;
             return allByRegistryById != null ? allByRegistryById.ToList() : new List<Registry>();
 
 
         }
+        // GetByID får ju bara ut en reg? 
         public List<Registry> GetRegistriesByNumberOfDays(int days, int id)
         {
             List<Registry> registries = GetAllByRegistryId(id);
@@ -32,6 +33,25 @@ namespace DataAccessLayer.Data.Repositories
             enumerable.OrderBy(d => d.date);
             return (List<Registry>)enumerable.Take(days);
         }
+
+        public List<Registry> GetAllUserRegistries(int userId)
+        {
+            IEnumerable<Registry> all = GetAll();
+            IEnumerable<Registry> allByUserId = from a in all
+                                                      where a.userId == userId
+                                                      select a;
+            return allByUserId != null ? allByUserId.ToList() : new List<Registry>();
+        }
+        public List<Registry> GetRegistriesByDate(DateTime startDate, DateTime endDate, int userId)
+        {
+            IEnumerable<Registry> all = GetAll();
+            IEnumerable<Registry> allRegistriesBetweenDates = from a in all
+                                                              where a.userId == userId
+                                                              && (a.created <= endDate && a.created >= startDate)
+                                                              select a;
+            return allRegistriesBetweenDates != null ? allRegistriesBetweenDates.ToList() : new List<Registry>();
+        }
+
     }
     
     }
