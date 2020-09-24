@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DataAccessLayer.Data.IRepositories
+namespace DataAccessLayer.Data.IReppositories
 {
     public interface IGenericRepository<T> where T:class
     {
