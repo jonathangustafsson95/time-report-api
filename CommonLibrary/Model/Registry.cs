@@ -8,7 +8,7 @@ namespace CommonLibrary.Model
     public class Registry
     {
         [Key]
-        public int reqistryId { get; set; }
+        public int registryId { get; set; }
         [ForeignKey("TaskId")]
         public int taskId { get; set; }
         [ForeignKey("userId")]

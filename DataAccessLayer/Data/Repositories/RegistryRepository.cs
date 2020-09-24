@@ -15,11 +15,11 @@ namespace DataAccessLayer.Data.Repositories
         {
 
         }
-        public List<Registry> GetAllByRegistryId(int id)
+        public List<Registry> GetAllByUserId(int id)
         {
             IEnumerable<Registry> all = GetAll();
             IEnumerable<Registry> allByRegistryById= from a in all
-                                               where a.reqistryId == id
+                                               where a.userId == id
                                                select a;
             return allByRegistryById != null ? allByRegistryById.ToList() : new List<Registry>();
 
@@ -27,7 +27,7 @@ namespace DataAccessLayer.Data.Repositories
         }
         public List<Registry> GetRegistriesByNumberOfDays(int days, int id)
         {
-            List<Registry> registries = GetAllByRegistryId(id);
+            List<Registry> registries = GetAllByUserId(id);
             var enumerable = registries.ToList();
             enumerable.OrderBy(d => d.date);
             return (List<Registry>)enumerable.Take(days);

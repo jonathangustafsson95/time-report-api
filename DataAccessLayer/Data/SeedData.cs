@@ -72,7 +72,7 @@ namespace Data.Model
                 }
                 );
             modelBuilder.Entity<MissionMember>().HasData(new MissionMember { missionId=1, userId=1});
-            modelBuilder.Entity<Registry>().HasData(new Registry { created=new DateTime(2021, 1,1), date=new DateTime(2020,12,5), description=null, hours=8, reqistryId=1, taskId=1, userId=1, invoice=InvoiceType.invoicable});
+            modelBuilder.Entity<Registry>().HasData(new Registry { created=new DateTime(2021, 1,1), date=new DateTime(2020,12,5), description=null, hours=8, registryId=1, taskId=1, userId=1, invoice=InvoiceType.invoicable});
             modelBuilder.Entity<FavoriteMission>().HasData(new FavoriteMission { userId=1, missionId=1});
 
 

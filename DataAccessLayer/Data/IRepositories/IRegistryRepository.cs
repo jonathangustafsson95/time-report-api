@@ -7,6 +7,6 @@ namespace DataAccessLayer.Data.IRepositories
     interface IRegistryRepository : IGenericRepository<Registry>
     {
         List<Registry> GetRegistriesByNumberOfDays(int days, int id);
-        List<Registry> GetAllByRegistryId(int id);
+        List<Registry> GetAllByUserId(int id);
     }
 }
