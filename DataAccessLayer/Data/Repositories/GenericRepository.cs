@@ -5,9 +5,9 @@ using System.Reflection;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using DataAccessLayer;
-using DataAccessLayer.IReppositories;
+using DataAccessLayer.Data.IReppositories;
 
-namespace DataAccessLayer.Repositories
+namespace DataAccessLayer.Data.Repositories
 {
     public class GenericRepository<T>:IGenericRepository<T> where T:class
     {
@@ -22,6 +22,14 @@ namespace DataAccessLayer.Repositories
         {
             return _table.ToList();
         }
+        //public IEnumerable<T>GetAllById(int id)
+        //{
+        //    var All = GetAll();
+        //    T test= _table.
+        //    List<T> _list = LikeSearch<T>(All,x=>x.);
+        //    var list = user.Roles.Select(r => r.RoleId);
+        //    var roles = db.Roles.Where(r => listOfRoleId.Contains(r.RoleId));
+        //}
         public T GetById(object id)
         {
             return _table.Find(id);
@@ -49,9 +57,17 @@ namespace DataAccessLayer.Repositories
             T model = _table.Find(id);
             return model != null;
         }
-        public List<T> LikeSearch<T>(List<T> list, Func<T, string> getKey, string searchString)
+        public List<T> Search<T>(List<T> list, Func<T, string> getKey, string searchString)
         {
             return list.Where(x => getKey(x).Contains(searchString)).ToList();
+        }
+        public List<T> Search<T>(List<T> list, Func<T, int> getKey, int searchId)
+        {
+            return list.Where(x => getKey(x).Equals(searchId)).ToList();
+        }
+        public List<T> Search<T>(List<T> list, Func<T, DateTime> getKey, DateTime searchDate)
+        {
+            return list.Where(x => getKey(x).Equals(searchDate)).ToList();
         }
 
 

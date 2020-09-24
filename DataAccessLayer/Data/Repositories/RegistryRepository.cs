@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using CommonLibrary.Model;
 using DataAccessLayer.Data.IRepositories;
-using DataAccessLayer.Repositories;
 
 namespace DataAccessLayer.Data.Repositories
 {
@@ -16,13 +15,22 @@ namespace DataAccessLayer.Data.Repositories
         {
 
         }
-
-        public List<Registry> GetRegistriesLastWeek()
+        public List<Registry> GetAllByRegistryId(int id)
         {
-            var registries = GetAll();
+            IEnumerable<Registry> all = GetAll();
+            IEnumerable<Registry> allByRegistryById= from a in all
+                                               where a.reqistryId == id
+                                               select a;
+            return allByRegistryById != null ? allByRegistryById.ToList() : new List<Registry>();
+
+
+        }
+        public List<Registry> GetRegistriesByNumberOfDays(int days, int id)
+        {
+            List<Registry> registries = GetAllByRegistryId(id);
             var enumerable = registries.ToList();
             enumerable.OrderBy(d => d.date);
-            return (List<Registry>)enumerable.Take(7);
+            return (List<Registry>)enumerable.Take(days);
 
 
 

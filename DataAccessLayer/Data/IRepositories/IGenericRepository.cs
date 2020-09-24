@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace DataAccessLayer.IReppositories
+namespace DataAccessLayer.Data.IReppositories
 {
     public interface IGenericRepository<T> where T:class
     {

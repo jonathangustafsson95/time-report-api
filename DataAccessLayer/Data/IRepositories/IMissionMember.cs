@@ -4,11 +4,11 @@ using System.Text;
 using CommonLibrary.Model;
 using DataAccessLayer.Data.IReppositories;
 
+
 namespace DataAccessLayer.Data.IRepositories
 {
-    interface IRegistryRepository : IGenericRepository<Registry>
+    public interface IMissionMember: IGenericRepository<MissionMember>
     {
-        List<Registry> GetRegistriesByNumberOfDays(int days, int id);
-        List<Registry> GetAllByRegistryId(int id);
+        List<MissionMember> GetAllByUserId(int id);
     }
 }
