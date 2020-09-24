@@ -14,24 +14,24 @@ namespace DataAccessLayer.UnitOfWork
     public class UnitOfWork: IUnitOfWork
     {
         private readonly BulbasaurContext _context;
-        public IGenericRepository<Customer> CustomerRepository { get; private set; }
-        public IGenericRepository<FavoriteMission> FavoriteMissionRepository { get; private set; }
-        public IGenericRepository<Mission> MissionRepository { get; private set; }
-        public IGenericRepository<MissionMember> MissionMemberRepository { get; private set; }
-        public IGenericRepository<Registry> RegistryRepository { get; private set; }
-        public IGenericRepository<Task> TaskRepository { get; private set; }
-        public IGenericRepository<User> UserRepository { get; private set; }
+        public IGenericRepository<Customer> CustomerRepository { get; }
+        public IFavoriteMissionRepository FavoriteMissionRepository { get; }
+        public IGenericRepository<Mission> MissionRepository { get; }
+        public IMissionMember MissionMemberRepository { get; }
+        public IRegistryRepository RegistryRepository { get; }
+        public IGenericRepository<Task> TaskRepository { get; }
+        public IGenericRepository<User> UserRepository { get; }
 
         public UnitOfWork(BulbasaurContext context)
         {
             this._context = context;
-            CustomerRepository=new GenericRepository<Customer>(context);
-            FavoriteMissionRepository= new GenericRepository<FavoriteMission>(context);
-            MissionRepository=new GenericRepository<Mission>(context);
-            MissionMemberRepository= new GenericRepository<MissionMember>(context);
-            RegistryRepository=new GenericRepository<Registry>(context);
-            TaskRepository=new GenericRepository<Task>(context);
-            UserRepository=new GenericRepository<User>(context);
+            CustomerRepository = new GenericRepository<Customer>(context);
+            FavoriteMissionRepository = new FavoriteMissionRepository(context);
+            MissionRepository = new GenericRepository<Mission>(context);
+            MissionMemberRepository = new MissionMemberRepository(context);
+            RegistryRepository = new RegistryRepository(context);
+            TaskRepository = new GenericRepository<Task>(context);
+            UserRepository = new GenericRepository<User>(context);
         }
         public void Dispose()
         {

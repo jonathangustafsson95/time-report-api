@@ -18,6 +18,9 @@ using Microsoft.OpenApi.Models;
 using DataAccessLayer;
 using DataAccessLayer.Data;
 using DataAccessLayer.UnitOfWork;
+using DataAccessLayer.Data.IRepositories;
+using DataAccessLayer.Data.Repositories;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace time_report_api
 {
@@ -37,7 +40,8 @@ namespace time_report_api
         {
             services.AddControllers();
             services.AddDbContext<BulbasaurContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("time report api")));
-            services.AddScoped<UnitOfWork>();
+            services.AddScoped<IUnitOfWork,UnitOfWork>();
+            services.AddScoped<IRegistryRepository, RegistryRepository>();
             //options.UseSqlServer(Configuration.GetConnectionString("BulbasaurContext")));
             //services.AddSwaggerGen();
         }

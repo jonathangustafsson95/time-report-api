@@ -11,6 +11,7 @@ namespace DataAccessLayer.Data.IReppositories
         void Delete(object id);
         void Save();
         bool Exists(object id);
+       
 
     }
 }

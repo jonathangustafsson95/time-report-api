@@ -4,9 +4,11 @@ using DataAccessLayer.Data.IReppositories;
 
 namespace DataAccessLayer.Data.IRepositories
 {
-    interface IRegistryRepository : IGenericRepository<Registry>
+    public interface IRegistryRepository : IGenericRepository<Registry>
     {
         List<Registry> GetRegistriesByNumberOfDays(int days, int id);
         List<Registry> GetAllByUserId(int id);
+
+
     }
 }

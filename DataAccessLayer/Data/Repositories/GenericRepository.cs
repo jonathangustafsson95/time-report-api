@@ -21,13 +21,9 @@ namespace DataAccessLayer.Data.Repositories
         {
             return _table.ToList();
         }
-        //public IEnumerable<T>GetAllById(int id)
+        //public void GetAllById(int id)
         //{
-        //    var All = GetAll();
-        //    T test= _table.
-        //    List<T> _list = LikeSearch<T>(All,x=>x.);
-        //    var list = user.Roles.Select(r => r.RoleId);
-        //    var roles = db.Roles.Where(r => listOfRoleId.Contains(r.RoleId));
+            
         //}
         public T GetById(object id)
         {

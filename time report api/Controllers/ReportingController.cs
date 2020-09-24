@@ -22,7 +22,6 @@ namespace time_report_api.Controllers
         private readonly UnitOfWork unitOfWork;
         public ReportingController(UnitOfWork unitOfWork)
         {
-            this.unitOfWork = unitOfWork;
             user = new User()
             {
                 userId = 1,
