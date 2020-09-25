@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace time_report_api.Migrations
 {
-    public partial class bulba3 : Migration
+    public partial class db10 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,13 +58,13 @@ namespace time_report_api.Migrations
                         column: x => x.customerId,
                         principalTable: "customers",
                         principalColumn: "customerId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_missions_users_userId",
                         column: x => x.userId,
                         principalTable: "users",
                         principalColumn: "userId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -82,13 +82,13 @@ namespace time_report_api.Migrations
                         column: x => x.missionId,
                         principalTable: "missions",
                         principalColumn: "missionId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_favoriteMissions_users_userId",
                         column: x => x.userId,
                         principalTable: "users",
                         principalColumn: "userId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -106,13 +106,13 @@ namespace time_report_api.Migrations
                         column: x => x.missionId,
                         principalTable: "missions",
                         principalColumn: "missionId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_missionMembers_users_userId",
                         column: x => x.userId,
                         principalTable: "users",
                         principalColumn: "userId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -141,13 +141,13 @@ namespace time_report_api.Migrations
                         column: x => x.missionId,
                         principalTable: "missions",
                         principalColumn: "missionId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_tasks_users_userId",
                         column: x => x.userId,
                         principalTable: "users",
                         principalColumn: "userId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -171,13 +171,13 @@ namespace time_report_api.Migrations
                         column: x => x.taskId,
                         principalTable: "tasks",
                         principalColumn: "taskId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_registries_users_userId",
                         column: x => x.userId,
                         principalTable: "users",
                         principalColumn: "userId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
