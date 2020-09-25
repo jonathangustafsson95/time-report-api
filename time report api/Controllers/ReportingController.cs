@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -65,12 +64,13 @@ namespace time_report_api.Controllers
 
         [HttpGet]
         [Route("GetWeek/{dateTime}")]
-        public ActionResult<List<Registry>> GetWeek(DateTime dateTime)
+        public ActionResult<List<RegistryViewModel>> GetWeek(DateTime dateTime)
         {
             DateTime startDate = GetWeekStartDate(dateTime, DayOfWeek.Monday);
             DateTime endDate = startDate.AddDays(7);
 
-            return unitOfWork.RegistryRepository.GetRegistriesByDate(startDate, endDate, user.userId);
+            List<Registry> weekRegistries = unitOfWork.RegistryRepository.GetRegistriesByDate(startDate, endDate, user.userId);
+            return(ConvertRegistriesToViewModel(weekRegistries));     
         }
         private DateTime GetWeekStartDate(DateTime dateTime, DayOfWeek startDay)
         {
@@ -80,6 +80,28 @@ namespace time_report_api.Controllers
                 startDate = startDate.AddDays(-1);
             }
             return startDate;
+        }
+        private List<RegistryViewModel> ConvertRegistriesToViewModel(List<Registry> registries)
+        {
+            List<RegistryViewModel> weekRegistries = new List<RegistryViewModel>();
+            Task task;
+            Mission mission;
+
+            foreach (var reg in registries)
+            {
+                task = unitOfWork.TaskRepository.GetById(reg.taskId);
+                mission = unitOfWork.MissionRepository.GetById(task.missionId);
+
+                weekRegistries.Add(new RegistryViewModel
+                {
+                    RegistryId = reg.registryId,
+                    MissionName = mission.missionName,
+                    TaskName = task.name,
+                    Day = reg.date.Day,
+                    Hours = reg.hours
+                });
+            }
+            return weekRegistries;
         }
     }
 }

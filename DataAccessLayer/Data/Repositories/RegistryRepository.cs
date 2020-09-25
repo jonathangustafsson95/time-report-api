@@ -21,8 +21,6 @@ namespace DataAccessLayer.Data.Repositories
                                                where a.userId == id
                                                select a;
             return allByRegistryById != null ? allByRegistryById.ToList() : new List<Registry>();
-
-
         }
         // GetByID får ju bara ut en reg? 
         public List<Registry> GetRegistriesByNumberOfDays(int days, int id)
