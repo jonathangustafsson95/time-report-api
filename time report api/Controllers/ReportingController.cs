@@ -65,12 +65,13 @@ namespace time_report_api.Controllers
 
         [HttpGet]
         [Route("GetWeek/{dateTime}")]
-        public ActionResult<List<Registry>> GetWeek(DateTime dateTime)
+        public ActionResult<List<RegistryViewModel>> GetWeek(DateTime dateTime)
         {
             DateTime startDate = GetWeekStartDate(dateTime, DayOfWeek.Monday);
             DateTime endDate = startDate.AddDays(7);
 
-            return unitOfWork.RegistryRepository.GetRegistriesByDate(startDate, endDate, user.userId);
+            List<Registry> weekRegistries = unitOfWork.RegistryRepository.GetRegistriesByDate(startDate, endDate, user.userId);
+            return(ConvertRegistriesToViewModel(weekRegistries));     
         }
         private DateTime GetWeekStartDate(DateTime dateTime, DayOfWeek startDay)
         {
@@ -80,6 +81,23 @@ namespace time_report_api.Controllers
                 startDate = startDate.AddDays(-1);
             }
             return startDate;
+        }
+        private List<RegistryViewModel> ConvertRegistriesToViewModel(List<Registry> registries)
+        {
+            List<RegistryViewModel> weekRegistries = new List<RegistryViewModel>();
+            foreach (var reg in registries)
+            {
+                RegistryViewModel regVM = new RegistryViewModel
+                {
+                    RegistryId = reg.registryId,
+                    MissionName = unitOfWork.MissionRepository.GetById(unitOfWork.TaskRepository.GetById(reg.taskId).missionId).missionName,
+                    TaskName = unitOfWork.TaskRepository.GetById(reg.taskId).name,
+                    Day = reg.date.Day,
+                    Hours = reg.hours
+                };
+                weekRegistries.Add(regVM);
+            }
+            return weekRegistries;
         }
     }
 }
