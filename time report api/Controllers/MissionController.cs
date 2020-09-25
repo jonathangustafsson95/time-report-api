@@ -12,11 +12,11 @@ namespace time_report_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MissionMemberController : ControllerBase
+    public class MissionController : ControllerBase
     {
         private readonly UnitOfWork UnitOfWork;
         private readonly User dummy;
-        public MissionMemberController(UnitOfWork unitOfWork)
+        public MissionController(UnitOfWork unitOfWork)
         {
             this.UnitOfWork = unitOfWork;
             dummy = new User()
@@ -45,12 +45,19 @@ namespace time_report_api.Controllers
         //[FromBody]
 
         [HttpPost]
-        [Route("AddMissionMember/{_missionId}")]
-        public void Post( int _missionId)
+        [Route("AddMissionMember")]
+        public ActionResult Post([FromBody] MissionMember _missionMember)
         {
-            int missionId = _missionId;
-
-
+            try
+            {
+                UnitOfWork.MissionMemberRepository.Insert(_missionMember);
+                UnitOfWork.MissionMemberRepository.Save();
+                return Ok();
+            }
+            catch
+            {
+                return ValidationProblem();
+            }
         }
 
         // PUT api/<MissionMemberController>/5
