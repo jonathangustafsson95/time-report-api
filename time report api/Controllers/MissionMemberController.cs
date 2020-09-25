@@ -27,14 +27,17 @@ namespace time_report_api.Controllers
                 eMail = "hej@lol.com"
             };
         }
-        // GET: api/<MissionMemberController>
+      
         
         [HttpGet]
-        public IEnumerable<string> Get()
+        [Route("GetAllMissionMember")]
+        public IEnumerable<MissionMember> Get()
         {
 
-            return new string[] { "value1", "value2" };
+
+            return UnitOfWork.MissionMemberRepository.GetAll().ToList();
         }
+    
 
         // GET api/<MissionMemberController>/5
         [HttpGet("{id}")]
@@ -42,15 +45,13 @@ namespace time_report_api.Controllers
         {
             return "value";
         }
-        //[FromBody]
+        
 
         [HttpPost]
-        [Route("AddMissionMember/{_missionId}")]
-        public void Post( int _missionId)
+        [Route("AddMissionMember")]
+        public void Post([FromBody]int _missionId)
         {
-            int missionId = _missionId;
-
-
+           
         }
 
         // PUT api/<MissionMemberController>/5
