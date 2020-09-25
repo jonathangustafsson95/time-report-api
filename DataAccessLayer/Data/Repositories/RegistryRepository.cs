@@ -9,7 +9,6 @@ namespace DataAccessLayer.Data.Repositories
 {
     public class RegistryRepository : GenericRepository<Registry>, IRegistryRepository
     {
-
         public RegistryRepository(BulbasaurDevContext context)
             : base(context)
         {

@@ -37,10 +37,9 @@ namespace time_report_api.Controllers
         [Route("AddTimeReport")]
         public ActionResult<User> AddTimeReport([FromBody] Registries newRegistries)
         {
-           // var DbRegistries = unitOfWork.RegistryRepository.
             try
             {
-                for (int i = 0; i <= newRegistries.registries.Count; i++)
+                for (int i = 0; i < newRegistries.registries.Count; i++)
                 {
                     // En int kan aldrig  vara  null, så om vi skickar nya registries
                     // bör vi hantera det på något sätt i JSON, typ  sätta regID  till 0?
@@ -55,10 +54,8 @@ namespace time_report_api.Controllers
                         unitOfWork.RegistryRepository.Update(newRegistries.registries[i]);
                     }
                 }
-
                 unitOfWork.RegistryRepository.Save();
-                //
-                return BadRequest("");
+                return Ok();
             }
             catch (Exception)
             {
