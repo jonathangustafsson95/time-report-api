@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -85,17 +84,22 @@ namespace time_report_api.Controllers
         private List<RegistryViewModel> ConvertRegistriesToViewModel(List<Registry> registries)
         {
             List<RegistryViewModel> weekRegistries = new List<RegistryViewModel>();
+            Task task;
+            Mission mission;
+
             foreach (var reg in registries)
             {
-                RegistryViewModel regVM = new RegistryViewModel
+                task = unitOfWork.TaskRepository.GetById(reg.taskId);
+                mission = unitOfWork.MissionRepository.GetById(task.missionId);
+
+                weekRegistries.Add(new RegistryViewModel
                 {
                     RegistryId = reg.registryId,
-                    MissionName = unitOfWork.MissionRepository.GetById(unitOfWork.TaskRepository.GetById(reg.taskId).missionId).missionName,
-                    TaskName = unitOfWork.TaskRepository.GetById(reg.taskId).name,
+                    MissionName = mission.missionName,
+                    TaskName = task.name,
                     Day = reg.date.Day,
                     Hours = reg.hours
-                };
-                weekRegistries.Add(regVM);
+                });
             }
             return weekRegistries;
         }
