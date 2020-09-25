@@ -9,14 +9,17 @@ namespace CommonLibrary.Model
     {
         [Key]
         public int registryId { get; set; }
-        [ForeignKey("TaskId")]
+        [ForeignKey("Task")]
         public int taskId { get; set; }
-        [ForeignKey("userId")]
+        [ForeignKey("User")]
         public int userId { get; set; }
         public double hours { get; set; }
         public DateTime created { get; set; }
         public DateTime date { get; set; }
         public InvoiceType invoice { get; set; }
+
+        public Task Task { get; set; }
+        public User User { get; set; }
 
     }
 }

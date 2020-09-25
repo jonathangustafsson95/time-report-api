@@ -14,11 +14,11 @@ namespace time_report_api.Controllers
     [ApiController]
     public class MissionController : ControllerBase
     {
-        private readonly UnitOfWork UnitOfWork;
+        private readonly UnitOfWork unitOfWork;
         private readonly User dummy;
         public MissionController(UnitOfWork unitOfWork)
         {
-            this.UnitOfWork = unitOfWork;
+            this.unitOfWork = unitOfWork;
             dummy = new User()
             {
                 userId = 1,
@@ -30,20 +30,19 @@ namespace time_report_api.Controllers
       
         
         [HttpGet]
-        [Route("GetAllMissionMember")]
-        public IEnumerable<MissionMember> Get()
+        [Route("GetAllMission")]
+        public IEnumerable<Mission> GetAllMissions()
         {
-
-
-            return UnitOfWork.MissionMemberRepository.GetAll().ToList();
+            return unitOfWork.MissionRepository.GetAll();
         }
     
 
         // GET api/<MissionMemberController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        [Route("GetAllUserByMissionId")]
+        public IEnumerable<MissionMember> GetAllUserByMissionId(int id)
         {
-            return "value";
+            return unitOfWork.MissionMemberRepository.GetAllByUserId(id);
         }
         
 
@@ -53,8 +52,8 @@ namespace time_report_api.Controllers
         {
             try
             {
-                UnitOfWork.MissionMemberRepository.Insert(_missionMember);
-                UnitOfWork.MissionMemberRepository.Save();
+                unitOfWork.MissionMemberRepository.Insert(_missionMember);
+                unitOfWork.MissionMemberRepository.Save();
                 return Ok();
             }
             catch

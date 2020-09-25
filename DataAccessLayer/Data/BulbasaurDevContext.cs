@@ -22,8 +22,8 @@ namespace DataAccessLayer.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<FavoriteMission>().HasKey(f => new { f.userId, f.missionId });
-            modelBuilder.Entity<Task>().HasKey(t => new { t.taskId, t.userId });
             modelBuilder.Entity<MissionMember>().HasKey(m => new { m.userId, m.missionId });
+            //modelBuilder.Entity<FavoriteMission>().has
             modelBuilder.Seed();
         }
     }

@@ -10,7 +10,7 @@ namespace Data.Model
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Customer>().HasData(new Customer { customerId=1, created=new DateTime(2020,9,21), name="Bobby"});
+            modelBuilder.Entity<Customer>().HasData(new Customer { customerId=1, created=new DateTime(2020,9,20), name="Bobby"});
             modelBuilder.Entity<Mission>().HasData(
                 new Mission 
                 { 
@@ -62,17 +62,51 @@ namespace Data.Model
                     missionId = 1,
                     status = 0,
                     actualHours = null,
-                    created = new DateTime(2020, 10, 5),
+                    created = new DateTime(2020, 11, 5),
                     description = "PLACEHOLDER",
                     estimatedHour = 8.30,
                     invoice = InvoiceType.notInvoicable,
                     name = "PLACEHOLDER",
-                    start = new DateTime(2020, 11, 6),
-                    finished = new DateTime(2020, 11, 7)
+                    start = new DateTime(2020, 12, 6),
+                    finished = new DateTime(2020, 12, 7)
+                },
+                new Task
+                {
+                    taskId = 3,
+                    userId = 1,
+                    missionId = 1,
+                    status = 0,
+                    actualHours = null,
+                    created = new DateTime(2020, 12, 8),
+                    description = "PLACEHOLDER",
+                    estimatedHour = 8.30,
+                    invoice = InvoiceType.notInvoicable,
+                    name = "PLACEHOLDER",
+                    start = new DateTime(2020, 12, 9),
+                    finished = new DateTime(2020, 12, 10)
+                },
+                new Task
+                {
+                    taskId = 4,
+                    userId = 1,
+                    missionId = 1,
+                    status = 0,
+                    actualHours = null,
+                    created = new DateTime(2020, 12, 11),
+                    description = "PLACEHOLDER",
+                    estimatedHour = 8.30,
+                    invoice = InvoiceType.notInvoicable,
+                    name = "PLACEHOLDER",
+                    start = new DateTime(2020, 12, 12),
+                    finished = new DateTime(2020, 12, 13)
                 }
                 );
             modelBuilder.Entity<MissionMember>().HasData(new MissionMember { missionId=1, userId=1});
-            modelBuilder.Entity<Registry>().HasData(new Registry { created=new DateTime(2021, 1,1), date=new DateTime(2020,12,5), hours=8, registryId=1, taskId=1, userId=1, invoice=InvoiceType.invoicable});
+            modelBuilder.Entity<Registry>().HasData(
+                new Registry { created=new DateTime(2021, 1,1), date=new DateTime(2020,11,5), hours=8, registryId=1, taskId=1, userId=1, invoice=InvoiceType.invoicable},
+                 new Registry { created = new DateTime(2021, 2, 1), date = new DateTime(2020, 11, 5), hours = 8, registryId = 2, taskId = 1, userId = 1, invoice = InvoiceType.invoicable },
+                  new Registry { created = new DateTime(2021, 3, 2), date = new DateTime(2020, 11, 6), hours = 8, registryId = 3, taskId = 1, userId = 1, invoice = InvoiceType.invoicable },
+                 new Registry { created = new DateTime(2021, 4, 5), date = new DateTime(2020, 11, 7), hours = 8, registryId = 4, taskId = 1, userId = 1, invoice = InvoiceType.invoicable });
             modelBuilder.Entity<FavoriteMission>().HasData(new FavoriteMission { userId=1, missionId=1});
 
 

@@ -11,11 +11,10 @@ namespace CommonLibrary.Model
         [Key]
         public int taskId { get; set; }
 
-        [ForeignKey("MissionId")]
+        [ForeignKey("Mission")]
         public int missionId { get; set; }
 
-        [Key]
-        [ForeignKey("UserId")]
+        [ForeignKey("User")]
         public int userId { get; set; }
         public string name { get; set; }
         public string description { get; set; }
@@ -26,5 +25,8 @@ namespace CommonLibrary.Model
         public DateTime start { get; set; }
         public DateTime? finished { get; set; }
         public int status { get; set; }
+
+        public User User { get; set; }
+        public Mission Mission { get; set; }
     }
 }

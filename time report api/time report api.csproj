@@ -6,6 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200925133208_Bulbasaurv2.cs" />
+    <Compile Remove="Migrations\20200925133208_Bulbasaurv2.Designer.cs" />
+    <Compile Remove="Migrations\20200925135737_bulba3.cs" />
+    <Compile Remove="Migrations\20200925135737_bulba3.Designer.cs" />
+    <Compile Remove="Migrations\20200925140116_bulba3.cs" />
+    <Compile Remove="Migrations\20200925140116_bulba3.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="3.1.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.8">
