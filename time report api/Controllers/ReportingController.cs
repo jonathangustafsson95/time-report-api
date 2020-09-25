@@ -47,13 +47,17 @@ namespace time_report_api.Controllers
                     if (newRegistries.registries[i].registryId == 0)
                     {
                         // Add new registry
+                        unitOfWork.RegistryRepository.Insert(newRegistries.registries[i]);
                     }
-
-                    if (newRegistries.registries[i].registryId != 0)
+                    else 
                     {
                         // Change  a existing registry
+                        unitOfWork.RegistryRepository.Update(newRegistries.registries[i]);
                     }
                 }
+
+                unitOfWork.RegistryRepository.Save();
+                //
                 return BadRequest("");
             }
             catch (Exception)
