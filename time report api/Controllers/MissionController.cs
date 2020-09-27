@@ -60,13 +60,13 @@ namespace time_report_api.Controllers
             }
             return missionList;
         }
-        //[HttpGet]
-        //[Route("GetAllUserByMissionName/{name:string}")]
-        //public IEnumerable<Mission> GetAllMissionByMissionName(string name)
-        //{
-        //    List<Mission> missionList = unitOfWork.MissionRepository.Search<Mission>(x=>x.missionName,name);
-        //    return missionList;
-        //}
+        [HttpGet]
+        [Route("GetAllUserByMissionName/{name}")]
+        public IEnumerable<Mission> GetAllMissionByMissionName(string name)
+        {
+            List<Mission> missionList = unitOfWork.MissionRepository.Search<Mission>(x => x.missionName, name);
+            return missionList;
+        }
 
 
         [HttpPost]
