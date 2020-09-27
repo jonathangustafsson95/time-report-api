@@ -87,6 +87,7 @@ namespace time_report_api.Controllers
             Task task;
             Mission mission;
 
+
             foreach (var reg in registries)
             {
                 task = unitOfWork.TaskRepository.GetById(reg.taskId);

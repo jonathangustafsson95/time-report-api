@@ -366,13 +366,13 @@ namespace time_report_api.Migrations
                     b.HasOne("CommonLibrary.Model.Mission", "Mission")
                         .WithMany()
                         .HasForeignKey("missionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CommonLibrary.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -381,13 +381,13 @@ namespace time_report_api.Migrations
                     b.HasOne("CommonLibrary.Model.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("customerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CommonLibrary.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -396,13 +396,13 @@ namespace time_report_api.Migrations
                     b.HasOne("CommonLibrary.Model.Mission", "Mission")
                         .WithMany()
                         .HasForeignKey("missionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CommonLibrary.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -411,13 +411,13 @@ namespace time_report_api.Migrations
                     b.HasOne("CommonLibrary.Model.Task", "Task")
                         .WithMany()
                         .HasForeignKey("taskId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CommonLibrary.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -426,13 +426,13 @@ namespace time_report_api.Migrations
                     b.HasOne("CommonLibrary.Model.Mission", "Mission")
                         .WithMany()
                         .HasForeignKey("missionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CommonLibrary.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
