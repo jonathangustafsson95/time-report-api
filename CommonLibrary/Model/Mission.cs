@@ -15,7 +15,7 @@ namespace CommonLibrary.Model
         public int userId { get; set; }
         [ForeignKey("Customer")]
         public int customerId { get; set; }
-        public string missionName;
+        public string missionName { get; set; }
         public string description { get; set; }//ha kvar? enum/string
         public DateTime start { get; set; }
         public DateTime? finished { get; set; }

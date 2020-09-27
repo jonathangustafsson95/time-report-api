@@ -36,15 +36,38 @@ namespace time_report_api.Controllers
             return unitOfWork.MissionRepository.GetAll();
         }
     
-
-        // GET api/<MissionMemberController>/5
-        [HttpGet("{id}")]
-        [Route("GetAllUserByMissionId")]
-        public IEnumerable<MissionMember> GetAllUserByMissionId(int id)
+        [HttpGet]
+        [Route("GetAllMissionByUserId/{id:int}")]
+        public IEnumerable<Mission> GetAllMissionByUserId(int id)
         {
-            return unitOfWork.MissionMemberRepository.GetAllByUserId(id);
+            List<MissionMember> missionMemberList= unitOfWork.MissionMemberRepository.GetAllByUserId(id);
+            List<Mission> missionList = new List<Mission>();
+            foreach(MissionMember mm in missionMemberList)
+            {
+                missionList.Add(unitOfWork.MissionRepository.GetById(mm.missionId));
+            }
+            return missionList;
         }
-        
+        [HttpGet]
+        [Route("GetAllUserByMissionId/{id:int}")]
+        public IEnumerable<User> GetAllUserByMissionId(int id)
+        {
+            List<MissionMember> missionMemberList = unitOfWork.MissionMemberRepository.GetAllByMissionId(id);
+            List<User> missionList = new List<User>();
+            foreach (MissionMember mm in missionMemberList)
+            {
+                missionList.Add(unitOfWork.UserRepository.GetById(mm.userId));
+            }
+            return missionList;
+        }
+        [HttpGet]
+        [Route("GetAllUserByMissionName/{name:string}")]
+        public IEnumerable<Mission> GetAllMissionByMissionName(string name)
+        {
+            List<Mission> missionList = unitOfWork.MissionRepository.Search<Mission>(x=>x.missionName,name);
+            return missionList;
+        }
+
 
         [HttpPost]
         [Route("AddMissionMember")]

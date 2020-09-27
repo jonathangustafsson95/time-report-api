@@ -23,7 +23,6 @@ namespace DataAccessLayer.Data
         {
             modelBuilder.Entity<FavoriteMission>().HasKey(f => new { f.userId, f.missionId });
             modelBuilder.Entity<MissionMember>().HasKey(m => new { m.userId, m.missionId });
-            //modelBuilder.Entity<FavoriteMission>().has
             modelBuilder.Seed();
         }
     }
