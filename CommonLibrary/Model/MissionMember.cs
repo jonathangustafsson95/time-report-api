@@ -8,12 +8,9 @@ namespace CommonLibrary.Model
 {
     public class MissionMember
     {
-        [Key]
-        [ForeignKey("UserId")]
         public int userId { get; set; }
-        [Key]
-        [ForeignKey("MissionId")]
         public int missionId { get; set; }
-
+        public virtual User User { get; set; }
+        public virtual Mission Mission { get; set; }
     }
 }

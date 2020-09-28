@@ -14,11 +14,11 @@ namespace time_report_api.Controllers
     [ApiController]
     public class MissionController : ControllerBase
     {
-        private readonly UnitOfWork UnitOfWork;
+        private readonly UnitOfWork unitOfWork;
         private readonly User dummy;
         public MissionController(UnitOfWork unitOfWork)
         {
-            this.UnitOfWork = unitOfWork;
+            this.unitOfWork = unitOfWork;
             dummy = new User()
             {
                 userId = 1,
@@ -27,22 +27,47 @@ namespace time_report_api.Controllers
                 eMail = "hej@lol.com"
             };
         }
-        // GET: api/<MissionMemberController>
+      
         
         [HttpGet]
-        public IEnumerable<string> Get()
+        [Route("GetAllMission")]
+        public IEnumerable<Mission> GetAllMissions()
         {
-
-            return new string[] { "value1", "value2" };
+            return unitOfWork.MissionRepository.GetAll();
+        }
+    
+        [HttpGet]
+        [Route("GetAllMissionByUserId/{id:int}")]
+        public IEnumerable<Mission> GetAllMissionByUserId(int id)
+        {
+            List<MissionMember> missionMemberList= unitOfWork.MissionMemberRepository.GetAllByUserId(id);
+            List<Mission> missionList = new List<Mission>();
+            foreach(MissionMember mm in missionMemberList)
+            {
+                missionList.Add(unitOfWork.MissionRepository.GetById(mm.missionId));
+            }
+            return missionList;
+        }
+        [HttpGet]
+        [Route("GetAllUserByMissionId/{id:int}")]
+        public IEnumerable<User> GetAllUserByMissionId(int id)
+        {
+            List<MissionMember> missionMemberList = unitOfWork.MissionMemberRepository.GetAllByMissionId(id);
+            List<User> missionList = new List<User>();
+            foreach (MissionMember mm in missionMemberList)
+            {
+                missionList.Add(unitOfWork.UserRepository.GetById(mm.userId));
+            }
+            return missionList;
+        }
+        [HttpGet]
+        [Route("GetAllUserByMissionName/{name}")]
+        public IEnumerable<Mission> GetAllMissionByMissionName(string name)
+        {
+            List<Mission> missionList = unitOfWork.MissionRepository.Search<Mission>(x => x.missionName, name);
+            return missionList;
         }
 
-        // GET api/<MissionMemberController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-        //[FromBody]
 
         [HttpPost]
         [Route("AddMissionMember")]
@@ -50,8 +75,8 @@ namespace time_report_api.Controllers
         {
             try
             {
-                UnitOfWork.MissionMemberRepository.Insert(_missionMember);
-                UnitOfWork.MissionMemberRepository.Save();
+                unitOfWork.MissionMemberRepository.Insert(_missionMember);
+                unitOfWork.MissionMemberRepository.Save();
                 return Ok();
             }
             catch

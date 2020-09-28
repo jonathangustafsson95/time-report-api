@@ -1,6 +1,7 @@
 ﻿using CommonLibrary.Model;
 using Data.Model;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace DataAccessLayer.Data
 {
@@ -21,9 +22,36 @@ namespace DataAccessLayer.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<FavoriteMission>().HasKey(f => new { f.userId, f.missionId });
-            modelBuilder.Entity<Task>().HasKey(t => new { t.taskId, t.userId });
-            modelBuilder.Entity<MissionMember>().HasKey(m => new { m.userId, m.missionId });
+            modelBuilder.Entity<FavoriteMission>()
+                .HasKey(fm => new { fm.userId, fm.missionId });
+            //modelBuilder.Entity<FavoriteMission>()
+            //    .HasOne(fm => fm.User)
+            //    .WithMany(fm => fm.missionFavorites)
+            //    .HasForeignKey(fm => fm.userId)
+            //    .OnDelete(DeleteBehavior.NoAction);
+            //modelBuilder.Entity<FavoriteMission>()
+            //    .HasOne(fm => fm.Mission)
+            //    .WithMany(fm => fm.favoritedMission)
+            //    .HasForeignKey(fm => fm.missionId)
+            //    .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<MissionMember>()
+                .HasKey(mm => new { mm.userId, mm.missionId });
+            //modelBuilder.Entity<MissionMember>()
+            //    .HasOne(mm => mm.User)
+            //    .WithMany(mm => mm.missionMemberships)
+            //    .HasForeignKey(mm => mm.userId)
+            //    .OnDelete(DeleteBehavior.NoAction);
+            //modelBuilder.Entity<MissionMember>()
+            //    .HasOne(mm => mm.Mission)
+            //    .WithMany(mm => mm.missionMembers)
+            //    .HasForeignKey(mm => mm.missionId)
+            //    .OnDelete(DeleteBehavior.NoAction);
+
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
             modelBuilder.Seed();
         }
     }

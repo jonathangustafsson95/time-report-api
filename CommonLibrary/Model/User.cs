@@ -12,5 +12,7 @@ namespace CommonLibrary.Model
         public string userName { get; set; }
         public string password { get; set; }
         public string eMail { get; set; }
+        public ICollection<MissionMember> missionMemberships { get; set; }
+        public ICollection<FavoriteMission> missionFavorites { get; set; }
     }
 }
