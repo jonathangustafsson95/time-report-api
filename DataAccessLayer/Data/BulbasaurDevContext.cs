@@ -24,7 +24,6 @@ namespace DataAccessLayer.Data
         {
             modelBuilder.Entity<FavoriteMission>().HasKey(f => new { f.userId, f.missionId });
             modelBuilder.Entity<MissionMember>().HasKey(m => new { m.userId, m.missionId });
-            //modelBuilder.Entity<FavoriteMission>().has
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
