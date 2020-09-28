@@ -10,5 +10,6 @@ namespace DataAccessLayer.Data.IRepositories
     public interface IMissionMember: IGenericRepository<MissionMember>
     {
         List<MissionMember> GetAllByUserId(int id);
+        List<MissionMember> GetAllByMissionId(int id);
     }
 }

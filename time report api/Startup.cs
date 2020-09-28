@@ -26,8 +26,7 @@ namespace time_report_api
 {
     public class Startup
     {
-        //hårdkodad connection string for now
-        const string connection = @"Data Source=193.10.247.98, 1433;Database=BulbasaurDev;User ID=sa;Password=Pa55w0rd;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        //const string connection = @"Data Source=193.10.247.98, 1433;Database=BulbasaurDev;User ID=sa;Password=Pa55w0rd;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -49,10 +48,10 @@ namespace time_report_api
                 )
             );
             services.AddControllers();
-            services.AddDbContext<BulbasaurDevContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("time report api")));
-            services.AddScoped<UnitOfWork>();
-            //options.UseSqlServer(Configuration.GetConnectionString("BulbasaurContext")));
+            services.AddDbContext<BulbasaurDevContext>(options => /*options.UseSqlServer(connection, b => b.MigrationsAssembly("time report api")));*/
+            options.UseSqlServer(Configuration.GetConnectionString("BulbasaurDevContext")));
             //services.AddSwaggerGen();
+            services.AddScoped<UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
