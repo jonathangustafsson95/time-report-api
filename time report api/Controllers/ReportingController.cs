@@ -129,8 +129,10 @@ namespace time_report_api.Controllers
                     RegistryId = reg.registryId,
                     MissionName = mission.missionName,
                     TaskName = task.name,
+                    TaskId = task.taskId,
                     Day = reg.date.Day,
-                    Hours = reg.hours
+                    Hours = reg.hours,
+                    Invoice = task.invoice
                 });
             }
             return weekRegistries;
