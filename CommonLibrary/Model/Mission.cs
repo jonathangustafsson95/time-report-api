@@ -21,8 +21,10 @@ namespace CommonLibrary.Model
         public DateTime? finished { get; set; }
         public DateTime created { get; set; }
         public int status { get; set; }
-
         public User User { get; set; }
         public Customer Customer { get; set; }
+        public ICollection<MissionMember> missionMembers { get; set; }
+        public ICollection<FavoriteMission> favoritedMission { get; set; }
     }
 }
+ 

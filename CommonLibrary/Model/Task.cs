@@ -15,7 +15,7 @@ namespace CommonLibrary.Model
         public int missionId { get; set; }
 
         [ForeignKey("User")]
-        public int userId { get; set; }
+        public int? userId { get; set; }
         public string name { get; set; }
         public string description { get; set; }
         public double estimatedHour { get; set; }

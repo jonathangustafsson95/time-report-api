@@ -8,14 +8,8 @@ namespace CommonLibrary.Model
 {
     public class FavoriteMission
     {
-        [Key]
-        [ForeignKey("User")]
         public int userId { get; set; }
-
-        [Key]
-        [ForeignKey("Mission")]
         public int missionId { get; set; }
-
         public User User { get; set; }
         public Mission Mission { get; set;  }
     }
