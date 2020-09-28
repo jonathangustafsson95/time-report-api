@@ -11,6 +11,9 @@ using DataAccessLayer.Data;
 
 namespace time_report_api.Controllers
 {
+    /// <summary>
+    /// Controller for handlings rerporting events.
+    /// </summary>
     [Route("api/[controller]")]
     // Kalla på Authorize vid specifika metoder för att begränsa dem,
     // sätter man Authorize på hela kontrollern blir alla metoder begränsade och kräver login
@@ -32,6 +35,13 @@ namespace time_report_api.Controllers
             };
         }
 
+        /// <summary>
+        /// This method takes a registries class from body of request, extracts
+        /// registry items from registries and inserts new entries and updates 
+        /// entries that have been changed.
+        /// </summary>
+        /// <param name="newRegistries"></param>
+        /// <returns>Http response message</returns>
         [HttpPost]
         [Route("AddTimeReport")]
         public ActionResult<User> AddTimeReport([FromBody] Registries newRegistries)
@@ -62,6 +72,12 @@ namespace time_report_api.Controllers
             }
         }
 
+        /// <summary>
+        /// This method returns a list of RegistryViewModel items extracted from the database
+        /// for the week in which provided date exists.
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns>A list of RegistryViewModel items.</returns>
         [HttpGet]
         [Route("GetWeek/{dateTime}")]
         public ActionResult<List<RegistryViewModel>> GetWeek(DateTime dateTime)
@@ -72,7 +88,16 @@ namespace time_report_api.Controllers
             List<Registry> weekRegistries = unitOfWork.RegistryRepository.GetRegistriesByDate(startDate, endDate, user.userId);
             return(ConvertRegistriesToViewModel(weekRegistries));     
         }
-        private DateTime GetWeekStartDate(DateTime dateTime, DayOfWeek startDay)
+
+        /// <summary>
+        /// This method finds the date of the first day in a week which it the returns.
+        /// The method takes a optional argument id week should start on a day that is 
+        /// not equal to Monday.
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <param name="startDay"></param>
+        /// <returns>DateItem start date for week in question.</returns>
+        private DateTime GetWeekStartDate(DateTime dateTime, DayOfWeek startDay = DayOfWeek.Monday)
         {
             DateTime startDate = dateTime;
             while (startDate.DayOfWeek != startDay)
@@ -81,12 +106,18 @@ namespace time_report_api.Controllers
             }
             return startDate;
         }
+
+        /// <summary>
+        /// This method takes a list of registry items, collects additional information 
+        /// for each registry and returns a ViewModel.
+        /// </summary>
+        /// <param name="registries"></param>
+        /// <returns>A list of RegistryViewModel items.</returns>
         private List<RegistryViewModel> ConvertRegistriesToViewModel(List<Registry> registries)
         {
             List<RegistryViewModel> weekRegistries = new List<RegistryViewModel>();
             Task task;
             Mission mission;
-
 
             foreach (var reg in registries)
             {
