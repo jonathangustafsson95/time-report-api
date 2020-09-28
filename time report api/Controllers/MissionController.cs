@@ -103,8 +103,8 @@ namespace time_report_api.Controllers
         {
             try
             {
-                UnitOfWork.FavoriteMissionRepository.Insert(favoriteMission);
-                UnitOfWork.FavoriteMissionRepository.Save();
+                unitOfWork.FavoriteMissionRepository.Insert(favoriteMission);
+                unitOfWork.FavoriteMissionRepository.Save();
                 return Ok();
             }
             catch
@@ -118,7 +118,7 @@ namespace time_report_api.Controllers
         public ActionResult<List<FavoriteMission>> GetFavoriteMissions(int userId)
         {
 
-            return UnitOfWork.FavoriteMissionRepository.GetFavoriteMissionsById(userId);
+            return unitOfWork.FavoriteMissionRepository.GetFavoriteMissionsById(userId);
         }
 
     }
