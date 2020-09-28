@@ -48,12 +48,11 @@ namespace time_report_api
                 )
             );
             services.AddControllers();
-            services.AddDbContext<BulbasaurDevContext>(options => /*options.UseSqlServer(connection, b => b.MigrationsAssembly("time report api")));*/
-            options.UseSqlServer(Configuration.GetConnectionString("BulbasaurDevContext")));
+            services.AddDbContext<BulbasaurDevContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BulbasaurDevContext"), b => b.MigrationsAssembly("time report api")));
             //services.AddSwaggerGen();
             services.AddScoped<UnitOfWork>();
         }
-
+        //options.UseSqlServer(connection, b => b.MigrationsAssembly("time report api")));*/
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

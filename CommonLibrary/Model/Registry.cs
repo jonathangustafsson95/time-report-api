@@ -10,9 +10,9 @@ namespace CommonLibrary.Model
         [Key]
         public int registryId { get; set; }
         [ForeignKey("Task")]
-        public int taskId { get; set; }
+        public int? taskId { get; set; }
         [ForeignKey("User")]
-        public int userId { get; set; }
+        public int? userId { get; set; }
         public double hours { get; set; }
         public DateTime created { get; set; }
         public DateTime date { get; set; }

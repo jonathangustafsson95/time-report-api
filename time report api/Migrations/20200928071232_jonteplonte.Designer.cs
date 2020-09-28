@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace time_report_api.Migrations
 {
     [DbContext(typeof(BulbasaurDevContext))]
-    [Migration("20200925174721_db1.0")]
-    partial class db10
+    [Migration("20200928071232_jonteplonte")]
+    partial class jonteplonte
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -79,7 +79,7 @@ namespace time_report_api.Migrations
                     b.Property<DateTime>("created")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("customerId")
+                    b.Property<int?>("customerId")
                         .HasColumnType("int");
 
                     b.Property<string>("description")
@@ -88,13 +88,16 @@ namespace time_report_api.Migrations
                     b.Property<DateTime?>("finished")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("missionName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("start")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("status")
                         .HasColumnType("int");
 
-                    b.Property<int>("userId")
+                    b.Property<int?>("userId")
                         .HasColumnType("int");
 
                     b.HasKey("missionId");
@@ -112,6 +115,7 @@ namespace time_report_api.Migrations
                             created = new DateTime(2020, 8, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             customerId = 1,
                             description = "Make cool stuffs",
+                            missionName = "Operation Cool Stuffs",
                             start = new DateTime(2020, 8, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             status = 1,
                             userId = 1
@@ -123,6 +127,7 @@ namespace time_report_api.Migrations
                             customerId = 1,
                             description = "Lorem Ipsum ",
                             finished = new DateTime(2020, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            missionName = "dolor sit amet",
                             start = new DateTime(2020, 8, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             status = 1,
                             userId = 1
@@ -170,10 +175,10 @@ namespace time_report_api.Migrations
                     b.Property<int>("invoice")
                         .HasColumnType("int");
 
-                    b.Property<int>("taskId")
+                    b.Property<int?>("taskId")
                         .HasColumnType("int");
 
-                    b.Property<int>("userId")
+                    b.Property<int?>("userId")
                         .HasColumnType("int");
 
                     b.HasKey("registryId");
@@ -252,7 +257,7 @@ namespace time_report_api.Migrations
                     b.Property<int>("invoice")
                         .HasColumnType("int");
 
-                    b.Property<int>("missionId")
+                    b.Property<int?>("missionId")
                         .HasColumnType("int");
 
                     b.Property<string>("name")
@@ -264,7 +269,7 @@ namespace time_report_api.Migrations
                     b.Property<int>("status")
                         .HasColumnType("int");
 
-                    b.Property<int>("userId")
+                    b.Property<int?>("userId")
                         .HasColumnType("int");
 
                     b.HasKey("taskId");
@@ -366,13 +371,13 @@ namespace time_report_api.Migrations
             modelBuilder.Entity("CommonLibrary.Model.FavoriteMission", b =>
                 {
                     b.HasOne("CommonLibrary.Model.Mission", "Mission")
-                        .WithMany()
+                        .WithMany("favoritedMission")
                         .HasForeignKey("missionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CommonLibrary.Model.User", "User")
-                        .WithMany()
+                        .WithMany("missionFavorites")
                         .HasForeignKey("userId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -383,26 +388,24 @@ namespace time_report_api.Migrations
                     b.HasOne("CommonLibrary.Model.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("customerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("CommonLibrary.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("CommonLibrary.Model.MissionMember", b =>
                 {
                     b.HasOne("CommonLibrary.Model.Mission", "Mission")
-                        .WithMany()
+                        .WithMany("missionMembers")
                         .HasForeignKey("missionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CommonLibrary.Model.User", "User")
-                        .WithMany()
+                        .WithMany("missionMemberships")
                         .HasForeignKey("userId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -413,14 +416,12 @@ namespace time_report_api.Migrations
                     b.HasOne("CommonLibrary.Model.Task", "Task")
                         .WithMany()
                         .HasForeignKey("taskId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("CommonLibrary.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("CommonLibrary.Model.Task", b =>
@@ -428,14 +429,12 @@ namespace time_report_api.Migrations
                     b.HasOne("CommonLibrary.Model.Mission", "Mission")
                         .WithMany()
                         .HasForeignKey("missionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("CommonLibrary.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

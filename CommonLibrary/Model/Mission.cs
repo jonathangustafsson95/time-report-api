@@ -12,17 +12,19 @@ namespace CommonLibrary.Model
         public int missionId { get; set; }
 
         [ForeignKey("User")]
-        public int userId { get; set; }
+        public int? userId { get; set; }
         [ForeignKey("Customer")]
-        public int customerId { get; set; }
+        public int? customerId { get; set; }
         public string missionName { get; set; }
         public string description { get; set; }//ha kvar? enum/string
         public DateTime start { get; set; }
         public DateTime? finished { get; set; }
         public DateTime created { get; set; }
         public int status { get; set; }
-
         public User User { get; set; }
         public Customer Customer { get; set; }
+        public ICollection<MissionMember> missionMembers { get; set; }
+        public ICollection<FavoriteMission> favoritedMission { get; set; }
     }
 }
+ 
