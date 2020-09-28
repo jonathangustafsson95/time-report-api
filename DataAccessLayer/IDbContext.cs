@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataAccessLayer.Data
+namespace DataAccessLayer
 {
     public interface IDbContext
     {

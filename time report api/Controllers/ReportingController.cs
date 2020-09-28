@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using DataAccessLayer.UnitOfWork;
 using CommonLibrary.Model;
 using time_report_api.Models;
-using DataAccessLayer.Data;
+using DataAccessLayer;
 
 namespace time_report_api.Controllers
 {
@@ -126,13 +126,13 @@ namespace time_report_api.Controllers
 
                 weekRegistries.Add(new RegistryViewModel
                 {
-                    RegistryId = reg.registryId,
-                    MissionName = mission.missionName,
-                    TaskName = task.name,
-                    TaskId = task.taskId,
-                    Day = reg.date.Day,
-                    Hours = reg.hours,
-                    Invoice = task.invoice
+                    registryId = reg.registryId,
+                    missionName = mission.missionName,
+                    taskName = task.name,
+                    taskId = task.taskId,
+                    day = reg.date.DayOfWeek,
+                    hours = reg.hours,
+                    invoice = task.invoice
                 });
             }
             return weekRegistries;

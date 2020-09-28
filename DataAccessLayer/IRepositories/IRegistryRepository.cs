@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using CommonLibrary.Model;
-using DataAccessLayer.Data.IReppositories;
+using DataAccessLayer.IReppositories;
 
-namespace DataAccessLayer.Data.IRepositories
+namespace DataAccessLayer.IRepositories
 {
     public interface IRegistryRepository : IGenericRepository<Registry>
     {

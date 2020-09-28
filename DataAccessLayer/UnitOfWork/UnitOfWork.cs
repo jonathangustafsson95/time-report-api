@@ -4,10 +4,10 @@ using System.Text;
 using CommonLibrary;
 using CommonLibrary.Model;
 using Data.Model;
-using DataAccessLayer.Data;
-using DataAccessLayer.Data.IRepositories;
-using DataAccessLayer.Data.IReppositories;
-using DataAccessLayer.Data.Repositories;
+using DataAccessLayer;
+using DataAccessLayer.IRepositories;
+using DataAccessLayer.IReppositories;
+using DataAccessLayer.Repositories;
 
 namespace DataAccessLayer.UnitOfWork
 {

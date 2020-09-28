@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataAccessLayer.Data.IReppositories
+namespace DataAccessLayer.IReppositories
 {
     public interface IGenericRepository<T> where T:class
     {

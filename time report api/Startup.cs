@@ -16,10 +16,9 @@ using System.Reflection;
 using System.IO;
 using Microsoft.OpenApi.Models;
 using DataAccessLayer;
-using DataAccessLayer.Data;
 using DataAccessLayer.UnitOfWork;
-using DataAccessLayer.Data.IRepositories;
-using DataAccessLayer.Data.Repositories;
+using DataAccessLayer.IRepositories;
+using DataAccessLayer.Repositories;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace time_report_api
