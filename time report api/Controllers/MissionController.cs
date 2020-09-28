@@ -60,7 +60,7 @@ namespace time_report_api.Controllers
         /// This method returns all users associated to the mission id 
         /// </summary>
         /// <param name="id"></param>
-        /// <returns> IEnumerable<Mission> </returns>
+        /// <returns> IEnumerable<User> </returns>
         [HttpGet]
         [Route("GetAllUserByMissionId/{id:int}")]
         public IEnumerable<User> GetAllUserByMissionId(int id)
@@ -90,7 +90,7 @@ namespace time_report_api.Controllers
         /// This method adds a missionmember to the table when called
         /// </summary>
         /// <param name=" _missionMember"></param>
-        /// <returns> ActionResult> </returns>
+        /// <returns> ActionResult </returns>
         [HttpPost]
         [Route("AddMissionMember")]
         public ActionResult AddMissionMember([FromBody] MissionMember _missionMember)
@@ -119,6 +119,13 @@ namespace time_report_api.Controllers
         {
         }
 
+
+        /// <summary>
+        /// This method adds a favorite mission to repository. 
+        /// </summary>
+        /// <param name=" favoriteMission"></param>
+        /// <returns> ActionResult </returns>
+
         [HttpPost]
         [Route("AddFavoriteMission")]
         public ActionResult AddFavoriteMission([FromBody] FavoriteMission favoriteMission)
@@ -136,11 +143,16 @@ namespace time_report_api.Controllers
         }
 
         [HttpGet]
-        [Route("GetFavoriteMissions/{id}")]
-        public ActionResult<List<FavoriteMission>> GetFavoriteMissions(int userId)
+        [Route("GetFavoriteMissions/{id:int}")]
+        public ActionResult<List<Mission>> GetFavoriteMissions(int id)
         {
-
-            return unitOfWork.FavoriteMissionRepository.GetFavoriteMissionsById(userId);
+            List<FavoriteMission> favoriteMissionList = unitOfWork.FavoriteMissionRepository.GetFavoriteMissionsById(id);
+            List<Mission> missionList = new List<Mission>();
+            foreach (FavoriteMission fm in favoriteMissionList)
+            {
+                missionList.Add(unitOfWork.MissionRepository.GetById(fm.missionId));
+            }
+            return missionList;
         }
 
     }
