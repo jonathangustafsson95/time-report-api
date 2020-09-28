@@ -10,6 +10,9 @@ namespace Data.Model
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>()
+                
+                .HasData(new User { userId = 1, password = "abc123", eMail = "hej@lol.com", userName = "John" });
             modelBuilder.Entity<Customer>().HasData(new Customer { customerId=1, created=new DateTime(2020,9,20), name="Bobby"});
             modelBuilder.Entity<Mission>().HasData(
                 new Mission 
@@ -36,7 +39,6 @@ namespace Data.Model
                     userId = 1,
                     customerId=1
                 });
-            modelBuilder.Entity<User>().HasData(new User {userId=1, password="abc123", eMail="hej@lol.com", userName="John" });
             modelBuilder.Entity<Task>().HasData(
                 new Task 
                 {
