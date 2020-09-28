@@ -93,7 +93,7 @@ namespace time_report_api.Controllers
         /// <returns> ActionResult> </returns>
         [HttpPost]
         [Route("AddMissionMember")]
-        public ActionResult Post([FromBody] MissionMember _missionMember)
+        public ActionResult AddMissionMember([FromBody] MissionMember _missionMember)
         {
             try
             {
@@ -118,5 +118,30 @@ namespace time_report_api.Controllers
         public void Delete(int id)
         {
         }
+
+        [HttpPost]
+        [Route("AddFavoriteMission")]
+        public ActionResult AddFavoriteMission([FromBody] FavoriteMission favoriteMission)
+        {
+            try
+            {
+                unitOfWork.FavoriteMissionRepository.Insert(favoriteMission);
+                unitOfWork.FavoriteMissionRepository.Save();
+                return Ok();
+            }
+            catch
+            {
+                return ValidationProblem();
+            }
+        }
+
+        [HttpGet]
+        [Route("GetFavoriteMissions/{id}")]
+        public ActionResult<List<FavoriteMission>> GetFavoriteMissions(int userId)
+        {
+
+            return unitOfWork.FavoriteMissionRepository.GetFavoriteMissionsById(userId);
+        }
+
     }
 }
