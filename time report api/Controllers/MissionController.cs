@@ -66,15 +66,16 @@ namespace time_report_api.Controllers
         /// <returns> IEnumerable<Mission> </returns>
         [HttpGet]
         [Route("GetAllUserByMissionId/{id:int}")]
-        public IEnumerable<User> GetAllUserByMissionId(int id)
+        public IEnumerable<UserViewModel> GetAllUserByMissionId(int id)
         {
             List<MissionMember> missionMemberList = unitOfWork.MissionMemberRepository.GetAllByMissionId(id);
-            List<User> missionList = new List<User>();
-            foreach (MissionMember mm in missionMemberList)
+            List<UserViewModel> userList = new List<UserViewModel>();
+            for (int i = 0; i < missionMemberList.Count; i++)
             {
-                missionList.Add(unitOfWork.UserRepository.GetById(mm.userId));
+                User user = unitOfWork.UserRepository.GetById(missionMemberList[i].missionId);
+                userList.Add(new UserViewModel().ConvertToViewModel(user));
             }
-            return missionList;
+            return userList;
         }
         /// <summary>
         /// This method returns all missions associated to the mission name
