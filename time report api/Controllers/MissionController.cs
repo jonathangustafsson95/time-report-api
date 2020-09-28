@@ -148,15 +148,16 @@ namespace time_report_api.Controllers
 
         [HttpGet]
         [Route("GetFavoriteMissions/{id:int}")]
-        public ActionResult<List<Mission>> GetFavoriteMissions(int id)
+        public ActionResult<List<MissionViewModel>> GetFavoriteMissions(int id)
         {
             List<FavoriteMission> favoriteMissionList = unitOfWork.FavoriteMissionRepository.GetFavoriteMissionsById(id);
-            List<Mission> missionList = new List<Mission>();
-            foreach (FavoriteMission fm in favoriteMissionList)
+            List<MissionViewModel> mvmList = new List<MissionViewModel>();
+            for (int i = 0; i < favoriteMissionList.Count; i++)
             {
-                missionList.Add(unitOfWork.MissionRepository.GetById(fm.missionId));
+                Mission mission = unitOfWork.MissionRepository.GetById(favoriteMissionList[i].missionId);
+                mvmList.Add(new MissionViewModel().ConvertToViewModel(mission));
             }
-            return missionList;
+            return mvmList;
         }
 
     }
