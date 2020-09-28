@@ -27,15 +27,23 @@ namespace time_report_api.Controllers
                 eMail = "hej@lol.com"
             };
         }
-      
-        
+
+        /// <summary>
+        /// This method returns all missions when called 
+        /// </summary>
+        /// <param></param>
+        /// <returns> IEnumerable<Mission> </returns>
         [HttpGet]
         [Route("GetAllMission")]
         public IEnumerable<Mission> GetAllMissions()
         {
             return unitOfWork.MissionRepository.GetAll();
         }
-    
+        /// <summary>
+        /// This method returns all missions associated to the user id 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns> IEnumerable<Mission> </returns>
         [HttpGet]
         [Route("GetAllMissionByUserId/{id:int}")]
         public IEnumerable<Mission> GetAllMissionByUserId(int id)
@@ -48,6 +56,11 @@ namespace time_report_api.Controllers
             }
             return missionList;
         }
+        /// <summary>
+        /// This method returns all users associated to the mission id 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns> IEnumerable<Mission> </returns>
         [HttpGet]
         [Route("GetAllUserByMissionId/{id:int}")]
         public IEnumerable<User> GetAllUserByMissionId(int id)
@@ -60,6 +73,11 @@ namespace time_report_api.Controllers
             }
             return missionList;
         }
+        /// <summary>
+        /// This method returns all missions associated to the mission name
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns> IEnumerable<Mission> </returns>
         [HttpGet]
         [Route("GetAllUserByMissionName/{name}")]
         public IEnumerable<Mission> GetAllMissionByMissionName(string name)
@@ -68,7 +86,11 @@ namespace time_report_api.Controllers
             return missionList;
         }
 
-
+        /// <summary>
+        /// This method adds a missionmember to the table when called
+        /// </summary>
+        /// <param name=" _missionMember"></param>
+        /// <returns> ActionResult> </returns>
         [HttpPost]
         [Route("AddMissionMember")]
         public ActionResult Post([FromBody] MissionMember _missionMember)
