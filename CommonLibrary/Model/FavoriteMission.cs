@@ -10,7 +10,7 @@ namespace CommonLibrary.Model
     {
         public int userId { get; set; }
         public int missionId { get; set; }
-        public User User { get; set; }
-        public Mission Mission { get; set;  }
+        public virtual User User { get; set; }
+        public virtual Mission Mission { get; set;  }
     }
 }
