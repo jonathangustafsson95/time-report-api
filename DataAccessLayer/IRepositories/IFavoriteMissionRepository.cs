@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using CommonLibrary.Model;
-using DataAccessLayer.Data.IReppositories;
+using DataAccessLayer.IReppositories;
 
-namespace DataAccessLayer.Data.IRepositories
+namespace DataAccessLayer.IRepositories
 {
     public interface IFavoriteMissionRepository: IGenericRepository<FavoriteMission>
     {

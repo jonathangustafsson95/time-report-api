@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CommonLibrary.Model;
-using DataAccessLayer.Data.IRepositories;
+using DataAccessLayer.IRepositories;
 
-namespace DataAccessLayer.Data.Repositories
+namespace DataAccessLayer.Repositories
 {
     public class RegistryRepository : GenericRepository<Registry>, IRegistryRepository
     {

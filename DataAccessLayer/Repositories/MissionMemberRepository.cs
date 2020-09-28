@@ -2,11 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using DataAccessLayer.Data.IReppositories;
-using DataAccessLayer.Data.IRepositories;
+using DataAccessLayer.IReppositories;
+using DataAccessLayer.IRepositories;
 using System.Linq;
 
-namespace DataAccessLayer.Data.Repositories
+namespace DataAccessLayer.Repositories
 {
     public class MissionMemberRepository : GenericRepository<MissionMember>, IMissionMember
     {

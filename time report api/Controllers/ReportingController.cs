@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using DataAccessLayer.UnitOfWork;
 using CommonLibrary.Model;
 using time_report_api.Models;
-using DataAccessLayer.Data;
+using DataAccessLayer;
 
 namespace time_report_api.Controllers
 {

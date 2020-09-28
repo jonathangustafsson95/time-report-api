@@ -3,7 +3,7 @@ using Data.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
-namespace DataAccessLayer.Data
+namespace DataAccessLayer
 {
     public class BulbasaurDevContext: DbContext
     {

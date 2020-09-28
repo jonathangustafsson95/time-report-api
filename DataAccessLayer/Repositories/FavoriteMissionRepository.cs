@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using DataAccessLayer.Data.IRepositories;
+using DataAccessLayer.IRepositories;
 using CommonLibrary.Model;
 
-namespace DataAccessLayer.Data.Repositories
+namespace DataAccessLayer.Repositories
 {
     public class FavoriteMissionRepository : GenericRepository<FavoriteMission>, IFavoriteMissionRepository
     {
