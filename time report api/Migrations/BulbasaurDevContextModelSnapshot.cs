@@ -77,7 +77,7 @@ namespace time_report_api.Migrations
                     b.Property<DateTime>("created")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("customerId")
+                    b.Property<int?>("customerId")
                         .HasColumnType("int");
 
                     b.Property<string>("description")
@@ -95,7 +95,7 @@ namespace time_report_api.Migrations
                     b.Property<int>("status")
                         .HasColumnType("int");
 
-                    b.Property<int>("userId")
+                    b.Property<int?>("userId")
                         .HasColumnType("int");
 
                     b.HasKey("missionId");
@@ -173,10 +173,10 @@ namespace time_report_api.Migrations
                     b.Property<int>("invoice")
                         .HasColumnType("int");
 
-                    b.Property<int>("taskId")
+                    b.Property<int?>("taskId")
                         .HasColumnType("int");
 
-                    b.Property<int>("userId")
+                    b.Property<int?>("userId")
                         .HasColumnType("int");
 
                     b.HasKey("registryId");
@@ -255,7 +255,7 @@ namespace time_report_api.Migrations
                     b.Property<int>("invoice")
                         .HasColumnType("int");
 
-                    b.Property<int>("missionId")
+                    b.Property<int?>("missionId")
                         .HasColumnType("int");
 
                     b.Property<string>("name")
@@ -267,7 +267,7 @@ namespace time_report_api.Migrations
                     b.Property<int>("status")
                         .HasColumnType("int");
 
-                    b.Property<int>("userId")
+                    b.Property<int?>("userId")
                         .HasColumnType("int");
 
                     b.HasKey("taskId");
@@ -369,13 +369,13 @@ namespace time_report_api.Migrations
             modelBuilder.Entity("CommonLibrary.Model.FavoriteMission", b =>
                 {
                     b.HasOne("CommonLibrary.Model.Mission", "Mission")
-                        .WithMany()
+                        .WithMany("favoritedMission")
                         .HasForeignKey("missionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CommonLibrary.Model.User", "User")
-                        .WithMany()
+                        .WithMany("missionFavorites")
                         .HasForeignKey("userId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -386,26 +386,24 @@ namespace time_report_api.Migrations
                     b.HasOne("CommonLibrary.Model.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("customerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("CommonLibrary.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("CommonLibrary.Model.MissionMember", b =>
                 {
                     b.HasOne("CommonLibrary.Model.Mission", "Mission")
-                        .WithMany()
+                        .WithMany("missionMembers")
                         .HasForeignKey("missionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CommonLibrary.Model.User", "User")
-                        .WithMany()
+                        .WithMany("missionMemberships")
                         .HasForeignKey("userId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -416,14 +414,12 @@ namespace time_report_api.Migrations
                     b.HasOne("CommonLibrary.Model.Task", "Task")
                         .WithMany()
                         .HasForeignKey("taskId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("CommonLibrary.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("CommonLibrary.Model.Task", b =>
@@ -431,14 +427,12 @@ namespace time_report_api.Migrations
                     b.HasOne("CommonLibrary.Model.Mission", "Mission")
                         .WithMany()
                         .HasForeignKey("missionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("CommonLibrary.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

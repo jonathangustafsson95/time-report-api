@@ -12,7 +12,7 @@ namespace CommonLibrary.Model
         public int taskId { get; set; }
 
         [ForeignKey("Mission")]
-        public int missionId { get; set; }
+        public int? missionId { get; set; }
 
         [ForeignKey("User")]
         public int? userId { get; set; }
