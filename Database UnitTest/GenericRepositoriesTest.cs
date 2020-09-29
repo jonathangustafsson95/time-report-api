@@ -39,7 +39,6 @@ namespace Database_UnitTest
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
             var context = new BulbasaurDevContext(options);
-
             //context.Add(new User() { userId = 1, eMail = "bla@bla.com", password = "bla", userName = "blabla" });
             context.SaveChanges();
 
@@ -47,23 +46,31 @@ namespace Database_UnitTest
         }
 
         [TestMethod]
-        public void TestAddToDataBase()
+        public void InsertTest()
         {
-            
             unitOfWork.UserRepository.Insert(testObject);
             var item =unitOfWork.UserRepository.GetById(testObject.userId);
             Assert.Equal(testObject.userId, item.userId);
-
-
-
         }
 
         [TestMethod]
-        public void UpdateRepository()
+        public void UpdateRepositoryTest()
         {
             testObject.eMail = "newEmail";
             unitOfWork.UserRepository.Update(testObject);
             Assert.Equal("newEmail",unitOfWork.UserRepository.GetById(1).eMail);
         }
-    }
+
+        [TestMethod]
+        public void GetAllTest()
+        {
+            User anotherUser = new User() { userId = 2, userName = "test2", eMail = "Bla2@gmail.com", password = "blaSecret" };
+            IEnumerable<User> allUsers = new List<User>() { testObject, anotherUser };
+            DevContext.Add(testObject);
+            DevContext.Add(anotherUser);
+            //unitOfWork.UserRepository.Insert(testObject);
+            //unitOfWork.UserRepository.Insert(anotherUser);
+            var allUsersTestList = unitOfWork.UserRepository.GetAll();
+            Assert.Equal(allUsers, allUsersTestList);
+        }
 }
