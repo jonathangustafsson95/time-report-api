@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore.Sqlite;
 using Microsoft.EntityFrameworkCore.InMemory.Storage.Internal;
 using Assert = Xunit.Assert;
 using time_report_api.Controllers;
+using time_report_api.Models;
 
 namespace Database_UnitTest
 {
@@ -101,6 +102,7 @@ namespace Database_UnitTest
         {
             //arrange
             var controller = new MissionController(unitOfWork);
+            inMemorydbcontext.UpdateContext(DbContext);
 
             List<MissionMember> missionMembers = (List<MissionMember>)unitOfWork.MissionMemberRepository.GetAllByUserId(1);
             List<int> trueIdList = new List<int>();
@@ -112,13 +114,13 @@ namespace Database_UnitTest
             }
 
             //act 
-            List<Mission> missionList = (List<Mission>)controller.GetAllMissionByUserId(1);
-            foreach(Mission mission in missionList)
+            List<MissionViewModel> missionList = (List<MissionViewModel>)controller.GetAllMissionByUserId(1);
+            foreach(MissionViewModel mission in missionList)
             {
-                
+                testIdList.Add(mission.missionId);
             }
             //assert
-            //Assert.Equal(userList, testIdList);
+            Assert.Equal(trueIdList, testIdList);
         }
 
     }
