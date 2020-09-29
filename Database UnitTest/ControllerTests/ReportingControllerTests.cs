@@ -46,7 +46,7 @@ namespace Database_UnitTest.ControllerTests
 
         public ReportingControllerTests()
         {
-            DevContext = testContext.GetContextWithData();
+            //DevContext = testContext.GetContextWithData();
             unitOfWork = new UnitOfWork(DevContext);
         }
 
