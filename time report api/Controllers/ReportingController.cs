@@ -48,19 +48,19 @@ namespace time_report_api.Controllers
         {
             try
             {
-                for (int i = 0; i < newRegistries.registries.Count; i++)
+                for (int i = 0; i < newRegistries.registriesToReport.Count; i++)
                 {
                     // En int kan aldrig  vara  null, så om vi skickar nya registries
                     // bör vi hantera det på något sätt i JSON, typ  sätta regID  till 0?
-                    if (newRegistries.registries[i].registryId == 0)
+                    if (newRegistries.registriesToReport[i].registryId == 0)
                     {
                         // Add new registry
-                        unitOfWork.RegistryRepository.Insert(newRegistries.registries[i]);
+                        unitOfWork.RegistryRepository.Insert(newRegistries.registriesToReport[i]);
                     }
                     else 
                     {
                         // Change  a existing registry
-                        unitOfWork.RegistryRepository.Update(newRegistries.registries[i]);
+                        unitOfWork.RegistryRepository.Update(newRegistries.registriesToReport[i]);
                     }
                 }
                 unitOfWork.RegistryRepository.Save();
