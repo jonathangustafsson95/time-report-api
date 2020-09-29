@@ -1,44 +1,78 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
-using DataAccessLayer.Data.Repositories;
+using System.Runtime.CompilerServices;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.AspNetCore.Mvc.Core;
 using CommonLibrary.Model;
-using DataAccessLayer.Data;
+using DataAccessLayer;
+using DataAccessLayer.Repositories;
+using DataAccessLayer.UnitOfWork;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
-using DataAccessLayer.Data.IRepositories;
-using DataAccessLayer.Data.IReppositories;
 using Microsoft.EntityFrameworkCore.InMemory;
 using Microsoft.EntityFrameworkCore.Sqlite;
 using Microsoft.EntityFrameworkCore.InMemory.Storage.Internal;
+using Assert = Xunit.Assert;
+
 
 namespace Database_UnitTest
 {
+    public static class testContext
+    {
+        public static BulbasaurDevContext GetContextWithData()
+        {
+            var options = new DbContextOptionsBuilder<BulbasaurDevContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+            var context = new BulbasaurDevContext(options);
+
+            //context.Add(new User() { userId = 1, eMail = "bla@bla.com", password = "bla", userName = "blabla" });
+            context.SaveChanges();
+
+            return context;
+        }
+    }
     [TestClass]
     public class GenericRepositoriesTest
     {
-        
+
+        private readonly UnitOfWork unitOfWork;
+        private readonly BulbasaurDevContext DevContext;
+        private readonly User testObject = new User(){userId = 1,eMail = "bla@bla.com",password = "bla",userName = "blabla"};
+
+        public GenericRepositoriesTest()
+        { 
+            DevContext = testContext.GetContextWithData();
+            unitOfWork=new UnitOfWork(DevContext);
+        }
+       
+
         [TestMethod]
         public void TestAddToDataBase()
         {
-
-
-
-            //arrange
-            var testObject = new MissionMember();
-            var context = new Mock<BulbasaurDevContext>();
-            var dbSetMock = new Mock<DbSet<MissionMember>>();
-            context.Setup(x => x.Set<MissionMember>()).Returns(dbSetMock.Object);
-            dbSetMock.Setup(x => x.Add(It.IsAny<MissionMember>()).Entity).Returns(testObject);
-
-            //act
-            var repository = new GenericRepository<MissionMember>(context.Object);
-            repository.Insert(testObject);
-            //assert
-            context.Verify(x => x.Set<MissionMember>());
-            dbSetMock.Verify(x => x.Add(It.Is<MissionMember>(y => y == testObject)));
+            
+            unitOfWork.UserRepository.Insert(testObject);
+            var item =unitOfWork.UserRepository.GetById(testObject.userId);
+            Assert.Equal(testObject.userId, item.userId);
 
 
 
         }
+
+        [TestMethod]
+        public void UpdateRepository()
+        {
+            testObject.eMail = "newEmail";
+            unitOfWork.UserRepository.Update(testObject);
+            Assert.Equal("newEmail",unitOfWork.UserRepository.GetById(1).eMail);
+        }
+    }
+    [TestClass]
+    public class ControllerTest
+    {
+
     }
 }

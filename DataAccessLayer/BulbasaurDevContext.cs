@@ -6,10 +6,9 @@ using System.Linq;
 namespace DataAccessLayer
 {
     public class BulbasaurDevContext: DbContext
-    {
-        public BulbasaurDevContext(DbContextOptions<BulbasaurDevContext>options):base(options)
+    { 
+        public BulbasaurDevContext(DbContextOptions<BulbasaurDevContext> options) : base(options)
         {
-
         }
         DbSet<Customer> customers { get; set; }
         DbSet<FavoriteMission> favoriteMissions { get; set; }
