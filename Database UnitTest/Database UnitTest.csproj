@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CommonLibrary\CommonLibrary.csproj" />
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
+    <ProjectReference Include="..\time report api\time report api.csproj" />
   </ItemGroup>
 
 </Project>

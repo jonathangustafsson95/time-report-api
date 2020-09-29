@@ -1,16 +1,17 @@
 using System.Runtime.CompilerServices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.EntityFrameworkCore;
-using DataAccessLayer.Data.Repositories;
+using DataAccessLayer.Repositories;
 using CommonLibrary.Model;
-using DataAccessLayer.Data;
+using DataAccessLayer;
 using Moq;
 using Xunit;
-using DataAccessLayer.Data.IRepositories;
-using DataAccessLayer.Data.IReppositories;
+using DataAccessLayer.IRepositories;
+using DataAccessLayer.IReppositories;
 using Microsoft.EntityFrameworkCore.InMemory;
 using Microsoft.EntityFrameworkCore.Sqlite;
 using Microsoft.EntityFrameworkCore.InMemory.Storage.Internal;
+using System;
 
 namespace Database_UnitTest
 {
@@ -81,5 +82,11 @@ namespace Database_UnitTest
 
 
         }
+       
+    }
+    [TestClass]
+    public class ControllerTest
+    {
+
     }
 }
