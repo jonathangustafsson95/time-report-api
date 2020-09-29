@@ -16,11 +16,11 @@ using Microsoft.EntityFrameworkCore.InMemory;
 using Microsoft.EntityFrameworkCore.Sqlite;
 using Microsoft.EntityFrameworkCore.InMemory.Storage.Internal;
 using Assert = Xunit.Assert;
-
+using time_report_api.Controllers;
 
 namespace Database_UnitTest
 {
-    public static class testContext
+    public static class inMemorydbcontext
     {
         public static BulbasaurDevContext GetContextWithData()
         {
@@ -34,6 +34,8 @@ namespace Database_UnitTest
 
             return context;
         }
+        public static void UpdateContext(BulbasaurDevContext dbcontext) => dbcontext.Database.EnsureCreated();
+      
     }
     [TestClass]
     public class GenericRepositoriesTest
@@ -45,7 +47,7 @@ namespace Database_UnitTest
 
         public GenericRepositoriesTest()
         { 
-            DevContext = testContext.GetContextWithData();
+            DevContext = inMemorydbcontext.GetContextWithData();
             unitOfWork=new UnitOfWork(DevContext);
         }
        
@@ -73,6 +75,51 @@ namespace Database_UnitTest
     [TestClass]
     public class ControllerTest
     {
+        BulbasaurDevContext DbContext { get; set; }
+        UnitOfWork unitOfWork { get; set; }
+        public ControllerTest()
+        {
+            DbContext = inMemorydbcontext.GetContextWithData();
+            unitOfWork = new UnitOfWork(DbContext);
+
+        }
+        [TestMethod]
+        public void GetAllMissions()
+        {
+            //arrange
+            var controller = new MissionController(unitOfWork);
+            inMemorydbcontext.UpdateContext(DbContext);
+
+            List<Mission> trueList = (List<Mission>)unitOfWork.MissionRepository.GetAll();
+            //act 
+            List<Mission> userList = (List<Mission>)controller.GetAllMissions();
+            //assert
+            Assert.Equal(userList, trueList);
+        }
+        [TestMethod]
+        public void GetAllMissionsByUserId()
+        {
+            //arrange
+            var controller = new MissionController(unitOfWork);
+
+            List<MissionMember> missionMembers = (List<MissionMember>)unitOfWork.MissionMemberRepository.GetAllByUserId(1);
+            List<int> trueIdList = new List<int>();
+            List<int> testIdList = new List<int>();
+            foreach (MissionMember mm in missionMembers)
+            {
+                Mission mission = unitOfWork.MissionRepository.GetById(mm.userId);
+                trueIdList.Add(mission.missionId);
+            }
+
+            //act 
+            List<Mission> missionList = (List<Mission>)controller.GetAllMissionByUserId(1);
+            foreach(Mission mission in missionList)
+            {
+                
+            }
+            //assert
+            //Assert.Equal(userList, testIdList);
+        }
 
     }
 }
