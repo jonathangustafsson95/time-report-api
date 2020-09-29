@@ -20,20 +20,9 @@ using Assert = Xunit.Assert;
 
 namespace Database_UnitTest
 {
-    [TestClass]
-    public class GenericRepositoriesTest
+    public static class testContext
     {
-
-        private readonly UnitOfWork unitOfWork;
-        private readonly BulbasaurDevContext DevContext;
-        private readonly User testObject = new User(){userId = 1,eMail = "bla@bla.com",password = "bla",userName = "blabla"};
-
-        public GenericRepositoriesTest()
-        { 
-            DevContext = GetContextWithData();
-            unitOfWork=new UnitOfWork(DevContext);
-        }
-        private BulbasaurDevContext GetContextWithData()
+        public static BulbasaurDevContext GetContextWithData()
         {
             var options = new DbContextOptionsBuilder<BulbasaurDevContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
@@ -45,6 +34,21 @@ namespace Database_UnitTest
 
             return context;
         }
+    }
+    [TestClass]
+    public class GenericRepositoriesTest
+    {
+
+        private readonly UnitOfWork unitOfWork;
+        private readonly BulbasaurDevContext DevContext;
+        private readonly User testObject = new User(){userId = 1,eMail = "bla@bla.com",password = "bla",userName = "blabla"};
+
+        public GenericRepositoriesTest()
+        { 
+            DevContext = testContext.GetContextWithData();
+            unitOfWork=new UnitOfWork(DevContext);
+        }
+       
 
         [TestMethod]
         public void TestAddToDataBase()
@@ -65,5 +69,10 @@ namespace Database_UnitTest
             unitOfWork.UserRepository.Update(testObject);
             Assert.Equal("newEmail",unitOfWork.UserRepository.GetById(1).eMail);
         }
+    }
+    [TestClass]
+    public class ControllerTest
+    {
+
     }
 }
