@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using CommonLibrary.Model;
-using DataAccessLayer.Data;
+using DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 
 namespace Database_UnitTest
 {
 
-    public class MyContext : DbContext, IDbContext
+    public class MyContext : DbContext
     {
         public MyContext(DbContextOptions<MyContext> options)
             : base(options)
