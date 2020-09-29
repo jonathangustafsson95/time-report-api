@@ -18,7 +18,5 @@ namespace DataAccessLayer.UnitOfWork
         IRegistryRepository RegistryRepository { get; }
         IGenericRepository<Task> TaskRepository { get; }
         IGenericRepository<User> UserRepository { get; }
-
     }
-
-    }
+}
