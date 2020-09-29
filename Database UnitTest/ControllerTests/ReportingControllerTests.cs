@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
@@ -17,10 +17,10 @@ using Microsoft.EntityFrameworkCore.Sqlite;
 using Microsoft.EntityFrameworkCore.InMemory.Storage.Internal;
 using Assert = Xunit.Assert;
 
-
-namespace Database_UnitTest
+namespace Database_UnitTest.ControllerTests
 {
-    public static class testContext
+
+    public static class ControllerTestsContext
     {
         public static BulbasaurDevContext GetContextWithData()
         {
@@ -28,6 +28,7 @@ namespace Database_UnitTest
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
             var context = new BulbasaurDevContext(options);
+            context.Database.EnsureCreated();
 
             //context.Add(new User() { userId = 1, eMail = "bla@bla.com", password = "bla", userName = "blabla" });
             context.SaveChanges();
@@ -35,45 +36,24 @@ namespace Database_UnitTest
             return context;
         }
     }
-    [TestClass]
-    public class GenericRepositoriesTest
-    {
 
+    [TestClass]
+    public class ReportingControllerTests
+    {
         private readonly UnitOfWork unitOfWork;
         private readonly BulbasaurDevContext DevContext;
-        private readonly User testObject = new User(){userId = 1,eMail = "bla@bla.com",password = "bla",userName = "blabla"};
+        private readonly Registry testObject = new Registry() { registryId=1, taskId=1, userId=1, hours=5, created= DateTime.Today, date=DateTime.Today};
 
-        public GenericRepositoriesTest()
-        { 
+        public ReportingControllerTests()
+        {
             DevContext = testContext.GetContextWithData();
-            unitOfWork=new UnitOfWork(DevContext);
-        }
-       
-
-        [TestMethod]
-        public void TestAddToDataBase()
-        {
-            
-            unitOfWork.UserRepository.Insert(testObject);
-            var item =unitOfWork.UserRepository.GetById(testObject.userId);
-            Assert.Equal(testObject.userId, item.userId);
-
-
-
+            unitOfWork = new UnitOfWork(DevContext);
         }
 
-        [TestMethod]
-        public void UpdateRepository()
-        {
-            testObject.eMail = "newEmail";
-            unitOfWork.UserRepository.Update(testObject);
-            Assert.Equal("newEmail",unitOfWork.UserRepository.GetById(1).eMail);
-        }
-    }
-    [TestClass]
-    public class ControllerTest
-    {
+
+
+
+
 
     }
-
 }
