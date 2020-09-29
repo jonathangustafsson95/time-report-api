@@ -16,10 +16,27 @@ using Microsoft.EntityFrameworkCore.InMemory;
 using Microsoft.EntityFrameworkCore.Sqlite;
 using Microsoft.EntityFrameworkCore.InMemory.Storage.Internal;
 using Assert = Xunit.Assert;
-
+using time_report_api.Controllers;
 
 namespace Database_UnitTest
 {
+    public static class inMemorydbcontext
+    {
+        public static BulbasaurDevContext GetContextWithData()
+        {
+            var options = new DbContextOptionsBuilder<BulbasaurDevContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+            var context = new BulbasaurDevContext(options);
+
+            //context.Add(new User() { userId = 1, eMail = "bla@bla.com", password = "bla", userName = "blabla" });
+            context.SaveChanges();
+
+            return context;
+        }
+        public static void UpdateContext(BulbasaurDevContext dbcontext) => dbcontext.Database.EnsureCreated();
+      
+    }
     [TestClass]
     public class GenericRepositoriesTest
     {
@@ -30,20 +47,10 @@ namespace Database_UnitTest
 
         public GenericRepositoriesTest()
         { 
-            DevContext = GetContextWithData();
+            DevContext = inMemorydbcontext.GetContextWithData();
             unitOfWork=new UnitOfWork(DevContext);
         }
-        private BulbasaurDevContext GetContextWithData()
-        {
-            var options = new DbContextOptionsBuilder<BulbasaurDevContext>()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                .Options;
-            var context = new BulbasaurDevContext(options);
-            //context.Add(new User() { userId = 1, eMail = "bla@bla.com", password = "bla", userName = "blabla" });
-            context.SaveChanges();
-
-            return context;
-        }
+       
 
         [TestMethod]
         public void InsertTest()
@@ -60,17 +67,55 @@ namespace Database_UnitTest
             unitOfWork.UserRepository.Update(testObject);
             Assert.Equal("newEmail",unitOfWork.UserRepository.GetById(1).eMail);
         }
-
-        [TestMethod]
-        public void GetAllTest()
+    }
+    [TestClass]
+    public class ControllerTest
+    {
+        BulbasaurDevContext DbContext { get; set; }
+        UnitOfWork unitOfWork { get; set; }
+        public ControllerTest()
         {
-            User anotherUser = new User() { userId = 2, userName = "test2", eMail = "Bla2@gmail.com", password = "blaSecret" };
-            IEnumerable<User> allUsers = new List<User>() { testObject, anotherUser };
-            DevContext.Add(testObject);
-            DevContext.Add(anotherUser);
-            //unitOfWork.UserRepository.Insert(testObject);
-            //unitOfWork.UserRepository.Insert(anotherUser);
-            var allUsersTestList = unitOfWork.UserRepository.GetAll();
-            Assert.Equal(allUsers, allUsersTestList);
+            DbContext = inMemorydbcontext.GetContextWithData();
+            unitOfWork = new UnitOfWork(DbContext);
+
         }
+        [TestMethod]
+        public void GetAllMissions()
+        {
+            //arrange
+            var controller = new MissionController(unitOfWork);
+            inMemorydbcontext.UpdateContext(DbContext);
+
+            List<Mission> trueList = (List<Mission>)unitOfWork.MissionRepository.GetAll();
+            //act 
+            List<Mission> userList = (List<Mission>)controller.GetAllMissions();
+            //assert
+            Assert.Equal(userList, trueList);
+        }
+        [TestMethod]
+        public void GetAllMissionsByUserId()
+        {
+            //arrange
+            var controller = new MissionController(unitOfWork);
+
+            List<MissionMember> missionMembers = (List<MissionMember>)unitOfWork.MissionMemberRepository.GetAllByUserId(1);
+            List<int> trueIdList = new List<int>();
+            List<int> testIdList = new List<int>();
+            foreach (MissionMember mm in missionMembers)
+            {
+                Mission mission = unitOfWork.MissionRepository.GetById(mm.userId);
+                trueIdList.Add(mission.missionId);
+            }
+
+            //act 
+            List<Mission> missionList = (List<Mission>)controller.GetAllMissionByUserId(1);
+            foreach(Mission mission in missionList)
+            {
+                
+            }
+            //assert
+            //Assert.Equal(userList, testIdList);
+        }
+
+    }
 }
