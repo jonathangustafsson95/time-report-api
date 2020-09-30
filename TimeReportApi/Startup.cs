@@ -38,7 +38,7 @@ namespace TimeReportApi
                 )
             );
             services.AddControllers();
-            services.AddDbContext<BulbasaurDevContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BulbasaurDevContext"), b => b.MigrationsAssembly("time report api")));
+            services.AddDbContext<BulbasaurDevContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BulbasaurDevContext"), b => b.MigrationsAssembly("TimeReportApi")));
             //services.AddSwaggerGen();
             services.AddScoped<UnitOfWork>();
 
