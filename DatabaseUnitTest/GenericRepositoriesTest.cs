@@ -18,8 +18,8 @@ using Microsoft.EntityFrameworkCore.InMemory;
 using Microsoft.EntityFrameworkCore.Sqlite;
 using Microsoft.EntityFrameworkCore.InMemory.Storage.Internal;
 using Assert = Xunit.Assert;
-using time_report_api.Controllers;
-using time_report_api.Models;
+using TimeReportApi.Controllers;
+using TimeReportApi.Models;
 
 namespace Database_UnitTest
 {
