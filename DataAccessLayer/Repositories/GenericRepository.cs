@@ -22,10 +22,7 @@ namespace DataAccessLayer.Repositories
         {
             return _table.ToList();
         }
-        //public void GetAllById(int id)
-        //{
-            
-        //}
+       
         public T GetById(object id)
         {
             return _table.Find(id);
@@ -44,6 +41,7 @@ namespace DataAccessLayer.Repositories
             T existing = _table.Find(id);
             _table.Remove(existing);
         }
+        
         public void Save()
         {
             _context.SaveChanges();
