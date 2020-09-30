@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace time_report_api.Migrations
+namespace TimeReportApi.Migrations
 {
     [DbContext(typeof(BulbasaurDevContext))]
     [Migration("20200928071232_jonteplonte")]
