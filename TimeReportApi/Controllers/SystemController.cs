@@ -11,11 +11,11 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using time_report_api.Models;
+using TimeReportApi.Models;
 using DataAccessLayer;
 using Microsoft.Extensions.Configuration;
 
-namespace time_report_api.Controllers
+namespace TimeReportApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
