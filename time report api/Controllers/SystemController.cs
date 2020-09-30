@@ -7,6 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using DataAccessLayer.UnitOfWork;
 using CommonLibrary.Model;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using time_report_api.Models;
+using DataAccessLayer;
 
 namespace time_report_api.Controllers
 {
@@ -22,21 +28,23 @@ namespace time_report_api.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public ActionResult<User> LoginUser(User user)
+        public ActionResult<User> LoginUser(string userName, string passWord)
         {
             try
             {
-                // Hade vart smidigare att ha en GetByName? ist för att kolla alla users.
-                var DBusers = unitOfWork.UserRepository.GetAll();
-
-                foreach (var u in DBusers)
+                IActionResult respone = Unauthorized();
+                LoginRequest login = new LoginRequest
                 {
-                    if (u.userName.ToLower().Equals(user.userName.ToLower()) && u.password.Equals(user.password))
-                    {
-                        //Returnera en Token för att vidare kunna kommunicera med API?
-                        return u;
-                    }
+                    userName = userName,
+                    passWord = passWord
+                };
+
+                var user = unitOfWork.UserRepository.GetByName(login.userName).SingleOrDefault();
+
+                if (user.userName == login.userName && user.password == login.passWord)
+                {
                 }
+
                 return BadRequest("Wrong username/password");
             }
             catch (Exception)

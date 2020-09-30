@@ -17,6 +17,6 @@ namespace DataAccessLayer.UnitOfWork
         IMissionMember MissionMemberRepository { get; }
         IRegistryRepository RegistryRepository { get; }
         IGenericRepository<Task> TaskRepository { get; }
-        IGenericRepository<User> UserRepository { get; }
+        IUserRepository UserRepository { get; }
     }
 }

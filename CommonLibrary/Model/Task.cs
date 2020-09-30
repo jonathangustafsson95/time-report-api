@@ -26,7 +26,7 @@ namespace CommonLibrary.Model
         public DateTime? finished { get; set; }
         public int status { get; set; }
 
-        public User User { get; set; }
-        public Mission Mission { get; set; }
+        public virtual User User { get; set; }
+        public virtual Mission Mission { get; set; }
     }
 }

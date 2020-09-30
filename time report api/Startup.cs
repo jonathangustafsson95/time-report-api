@@ -42,7 +42,7 @@ namespace time_report_api
                 options.AddPolicy("MyPolicy",
                      builder =>
                      {
-                         builder.WithOrigins("http://localhost:3001").AllowAnyMethod().AllowAnyHeader();
+                         builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
                      }
                 )
             );
