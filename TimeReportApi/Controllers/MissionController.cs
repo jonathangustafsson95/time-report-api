@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using CommonLibrary.Model;
 using DataAccessLayer.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
-using time_report_api.Models;
+using TimeReportApi.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace time_report_api.Controllers
+namespace TimeReportApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
