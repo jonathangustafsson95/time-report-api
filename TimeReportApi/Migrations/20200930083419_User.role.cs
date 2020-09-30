@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace time_report_api.Migrations
+namespace TimeReportApi.Migrations
 {
     public partial class Userrole : Migration
     {
