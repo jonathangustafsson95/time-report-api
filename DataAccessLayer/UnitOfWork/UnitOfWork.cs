@@ -20,7 +20,7 @@ namespace DataAccessLayer.UnitOfWork
         public IMissionMember MissionMemberRepository { get; }
         public IRegistryRepository RegistryRepository { get; }
         public IGenericRepository<Task> TaskRepository { get; }
-        public IGenericRepository<User> UserRepository { get; }
+        public IUserRepository UserRepository { get; }
 
         public UnitOfWork(BulbasaurDevContext context)
         {
@@ -31,7 +31,7 @@ namespace DataAccessLayer.UnitOfWork
             MissionMemberRepository = new MissionMemberRepository(context);
             RegistryRepository = new RegistryRepository(context);
             TaskRepository = new GenericRepository<Task>(context);
-            UserRepository = new GenericRepository<User>(context);
+            UserRepository = new UserRepository(context);
         }
         public void Dispose()
         {
