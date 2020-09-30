@@ -8,6 +8,7 @@ using DataAccessLayer.UnitOfWork;
 using CommonLibrary.Model;
 using time_report_api.Models;
 using DataAccessLayer;
+using System.Security.Claims;
 
 namespace time_report_api.Controllers
 {
@@ -17,22 +18,19 @@ namespace time_report_api.Controllers
     [Route("api/[controller]")]
     // Kalla på Authorize vid specifika metoder för att begränsa dem,
     // sätter man Authorize på hela kontrollern blir alla metoder begränsade och kräver login
-    //[Authorize]
+    [Authorize]
     [ApiController]
     public class ReportingController : ControllerBase
     {
         private readonly User user;
         private readonly UnitOfWork unitOfWork;
-        public ReportingController(UnitOfWork unitOfWork)
+        private readonly IHttpContextAccessor httpContextAccessor;
+        public ReportingController(UnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
         {
             this.unitOfWork = unitOfWork;
-            user = new User()
-            {
-                userId = 1,
-                userName = "John",
-                password = "abc123",
-                eMail = "hej@lol.com"
-            };
+            this.httpContextAccessor = httpContextAccessor;
+            int userId = Int32.Parse(httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "userId").Value);
+            user = unitOfWork.UserRepository.GetById(userId);
         }
 
         /// <summary>
