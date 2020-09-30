@@ -30,6 +30,11 @@ namespace DataAccessLayer.Repositories
         {
             return _table.Find(id);
         }
+
+        public T GetById(object firstId, object secondId)
+        {
+            return _table.Find(firstId, secondId);
+        }
         public void Insert(T obj)
         {
             _table.Add(obj);
@@ -44,6 +49,12 @@ namespace DataAccessLayer.Repositories
             T existing = _table.Find(id);
             _table.Remove(existing);
         }
+
+        public void Delete(object firstId, object secondId)
+        {
+           T existing = _table.Find(firstId, secondId);
+            _table.Remove(existing);
+        }
         public void Save()
         {
             _context.SaveChanges();
@@ -51,6 +62,12 @@ namespace DataAccessLayer.Repositories
         public bool Exists(object id)
         {
             T model = _table.Find(id);
+            return model != null;
+        }
+
+        public bool Exists(object firstId, object secondId)
+        {
+            T model = _table.Find(firstId, secondId);
             return model != null;
         }
         public List<T> Search<T>(Func<T, string> getKey, string searchString)

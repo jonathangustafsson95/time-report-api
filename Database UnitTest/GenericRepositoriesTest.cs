@@ -52,6 +52,7 @@ namespace Database_UnitTest
             date = new DateTime(2020,07,02), hours = 12,invoice = InvoiceType.invoicable,taskId = 1};
         private readonly Registry anotherTestRegistryObject=new Registry(){registryId = 2,userId = 1,created = new DateTime(2010,05,28) ,
             date = new DateTime(2019,09,02), hours = 15,invoice = InvoiceType.invoicable,taskId = 1};
+        private readonly MissionMember testMissionMember=new MissionMember(){missionId = 1,userId = 1};
 
 
         public GenericRepositoriesTest()
@@ -66,6 +67,7 @@ namespace Database_UnitTest
             {
                 unitOfWork.UserRepository.Insert(testUserObject);
                 unitOfWork.RegistryRepository.Insert(testRegistryObject);
+                unitOfWork.MissionMemberRepository.Insert(testMissionMember);
                 unitOfWork.UserRepository.Save();
             }
             else
@@ -84,6 +86,14 @@ namespace Database_UnitTest
             unitOfWork.UserRepository.Insert(testUserObject);
             var item =unitOfWork.UserRepository.GetById(testUserObject.userId);
             Assert.Equal(testUserObject.userId, item.userId);
+        }
+
+        [TestMethod]
+        public void GetByIdComposite()
+        {
+            SeedInMemory(1);
+            var item = unitOfWork.MissionMemberRepository.GetById(1, 1);
+            Assert.Equal(testMissionMember,item);
         }
 
         [TestMethod]
@@ -113,10 +123,27 @@ namespace Database_UnitTest
         }
 
         [TestMethod]
+        public void DeletTestComposite()
+        {
+            SeedInMemory(1);
+            unitOfWork.MissionMemberRepository.Delete(1,1);
+            unitOfWork.MissionMemberRepository.Save();
+            var allMissionMemberList = unitOfWork.MissionMemberRepository.GetAll();
+            Assert.Empty(allMissionMemberList);
+        }
+
+        [TestMethod]
         public void ExistsTest()
         {
             SeedInMemory(1);
             var actual=unitOfWork.UserRepository.Exists(testUserObject.userId);
+            Assert.True(actual);
+        }
+        [TestMethod]
+        public void ExistsTestComposite()
+        {
+            SeedInMemory(1);
+            var actual = unitOfWork.MissionMemberRepository.Exists(testMissionMember.missionId,testMissionMember.userId);
             Assert.True(actual);
         }
 
