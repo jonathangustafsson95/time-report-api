@@ -17,7 +17,7 @@ using Microsoft.EntityFrameworkCore.Sqlite;
 using Microsoft.EntityFrameworkCore.InMemory.Storage.Internal;
 using Assert = Xunit.Assert;
 
-namespace Database_UnitTest.ControllerTests
+namespace DatabaseUnitTest.ControllerTests
 {
 
     public static class ControllerTestsContext
