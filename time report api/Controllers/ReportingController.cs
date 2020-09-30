@@ -117,23 +117,32 @@ namespace time_report_api.Controllers
         {
             List<RegistryViewModel> weekRegistries = new List<RegistryViewModel>();
             Task task;
-            Mission mission;
+            RegistryViewModel registryViewModel;
 
             foreach (var reg in registries)
             {
-                task = unitOfWork.TaskRepository.GetById(reg.taskId);
-                mission = unitOfWork.MissionRepository.GetById(task.missionId);
-
-                weekRegistries.Add(new RegistryViewModel
+                registryViewModel = new RegistryViewModel();
+                
+                if (reg.taskId == null)
                 {
-                    registryId = reg.registryId,
-                    missionName = mission.missionName,
-                    taskName = task.name,
-                    taskId = task.taskId,
-                    day = reg.date.DayOfWeek,
-                    hours = reg.hours,
-                    invoice = task.invoice
-                });
+                    registryViewModel.taskId = null;
+                    registryViewModel.missionName = "Internal time";
+                }
+                else
+                {
+                    task = unitOfWork.TaskRepository.GetById(reg.taskId);
+                    registryViewModel.taskName = task.name;
+                    registryViewModel.missionName = unitOfWork.MissionRepository.GetById(task.missionId).missionName;
+                    registryViewModel.invoice = task.invoice;
+                    registryViewModel.taskId = task.taskId;
+                }
+
+                registryViewModel.registryId = reg.registryId;
+                registryViewModel.day = reg.date.DayOfWeek;
+                registryViewModel.hours = reg.hours;
+
+
+                weekRegistries.Add(registryViewModel);
             }
             return weekRegistries;
         }

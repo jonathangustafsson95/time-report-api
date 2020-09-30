@@ -18,8 +18,8 @@ namespace CommonLibrary.Model
         public DateTime date { get; set; }
         public InvoiceType invoice { get; set; }
 
-        public Task Task { get; set; }
-        public User User { get; set; }
+        public virtual Task Task { get; set; }
+        public virtual User User { get; set; }
 
     }
 }
