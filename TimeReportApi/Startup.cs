@@ -7,12 +7,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using DataAccessLayer;
 using DataAccessLayer.UnitOfWork;
-using time_report_api.Models;
+using TimeReportApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace time_report_api
+namespace TimeReportApi
 {
     public class Startup
     {
@@ -28,7 +28,7 @@ namespace time_report_api
         public void ConfigureServices(IServiceCollection services)
         {
 
-            // För att kalla på api med headers genom ajax
+            // FÃ¶r att kalla pÃ¥ api med headers genom ajax
             services.AddCors(options =>
                 options.AddPolicy("MyPolicy",
                      builder =>
