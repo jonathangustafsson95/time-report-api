@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using DataAccessLayer.UnitOfWork;
 using CommonLibrary.Model;
-using time_report_api.Models;
+using TimeReportApi.Models;
 using DataAccessLayer;
 using System.Security.Claims;
 
-namespace time_report_api.Controllers
+namespace TimeReportApi.Controllers
 {
     /// <summary>
     /// Controller for handlings rerporting events.
