@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommonLibrary.Model;
 
-namespace time_report_api.Models
+namespace TimeReportApi.Models
 {
     public class Registries
     {
