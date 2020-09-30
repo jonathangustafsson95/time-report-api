@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace time_report_api.Migrations
+namespace TimeReportApi.Migrations
 {
     [DbContext(typeof(BulbasaurDevContext))]
     partial class BulbasaurDevContextModelSnapshot : ModelSnapshot
