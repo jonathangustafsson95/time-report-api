@@ -21,7 +21,7 @@ using Assert = Xunit.Assert;
 using TimeReportApi.Controllers;
 using TimeReportApi.Models;
 
-namespace Database_UnitTest
+namespace DatabaseUnitTest
 {
     public static class inMemorydbcontext
     {
