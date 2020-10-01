@@ -35,23 +35,20 @@ namespace TimeReportApi.Controllers
         [AllowAnonymous]
         [Route("Login")]
         [EnableCors("MyPolicy")]
-        public IActionResult Login(int d)
+        public IActionResult Login([FromBody]User login)
         {
-            //[FromBody]User login
-            //IActionResult response = Unauthorized();
-            //User user = AuthenticateUser(login);
-            //if (user != null)
-            //{
-            //    var tokenString = GenerateJWTToken(user);
-            //    response = Ok(new
-            //    {
-            //        token = tokenString,
-            //        userDetails = user,
-            //    });
+            IActionResult response = Unauthorized();
+            User user = AuthenticateUser(login);
+            if (user != null)
+            {
+                var tokenString = GenerateJWTToken(user);
+                response = Ok(new
+                {
+                    token = tokenString,
+                    userDetails = user,
+                });
+            };
 
-            //}
-            //return response;
-            IActionResult response = Ok(new { id = d });
             return response;
         }
 
