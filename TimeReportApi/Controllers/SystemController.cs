@@ -38,18 +38,20 @@ namespace TimeReportApi.Controllers
         public IActionResult Login(int d)
         {
             //[FromBody]User login
-            IActionResult response = Unauthorized();
-            User user = AuthenticateUser(login);
-            if (user != null)
-            {
-                var tokenString = GenerateJWTToken(user);
-                response = Ok(new
-                {
-                    token = tokenString,
-                    userDetails = user,
-                });
-                
-            }
+            //IActionResult response = Unauthorized();
+            //User user = AuthenticateUser(login);
+            //if (user != null)
+            //{
+            //    var tokenString = GenerateJWTToken(user);
+            //    response = Ok(new
+            //    {
+            //        token = tokenString,
+            //        userDetails = user,
+            //    });
+
+            //}
+            //return response;
+            IActionResult response = Ok(new { id = d });
             return response;
         }
 
