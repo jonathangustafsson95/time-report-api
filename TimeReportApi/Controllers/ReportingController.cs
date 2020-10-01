@@ -41,7 +41,7 @@ namespace TimeReportApi.Controllers
         /// <param name="newRegistries"></param>
         /// <returns>Http response message</returns>
         [HttpPost]
-        [Route("AddTimeReport")]
+        [Route("TimeReport")]
         public ActionResult<User> AddTimeReport([FromBody] Registries newRegistries)
         {
             try
@@ -77,7 +77,7 @@ namespace TimeReportApi.Controllers
         /// <param name="dateTime"></param>
         /// <returns>A list of RegistryViewModel items.</returns>
         [HttpGet]
-        [Route("GetWeek/{dateTime}")]
+        [Route("Week/{dateTime}")]
         public ActionResult<List<RegistryViewModel>> GetWeek(DateTime dateTime)
         {
             DateTime startDate = GetWeekStartDate(dateTime, DayOfWeek.Monday);
