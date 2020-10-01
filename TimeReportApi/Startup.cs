@@ -36,7 +36,8 @@ namespace TimeReportApi
                          builder
                          .AllowAnyOrigin()
                          .AllowAnyMethod()
-                         .AllowAnyHeader();
+                         .AllowAnyHeader()
+                         .AllowCredentials();
                      }
                 )
             );
@@ -79,7 +80,7 @@ namespace TimeReportApi
                 app.UseDeveloperExceptionPage();
             }
             // API anrop genom headers med ajax
-            app.UseCors("MyPolicy");
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseHttpsRedirection();
 
