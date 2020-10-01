@@ -6,6 +6,7 @@ using CommonLibrary.Model;
 using DataAccessLayer.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 using TimeReportApi.Models;
+using Task = CommonLibrary.Model.Task;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -164,6 +165,16 @@ namespace TimeReportApi.Controllers
             }
             return mvmList;
         }
+
+        //[HttpGet]
+        //[Route("GetAllTasksInAMission/{id:int")]
+        //public IEnumerable<Task> GetAllTasksInAMission(int missionId)
+        //{
+        //    IEnumerable<Task> allTasksForAMission = unitOfWork.TaskRepository.GetAll();
+        //    var allTasksInAMission = allTasksForAMission.ToList();
+        //    allTasksInAMission.Select(m => m.MissionId == missionId);
+        //    return allTasksInAMission;
+        //}
 
     }
 }
