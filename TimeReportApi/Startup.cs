@@ -35,6 +35,7 @@ namespace TimeReportApi
                      {
                          builder
                          .AllowAnyOrigin()
+                         .WithOrigins("http://localhost:3000/")
                          .AllowAnyMethod()
                          .AllowAnyHeader()
                          .AllowCredentials();
