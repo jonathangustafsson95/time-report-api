@@ -118,9 +118,14 @@ namespace TimeReportApi.Controllers
         }
 
         // DELETE api/<MissionMemberController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        [Route("DeleteMissionMember/{userId}/{missionId}")]
+        public ActionResult DeleteMissionMember(int userId, int missionId)
         {
+            //unitOfWork.MissionMemberRepository.Insert(new MissionMember() { userId=2,});
+            unitOfWork.MissionMemberRepository.Delete(userId, missionId);
+            unitOfWork.MissionMemberRepository.Save();
+            return Ok();
         }
 
 
