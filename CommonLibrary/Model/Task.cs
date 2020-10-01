@@ -9,22 +9,22 @@ namespace CommonLibrary.Model
     public class Task
     {
         [Key]
-        public int taskId { get; set; }
+        public int TaskId { get; set; }
 
         [ForeignKey("Mission")]
-        public int? missionId { get; set; }
+        public int? MissionId { get; set; }
 
         [ForeignKey("User")]
-        public int? userId { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
-        public double estimatedHour { get; set; }
-        public double? actualHours { get; set; }
-        public InvoiceType invoice { get; set; }
-        public DateTime created { get; set; }
-        public DateTime start { get; set; }
-        public DateTime? finished { get; set; }
-        public int status { get; set; }
+        public int? UserId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public double EstimatedHour { get; set; }
+        public double? ActualHours { get; set; }
+        public InvoiceType Invoice { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime? Finished { get; set; }
+        public int Status { get; set; }
 
         public virtual User User { get; set; }
         public virtual Mission Mission { get; set; }

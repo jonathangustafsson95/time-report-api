@@ -6,7 +6,7 @@ namespace CommonLibrary.Model
 {
     public enum InvoiceType
     {
-        invoicable,
-        notInvoicable
+        Invoicable,
+        NotInvoicable
     }
 }

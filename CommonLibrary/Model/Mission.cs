@@ -9,22 +9,22 @@ namespace CommonLibrary.Model
     public class Mission
     {
         [Key]
-        public int missionId { get; set; }
+        public int MissionId { get; set; }
 
         [ForeignKey("User")]
-        public int? userId { get; set; }
+        public int? UserId { get; set; }
         [ForeignKey("Customer")]
-        public int? customerId { get; set; }
-        public string missionName { get; set; }
-        public string description { get; set; }//ha kvar? enum/string
-        public DateTime start { get; set; }
-        public DateTime? finished { get; set; }
-        public DateTime created { get; set; }
-        public int status { get; set; }
+        public int? CustomerId { get; set; }
+        public string MissionName { get; set; }
+        public string Description { get; set; }//ha kvar? enum/string
+        public DateTime Start { get; set; }
+        public DateTime? Finished { get; set; }
+        public DateTime Created { get; set; }
+        public int Status { get; set; }
         public virtual User User { get; set; }
         public virtual Customer Customer { get; set; }
-        public virtual ICollection<MissionMember> missionMembers { get; set; }
-        public virtual ICollection<FavoriteMission> favoritedMission { get; set; }
+        public virtual ICollection<MissionMember> MissionMembers { get; set; }
+        public virtual ICollection<FavoriteMission> FavoritedMission { get; set; }
     }
 }
  

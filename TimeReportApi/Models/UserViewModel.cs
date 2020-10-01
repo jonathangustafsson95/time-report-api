@@ -14,7 +14,7 @@ namespace TimeReportApi.Models
         public string eMail { get; set; }
         public UserViewModel ConvertToViewModel(User user)
         {
-            return new UserViewModel { userId = user.userId, password = user.password, eMail = user.eMail, userName = user.userName };
+            return new UserViewModel { userId = user.UserId, password = user.Password, eMail = user.EMail, userName = user.UserName };
         }
     }
 }

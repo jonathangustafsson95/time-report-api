@@ -18,7 +18,7 @@ namespace DataAccessLayer.Repositories
         {
             IEnumerable<User> all = GetAll();
             IEnumerable<User> allByName = from a in all
-                                                      where a.userName == userName
+                                                      where a.UserName == userName
                                                       select a;
             return allByName != null ? allByName.ToList() : new List<User>();
         }

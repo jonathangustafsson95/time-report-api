@@ -44,71 +44,70 @@ namespace DatabaseUnitTest
     public class GenericRepositoriesTest
     {
 
-        private readonly UnitOfWork unitOfWork;
-        private readonly BulbasaurDevContext DevContext;
-        private readonly User testUserObject = new User(){userId = 1,eMail = "bla@bla.com",password = "bla",userName = "blabla"};
-        private readonly User anotherUser = new User() { userId = 2, userName = "test2", eMail = "Bla2@gmail.com", password = "blaSecret" };
-        private readonly Registry testRegistryObject=new Registry(){registryId = 1,userId = 1,created =new DateTime(2020,02,14),
-            date = new DateTime(2020,07,02), hours = 12,invoice = InvoiceType.invoicable,taskId = 1};
-        private readonly Registry anotherTestRegistryObject=new Registry(){registryId = 2,userId = 1,created = new DateTime(2010,05,28) ,
-            date = new DateTime(2019,09,02), hours = 15,invoice = InvoiceType.invoicable,taskId = 1};
-        private readonly MissionMember testMissionMember=new MissionMember(){missionId = 1,userId = 1};
+        private readonly UnitOfWork _unitOfWork;
+        private readonly User _testUserObject = new User(){UserId = 1,EMail = "bla@bla.com",Password = "bla",UserName = "blabla"};
+        private readonly User _anotherUser = new User() { UserId = 2, UserName = "test2", EMail = "Bla2@gmail.com", Password = "blaSecret" };
+        private readonly Registry _testRegistryObject=new Registry(){RegistryId = 1,UserId = 1,Created =new DateTime(2020,02,14),
+            Date = new DateTime(2020,07,02), Hours = 12,Invoice = InvoiceType.Invoicable,TaskId = 1};
+        private readonly Registry _anotherTestRegistryObject=new Registry(){RegistryId = 2,UserId = 1,Created = new DateTime(2010,05,28) ,
+            Date = new DateTime(2019,09,02), Hours = 15,Invoice = InvoiceType.Invoicable,TaskId = 1};
+        private readonly MissionMember _testMissionMember=new MissionMember(){MissionId = 1,UserId = 1};
 
 
         public GenericRepositoriesTest()
-        { 
-            DevContext = inMemorydbcontext.GetContextWithData();
-            unitOfWork=new UnitOfWork(DevContext);
+        {
+            var devContext = inMemorydbcontext.GetContextWithData();
+            _unitOfWork=new UnitOfWork(devContext);
         }
 
         public void SeedInMemory(int numOfElement)
         {
             if (numOfElement == 1)
             {
-                unitOfWork.UserRepository.Insert(testUserObject);
-                unitOfWork.RegistryRepository.Insert(testRegistryObject);
-                unitOfWork.MissionMemberRepository.Insert(testMissionMember);
-                unitOfWork.UserRepository.Save();
+                _unitOfWork.UserRepository.Insert(_testUserObject);
+                _unitOfWork.RegistryRepository.Insert(_testRegistryObject);
+                _unitOfWork.MissionMemberRepository.Insert(_testMissionMember);
+                _unitOfWork.UserRepository.Save();
             }
             else
             {
-                unitOfWork.UserRepository.Insert(testUserObject);
-                unitOfWork.UserRepository.Insert(anotherUser);
-                unitOfWork.RegistryRepository.Insert(testRegistryObject);
-                unitOfWork.RegistryRepository.Insert(anotherTestRegistryObject);
-                unitOfWork.UserRepository.Save();
+                _unitOfWork.UserRepository.Insert(_testUserObject);
+                _unitOfWork.UserRepository.Insert(_anotherUser);
+                _unitOfWork.RegistryRepository.Insert(_testRegistryObject);
+                _unitOfWork.RegistryRepository.Insert(_anotherTestRegistryObject);
+                _unitOfWork.UserRepository.Save();
             }
         }
 
         [TestMethod]
         public void InsertTest()
         {
-            unitOfWork.UserRepository.Insert(testUserObject);
-            var item =unitOfWork.UserRepository.GetById(testUserObject.userId);
-            Assert.Equal(testUserObject.userId, item.userId);
+            _unitOfWork.UserRepository.Insert(_testUserObject);
+            var item =_unitOfWork.UserRepository.GetById(_testUserObject.UserId);
+            Assert.Equal(_testUserObject.UserId, item.UserId);
         }
 
         [TestMethod]
         public void GetByIdComposite()
         {
             SeedInMemory(1);
-            var item = unitOfWork.MissionMemberRepository.GetById(1, 1);
-            Assert.Equal(testMissionMember,item);
+            var item = _unitOfWork.MissionMemberRepository.GetById(1, 1);
+            Assert.Equal(_testMissionMember,item);
         }
 
         [TestMethod]
         public void UpdateRepositoryTest()
         {
-            testUserObject.eMail = "newEmail";
-            unitOfWork.UserRepository.Update(testUserObject);
-            Assert.Equal("newEmail",unitOfWork.UserRepository.GetById(1).eMail);
+            _testUserObject.EMail = "newEmail";
+            _unitOfWork.UserRepository.Update(_testUserObject);
+            Assert.Equal("newEmail",_unitOfWork.UserRepository.GetById(1).EMail);
         }
         [TestMethod]
         public void GetAllTest()
         {
-            IEnumerable<User> allUsers = new List<User>() { testUserObject, anotherUser };
+            IEnumerable<User> allUsers = new List<User>() { _testUserObject, _anotherUser };
             SeedInMemory(2);
-            var allUsersTestList = unitOfWork.UserRepository.GetAll();
+            var allUsersTestList = _unitOfWork.UserRepository.GetAll();
             Assert.Equal(allUsers, allUsersTestList);
         }
 
@@ -116,19 +115,21 @@ namespace DatabaseUnitTest
         public void DeleteTest()
         {
             SeedInMemory(1);
-            unitOfWork.UserRepository.Delete(testUserObject.userId);
-            unitOfWork.UserRepository.Save();
-            var allUsersTestList = unitOfWork.UserRepository.GetAll();
+            _unitOfWork.UserRepository.Delete(_testUserObject.UserId);
+            //unitOfWork.MissionMemberRepository.Delete(testMissionMember.missionId,testMissionMember.userId);
+            //unitOfWork.RegistryRepository.Delete(testRegistryObject.registryId);
+            _unitOfWork.UserRepository.Save();
+            var allUsersTestList = _unitOfWork.UserRepository.GetAll();
             Assert.Empty(allUsersTestList);
         }
 
         [TestMethod]
-        public void DeletTestComposite()
+        public void DeleteTestComposite()
         {
             SeedInMemory(1);
-            unitOfWork.MissionMemberRepository.Delete(1,1);
-            unitOfWork.MissionMemberRepository.Save();
-            var allMissionMemberList = unitOfWork.MissionMemberRepository.GetAll();
+            _unitOfWork.MissionMemberRepository.Delete(1,1);
+            _unitOfWork.MissionMemberRepository.Save();
+            var allMissionMemberList = _unitOfWork.MissionMemberRepository.GetAll();
             Assert.Empty(allMissionMemberList);
         }
 
@@ -136,14 +137,14 @@ namespace DatabaseUnitTest
         public void ExistsTest()
         {
             SeedInMemory(1);
-            var actual=unitOfWork.UserRepository.Exists(testUserObject.userId);
+            var actual=_unitOfWork.UserRepository.Exists(_testUserObject.UserId);
             Assert.True(actual);
         }
         [TestMethod]
         public void ExistsTestComposite()
         {
             SeedInMemory(1);
-            var actual = unitOfWork.MissionMemberRepository.Exists(testMissionMember.missionId,testMissionMember.userId);
+            var actual = _unitOfWork.MissionMemberRepository.Exists(_testMissionMember.MissionId,_testMissionMember.UserId);
             Assert.True(actual);
         }
 
@@ -151,29 +152,29 @@ namespace DatabaseUnitTest
         public void SearchByTextTest()
         {
             SeedInMemory(2);
-            var listOfUsers = unitOfWork.UserRepository.GetAll();
-            List<User> result=unitOfWork.UserRepository.Search<User>((x=>x.userName),"blabla");
+            var listOfUsers = _unitOfWork.UserRepository.GetAll();
+            List<User> result=_unitOfWork.UserRepository.Search<User>((x=>x.UserName),"blabla");
             var userInTest = result[0];
-            Assert.Equal("blabla",userInTest.userName);
+            Assert.Equal("blabla",userInTest.UserName);
         }
 
         [TestMethod]
         public void SearchByIdTest()
         {
             SeedInMemory(2);
-            var listOfUsers = unitOfWork.UserRepository.GetAll();
-            List<User> result = unitOfWork.UserRepository.Search<User>(x => x.userId, 1);
+            var listOfUsers = _unitOfWork.UserRepository.GetAll();
+            List<User> result = _unitOfWork.UserRepository.Search<User>(x => x.UserId, 1);
             var userInTest = result[0];
-            Assert.Equal(testUserObject.userId, userInTest.userId);
+            Assert.Equal(_testUserObject.UserId, userInTest.UserId);
         }
         [TestMethod]
         public void SearchByDateTest()
         {
             SeedInMemory(2);
-            var listOfRegistries = unitOfWork.RegistryRepository.GetAll();
-            List<Registry> result = unitOfWork.RegistryRepository.Search<Registry>(getKey: x => x.date,new DateTime(2019 , 09,02));
+            var listOfRegistries = _unitOfWork.RegistryRepository.GetAll();
+            List<Registry> result = _unitOfWork.RegistryRepository.Search<Registry>(getKey: x => x.Date,new DateTime(2019 , 09,02));
             var regiInTest = result[0];
-            Assert.Equal(anotherTestRegistryObject.date, regiInTest.date);
+            Assert.Equal(_anotherTestRegistryObject.Date, regiInTest.Date);
         }
 
     }
@@ -213,8 +214,8 @@ namespace DatabaseUnitTest
             List<int> testIdList = new List<int>();
             foreach (MissionMember mm in missionMembers)
             {
-                Mission mission = unitOfWork.MissionRepository.GetById(mm.userId);
-                trueIdList.Add(mission.missionId);
+                Mission mission = unitOfWork.MissionRepository.GetById(mm.UserId);
+                trueIdList.Add(mission.MissionId);
             }
 
             //act 

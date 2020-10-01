@@ -18,7 +18,7 @@ namespace DataAccessLayer.Repositories
         {
             IEnumerable<Registry> all = GetAll();
             IEnumerable<Registry> allByRegistryById= from a in all
-                                               where a.userId == id
+                                               where a.UserId == id
                                                select a;
             return allByRegistryById != null ? allByRegistryById.ToList() : new List<Registry>();
         }
@@ -35,7 +35,7 @@ namespace DataAccessLayer.Repositories
         {
             IEnumerable<Registry> all = GetAll();
             IEnumerable<Registry> allByUserId = from a in all
-                                                      where a.userId == userId
+                                                      where a.UserId == userId
                                                       select a;
             return allByUserId != null ? allByUserId.ToList() : new List<Registry>();
         }
@@ -43,8 +43,8 @@ namespace DataAccessLayer.Repositories
         {
             IEnumerable<Registry> all = GetAll();
             IEnumerable<Registry> allRegistriesBetweenDates = from a in all
-                                                              where a.userId == userId
-                                                              && (a.date <= endDate && a.date >= startDate)
+                                                              where a.UserId == userId
+                                                              && (a.Date <= endDate && a.Date >= startDate)
                                                               select a;
             return allRegistriesBetweenDates != null ? allRegistriesBetweenDates.ToList() : new List<Registry>();
         }

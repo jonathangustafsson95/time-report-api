@@ -20,7 +20,7 @@ namespace TimeReportApi.Models
 
         public  MissionViewModel ConvertToViewModel( Mission a)
         {
-           return new MissionViewModel { missionId = a.missionId, description = a.description, created = a.created, customerId = a.customerId, finished = a.finished, missionName = a.missionName, start = a.start, userId = a.userId, status = a.status };
+           return new MissionViewModel { missionId = a.MissionId, description = a.Description, created = a.Created, customerId = a.CustomerId, finished = a.Finished, missionName = a.MissionName, start = a.Start, userId = a.UserId, status = a.Status };
         }
     }
 }
