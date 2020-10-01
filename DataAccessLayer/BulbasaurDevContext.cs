@@ -45,7 +45,8 @@ namespace DataAccessLayer
                 .WithMany(mm => mm.MissionMembers)
                 .HasForeignKey(mm => mm.MissionId)
                 .OnDelete(DeleteBehavior.NoAction);
-            //modelBuilder.Entity<User>().HasOne()
+            
+            //modelBuilder.Entity<User>().HasMany(mm=>mm.MissionMemberships),
 
             //foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             //{
