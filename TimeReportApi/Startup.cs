@@ -33,7 +33,10 @@ namespace TimeReportApi
                 options.AddPolicy("MyPolicy",
                      builder =>
                      {
-                         builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                         builder
+                         .AllowAnyOrigin()
+                         .AllowAnyMethod()
+                         .AllowAnyHeader();
                      }
                 )
             );
