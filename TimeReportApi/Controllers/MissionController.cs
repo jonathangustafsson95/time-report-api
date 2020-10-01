@@ -166,15 +166,15 @@ namespace TimeReportApi.Controllers
             return mvmList;
         }
 
-        //[HttpGet]
-        //[Route("GetAllTasksInAMission/{id:int")]
-        //public IEnumerable<Task> GetAllTasksInAMission(int missionId)
-        //{
-        //    IEnumerable<Task> allTasksForAMission = unitOfWork.TaskRepository.GetAll();
-        //    var allTasksInAMission = allTasksForAMission.ToList();
-        //    allTasksInAMission.Select(m => m.MissionId == missionId);
-        //    return allTasksInAMission;
-        //}
+        [HttpGet]
+        [Route("GetAllTasksInAMission/{id:int}")]
+        public IEnumerable<Task> GetAllTasksInAMission(int missionId)
+        {
+            IEnumerable<Task> allTasksForAMission = unitOfWork.TaskRepository.GetAll();
+            var allTasksInAMission = allTasksForAMission.ToList();
+            allTasksInAMission.Select(m => m.MissionId == missionId);
+            return allTasksInAMission;
+        }
 
     }
 }
