@@ -29,8 +29,8 @@ namespace TimeReportApi.Controllers
         {
             this.unitOfWork = unitOfWork;
             this.httpContextAccessor = httpContextAccessor;
-            //int userId = Int32.Parse(httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "userId").Value);
-           // user = unitOfWork.UserRepository.GetById(userId);
+            int userId = Int32.Parse(httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "userId").Value);
+            user = unitOfWork.UserRepository.GetById(userId);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace TimeReportApi.Controllers
             {
                 for (int i = 0; i < registryIdsToDelete.RegistriesToDelete.Count; i++)
                 {                   
-                    unitOfWork.RegistryRepository.Delete(unitOfWork.RegistryRepository.GetById(registryIdsToDelete.RegistriesToDelete[i]).registryId);
+                    unitOfWork.RegistryRepository.Delete(unitOfWork.RegistryRepository.GetById(registryIdsToDelete.RegistriesToDelete[i]).RegistryId);
                 }
                 unitOfWork.RegistryRepository.Save();
                 return Ok();
