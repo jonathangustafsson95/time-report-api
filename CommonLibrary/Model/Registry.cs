@@ -8,15 +8,15 @@ namespace CommonLibrary.Model
     public class Registry
     {
         [Key]
-        public int registryId { get; set; }
+        public int RegistryId { get; set; }
         [ForeignKey("Task")]
-        public int? taskId { get; set; }
+        public int? TaskId { get; set; }
         [ForeignKey("User")]
-        public int? userId { get; set; }
-        public double hours { get; set; }
-        public DateTime created { get; set; }
-        public DateTime date { get; set; }
-        public InvoiceType invoice { get; set; }
+        public int? UserId { get; set; }
+        public double Hours { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Date { get; set; }
+        public InvoiceType Invoice { get; set; }
 
         public virtual Task Task { get; set; }
         public virtual User User { get; set; }

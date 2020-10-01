@@ -19,7 +19,7 @@ namespace DataAccessLayer.Repositories
         {
             IEnumerable<MissionMember> all = GetAll();
             IEnumerable<MissionMember> allByUserById = from a in all
-                                                      where a.userId == id
+                                                      where a.UserId == id
                                                       select a;
             return allByUserById != null ? allByUserById.ToList() : new List<MissionMember>();
 
@@ -28,7 +28,7 @@ namespace DataAccessLayer.Repositories
         {
             IEnumerable<MissionMember> all = GetAll();
             IEnumerable<MissionMember> allByMissionById = from a in all
-                                                       where a.missionId == id
+                                                       where a.MissionId == id
                                                        select a;
             return allByMissionById != null ? allByMissionById.ToList() : new List<MissionMember>();
 

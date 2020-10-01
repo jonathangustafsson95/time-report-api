@@ -8,9 +8,9 @@ namespace CommonLibrary.Model
     public class Customer
     {
         [Key]
-        public int customerId { get; set; }
-        public string name { get; set; }
-        public DateTime created { get; set; }
+        public int CustomerId { get; set; }
+        public string Name { get; set; }
+        public DateTime Created { get; set; }
 
 
     }
