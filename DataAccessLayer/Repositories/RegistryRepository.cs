@@ -23,9 +23,9 @@ namespace DataAccessLayer.Repositories
             return allByRegistryById != null ? allByRegistryById.ToList() : new List<Registry>();
         }
         // GetByID får ju bara ut en reg? 
-        public List<Registry> GetRegistriesByNumberOfDays(int days, int id)
+        public List<Registry> GetRegistriesByNumberOfDays(int days, int userId)
         {
-            List<Registry> registries = GetAllByUserId(id);
+            List<Registry> registries = GetAllByUserId(userId);
             var enumerable = registries.ToList();
             enumerable.OrderBy(d => d.date);
             return (List<Registry>)enumerable.Take(days);
