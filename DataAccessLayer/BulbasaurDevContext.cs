@@ -45,8 +45,19 @@ namespace DataAccessLayer
                 .WithMany(mm => mm.MissionMembers)
                 .HasForeignKey(mm => mm.MissionId)
                 .OnDelete(DeleteBehavior.NoAction);
-            
-            //modelBuilder.Entity<User>().HasMany(mm=>mm.MissionMemberships),
+            //modelBuilder.Entity<User>()
+            //    .HasMany(u => u.Mission)
+            //    .WithOne(m => m.User)
+            //    .OnDelete(DeleteBehavior.NoAction);
+            //modelBuilder.Entity<User>()
+            //    .HasMany(u => u.missionMemberships)
+            //    .WithOne(m => m.User)
+            //    .OnDelete(DeleteBehavior.NoAction);
+            //modelBuilder.Entity<User>()
+            //    .HasMany(u => u.missionFavorites)
+            //    .WithOne(m => m.User)
+            //    .OnDelete(DeleteBehavior.NoAction);
+         
 
             //foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             //{

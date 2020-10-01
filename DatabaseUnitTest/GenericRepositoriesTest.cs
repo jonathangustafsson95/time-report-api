@@ -32,7 +32,7 @@ namespace DatabaseUnitTest
                 .Options;
             var context = new BulbasaurDevContext(options);
 
-            //context.Add(new User() { userId = 1, eMail = "bla@bla.com", password = "bla", userName = "blabla" });
+            //context.Add(new User() { userId = 1, eMail = "bla@bla.com", password = "bla", userName = "blabla" }); 
             context.SaveChanges();
 
             return context;

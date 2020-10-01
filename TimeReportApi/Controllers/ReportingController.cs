@@ -18,7 +18,7 @@ namespace TimeReportApi.Controllers
     [Route("api/[controller]")]
     // Kalla på Authorize vid specifika metoder för att begränsa dem,
     // sätter man Authorize på hela kontrollern blir alla metoder begränsade och kräver login
-    [Authorize]
+    //[Authorize]
     [ApiController]
     public class ReportingController : ControllerBase
     {
@@ -42,7 +42,7 @@ namespace TimeReportApi.Controllers
         /// <returns>Http response message</returns>
         [HttpPost]
         [Route("TimeReport")]
-        public ActionResult<User> AddTimeReport([FromBody] Registries newRegistries)
+        public ActionResult<HttpResponse> AddTimeReport([FromBody] Registries newRegistries)
         {
             try
             {
@@ -60,6 +60,32 @@ namespace TimeReportApi.Controllers
                         // Change  a existing registry
                         unitOfWork.RegistryRepository.Update(newRegistries.registriesToReport[i]);
                     }
+                }
+                unitOfWork.RegistryRepository.Save();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Something went wrong!");
+            }
+        }
+
+
+        /// <summary>
+        /// This method takes a list of registry ids from body of request, extracts
+        /// and deletes the entries from the database.
+        /// </summary>
+        /// <param name="registryIdsToDelete"></param>
+        /// <returns>Http response message</returns>
+        [HttpDelete]
+        [Route("TimeReport")] 
+        public ActionResult<HttpResponse> DeleteTimeReport([FromBody]RegistriesDelete registryIdsToDelete)
+        {
+            try
+            {
+                for (int i = 0; i < registryIdsToDelete.RegistriesToDelete.Count; i++)
+                {                   
+                    unitOfWork.RegistryRepository.Delete(unitOfWork.RegistryRepository.GetById(registryIdsToDelete.RegistriesToDelete[i]).RegistryId);
                 }
                 unitOfWork.RegistryRepository.Save();
                 return Ok();

@@ -27,7 +27,7 @@ namespace Data.Model
                     UserId=1,
                     CustomerId=1
                 },
-                new Mission 
+                new Mission
                 {
                     Created = new DateTime(2020, 9, 5), 
                     Description = "Lorem Ipsum ", 
@@ -40,7 +40,7 @@ namespace Data.Model
                     CustomerId=1
                 });
             modelBuilder.Entity<Task>().HasData(
-                new Task 
+                new Task
                 {
                     TaskId=1, 
                     UserId=1, 

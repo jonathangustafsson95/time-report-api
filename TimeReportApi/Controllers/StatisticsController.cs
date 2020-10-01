@@ -54,8 +54,8 @@ namespace time_report_api.Controllers
                 internalTaskCount = internalCount,
                 customerTaskCount = customerCount,
                 totalTime = totalHours,
-                internalTimePerc = internalHours / totalHours,
-                customerTimePerc = customerHours / totalHours
+                internalTimePerc = (internalHours / totalHours)*100,
+                customerTimePerc = (customerHours / totalHours)*100
 
             };
             //List<Registry> filteredByInternal=registryByDate.Where(t=>t.taskId==null).ToList();
