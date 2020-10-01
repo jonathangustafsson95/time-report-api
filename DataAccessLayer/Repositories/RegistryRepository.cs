@@ -28,7 +28,7 @@ namespace DataAccessLayer.Repositories
             List<Registry> registries = GetAllByUserId(userId);
             var enumerable = registries.ToList();
             enumerable.OrderBy(d => d.date);
-            return (List<Registry>)enumerable.Take(days);
+            return enumerable.Take(days).ToList();
         }
 
         public List<Registry> GetAllUserRegistries(int userId)
