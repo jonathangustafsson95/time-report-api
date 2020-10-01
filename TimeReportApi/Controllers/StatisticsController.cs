@@ -21,30 +21,30 @@ namespace time_report_api.Controllers
             this.unitOfWork = unitOfWork;
             dummy = new User()
             {
-                userId = 1,
-                userName = "John",
-                password = "abc123",
-                eMail = "hej@lol.com"
+                UserId = 1,
+                UserName = "John",
+                Password = "abc123",
+                EMail = "hej@lol.com"
             };
         }
         [HttpGet]
         [Route("GetStatsInternVsCustomer/{numberOfWeeks:int}")]
         public Statistic GetStatsInternVsCustomer(int numberOfWeeks)
         {
-            List<Registry> registryByDate = unitOfWork.RegistryRepository.GetRegistriesByNumberOfDays(numberOfWeeks * 7, dummy.userId);
+            List<Registry> registryByDate = unitOfWork.RegistryRepository.GetRegistriesByNumberOfDays(numberOfWeeks * 7, dummy.UserId);
             int internalCount = 0, customerCount = 0;
             float internalHours = 0, customerHours = 0;
             foreach (Registry reg in registryByDate)
             {
-                if (reg.taskId.HasValue)
+                if (reg.TaskId.HasValue)
                 {
                     customerCount++;
-                    customerHours += (float)reg.hours;
+                    customerHours += (float)reg.Hours;
                 }
                 else
                 {
                     internalCount++;
-                    internalHours = (float)reg.hours;
+                    internalHours = (float)reg.Hours;
                 }
             }
             float totalHours = internalHours + customerHours;
