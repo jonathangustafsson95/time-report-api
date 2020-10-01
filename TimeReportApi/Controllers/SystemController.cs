@@ -14,6 +14,7 @@ using System.Text;
 using TimeReportApi.Models;
 using DataAccessLayer;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Cors;
 
 namespace TimeReportApi.Controllers
 {
@@ -33,8 +34,10 @@ namespace TimeReportApi.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("Login")]
+        [EnableCors("MyPolicy")]
         public IActionResult Login([FromBody]User login)
         {
+            //[FromBody]User login
             IActionResult response = Unauthorized();
             User user = AuthenticateUser(login);
             if (user != null)
@@ -45,6 +48,7 @@ namespace TimeReportApi.Controllers
                     token = tokenString,
                     userDetails = user,
                 });
+                
             }
             return response;
         }
