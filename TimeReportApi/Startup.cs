@@ -78,7 +78,7 @@ namespace TimeReportApi
             // API anrop genom headers med ajax
             app.UseCors("MyPolicy");
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
