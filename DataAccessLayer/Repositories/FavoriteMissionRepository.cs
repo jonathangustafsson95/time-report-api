@@ -15,7 +15,7 @@ namespace DataAccessLayer.Repositories
 
         public List<FavoriteMission> GetFavoriteMissionsById(int id)
         {
-            IEnumerable<FavoriteMission> allFavoriteMissions = GetAll().Where(i => i.userId == id);
+            IEnumerable<FavoriteMission> allFavoriteMissions = GetAll().Where(i => i.UserId == id);
             return allFavoriteMissions.ToList();
 
         }

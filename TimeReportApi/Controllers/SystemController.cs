@@ -51,7 +51,7 @@ namespace TimeReportApi.Controllers
 
         User AuthenticateUser(User loginCredentials)
         {
-            User user = unitOfWork.UserRepository.GetByName(loginCredentials.userName).SingleOrDefault(x => x.userName == loginCredentials.userName && x.password == loginCredentials.password);
+            User user = unitOfWork.UserRepository.GetByName(loginCredentials.UserName).SingleOrDefault(x => x.UserName == loginCredentials.UserName && x.Password == loginCredentials.Password);
             return user;
         }
 
@@ -61,10 +61,10 @@ namespace TimeReportApi.Controllers
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userInfo.userName),
-                new Claim("userName", userInfo.userName.ToString()),
-                new Claim("role", userInfo.role),
-                new Claim("userId", userInfo.userId.ToString()),
+                new Claim(JwtRegisteredClaimNames.Sub, userInfo.UserName),
+                new Claim("userName", userInfo.UserName.ToString()),
+                new Claim("role", userInfo.Role),
+                new Claim("userId", userInfo.UserId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
             var token = new JwtSecurityToken(

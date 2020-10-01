@@ -42,7 +42,7 @@ namespace DatabaseUnitTest.ControllerTests
     {
         private readonly UnitOfWork unitOfWork;
         private readonly BulbasaurDevContext DevContext;
-        private readonly Registry testObject = new Registry() { registryId=1, taskId=1, userId=1, hours=5, created= DateTime.Today, date=DateTime.Today};
+        private readonly Registry testObject = new Registry() { RegistryId=1, TaskId=1, UserId=1, Hours=5, Created= DateTime.Today, Date=DateTime.Today};
 
         public ReportingControllerTests()
         {

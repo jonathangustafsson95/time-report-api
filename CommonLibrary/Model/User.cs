@@ -8,12 +8,12 @@ namespace CommonLibrary.Model
     public class User
     {
         [Key]
-        public int userId { get; set; }
-        public string userName { get; set; }
-        public string password { get; set; }
-        public string eMail { get; set; }
-        public string role { get; set; }
-        public ICollection<MissionMember> missionMemberships { get; set; }
-        public ICollection<FavoriteMission> missionFavorites { get; set; }
+        public int UserId { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public string EMail { get; set; }
+        public string Role { get; set; }
+        public ICollection<MissionMember> MissionMemberships { get; set; }
+        public ICollection<FavoriteMission> MissionFavorites { get; set; }
     }
 }

@@ -22,10 +22,10 @@ namespace TimeReportApi.Controllers
             this.unitOfWork = unitOfWork;
             dummy = new User()
             {
-                userId = 1,
-                userName = "John",
-                password = "abc123",
-                eMail = "hej@lol.com"
+                UserId = 1,
+                UserName = "John",
+                Password = "abc123",
+                EMail = "hej@lol.com"
             };
         }
 
@@ -53,7 +53,7 @@ namespace TimeReportApi.Controllers
             List<MissionViewModel> mvmList = new List<MissionViewModel>();
             for(int i=0;i< missionMemberList.Count;i++)
             {
-                Mission mission = unitOfWork.MissionRepository.GetById(missionMemberList[i].missionId);
+                Mission mission = unitOfWork.MissionRepository.GetById(missionMemberList[i].MissionId);
                 mvmList.Add(new MissionViewModel().ConvertToViewModel(mission));
             }
             return mvmList;
@@ -72,7 +72,7 @@ namespace TimeReportApi.Controllers
             List<UserViewModel> userList = new List<UserViewModel>();
             for (int i = 0; i < missionMemberList.Count; i++)
             {
-                User user = unitOfWork.UserRepository.GetById(missionMemberList[i].missionId);
+                User user = unitOfWork.UserRepository.GetById(missionMemberList[i].MissionId);
                 userList.Add(new UserViewModel().ConvertToViewModel(user));
             }
             return userList;
@@ -86,7 +86,7 @@ namespace TimeReportApi.Controllers
         [Route("GetAllUserByMissionName/{name}")]
         public IEnumerable<Mission> GetAllMissionByMissionName(string name)
         {
-            List<Mission> missionList = unitOfWork.MissionRepository.Search<Mission>(x => x.missionName, name);
+            List<Mission> missionList = unitOfWork.MissionRepository.Search<Mission>(x => x.MissionName, name);
             return missionList;
         }
 
@@ -118,9 +118,14 @@ namespace TimeReportApi.Controllers
         }
 
         // DELETE api/<MissionMemberController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        [Route("DeleteMissionMember/{userId}/{missionId}")]
+        public ActionResult DeleteMissionMember(int userId, int missionId)
         {
+            //unitOfWork.MissionMemberRepository.Insert(new MissionMember() { userId=2,});
+            unitOfWork.MissionMemberRepository.Delete(userId, missionId);
+            unitOfWork.MissionMemberRepository.Save();
+            return Ok();
         }
 
 
@@ -154,7 +159,7 @@ namespace TimeReportApi.Controllers
             List<MissionViewModel> mvmList = new List<MissionViewModel>();
             for (int i = 0; i < favoriteMissionList.Count; i++)
             {
-                Mission mission = unitOfWork.MissionRepository.GetById(favoriteMissionList[i].missionId);
+                Mission mission = unitOfWork.MissionRepository.GetById(favoriteMissionList[i].MissionId);
                 mvmList.Add(new MissionViewModel().ConvertToViewModel(mission));
             }
             return mvmList;

@@ -50,7 +50,7 @@ namespace TimeReportApi.Controllers
                 {
                     // En int kan aldrig  vara  null, så om vi skickar nya registries
                     // bör vi hantera det på något sätt i JSON, typ  sätta regID  till 0?
-                    if (newRegistries.registriesToReport[i].registryId == 0)
+                    if (newRegistries.registriesToReport[i].RegistryId == 0)
                     {
                         // Add new registry
                         unitOfWork.RegistryRepository.Insert(newRegistries.registriesToReport[i]);
@@ -109,7 +109,7 @@ namespace TimeReportApi.Controllers
             DateTime startDate = GetWeekStartDate(dateTime, DayOfWeek.Monday);
             DateTime endDate = startDate.AddDays(7);
 
-            List<Registry> weekRegistries = unitOfWork.RegistryRepository.GetRegistriesByDate(startDate, endDate, user.userId);
+            List<Registry> weekRegistries = unitOfWork.RegistryRepository.GetRegistriesByDate(startDate, endDate, user.UserId);
             return(ConvertRegistriesToViewModel(weekRegistries));     
         }
 
@@ -147,23 +147,23 @@ namespace TimeReportApi.Controllers
             {
                 registryViewModel = new RegistryViewModel();
                 
-                if (reg.taskId == null)
+                if (reg.TaskId == null)
                 {
                     registryViewModel.taskId = null;
                     registryViewModel.missionName = "Internal time";
                 }
                 else
                 {
-                    task = unitOfWork.TaskRepository.GetById(reg.taskId);
-                    registryViewModel.taskName = task.name;
-                    registryViewModel.missionName = unitOfWork.MissionRepository.GetById(task.missionId).missionName;
-                    registryViewModel.invoice = task.invoice;
-                    registryViewModel.taskId = task.taskId;
+                    task = unitOfWork.TaskRepository.GetById(reg.TaskId);
+                    registryViewModel.taskName = task.Name;
+                    registryViewModel.missionName = unitOfWork.MissionRepository.GetById(task.MissionId).MissionName;
+                    registryViewModel.invoice = task.Invoice;
+                    registryViewModel.taskId = task.TaskId;
                 }
 
-                registryViewModel.registryId = reg.registryId;
-                registryViewModel.day = reg.date.DayOfWeek;
-                registryViewModel.hours = reg.hours;
+                registryViewModel.registryId = reg.RegistryId;
+                registryViewModel.day = reg.Date.DayOfWeek;
+                registryViewModel.hours = reg.Hours;
 
 
                 weekRegistries.Add(registryViewModel);
