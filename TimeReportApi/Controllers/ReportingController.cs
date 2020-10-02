@@ -48,6 +48,9 @@ namespace TimeReportApi.Controllers
             {
                 for (int i = 0; i < newRegistries.registriesToReport.Count; i++)
                 {
+                    if (newRegistries.registriesToReport[i].UserId != user.UserId)
+                        throw new Exception("You are trying to edit someone elses registries!");
+
                     // En int kan aldrig  vara  null, så om vi skickar nya registries
                     // bör vi hantera det på något sätt i JSON, typ  sätta regID  till 0?
                     if (newRegistries.registriesToReport[i].RegistryId == 0)
@@ -64,9 +67,9 @@ namespace TimeReportApi.Controllers
                 unitOfWork.RegistryRepository.Save();
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return StatusCode(500, "Something went wrong!");
+                return StatusCode(500, e.Message);
             }
         }
 
