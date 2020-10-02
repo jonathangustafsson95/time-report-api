@@ -111,17 +111,17 @@ namespace DatabaseUnitTest
             Assert.Equal(allUsers, allUsersTestList);
         }
 
-        [TestMethod]
-        public void DeleteTest()
-        {
-            SeedInMemory(1);
-            _unitOfWork.UserRepository.Delete(_testUserObject.UserId);
-            //unitOfWork.MissionMemberRepository.Delete(testMissionMember.missionId,testMissionMember.userId);
-            //unitOfWork.RegistryRepository.Delete(testRegistryObject.registryId);
-            _unitOfWork.UserRepository.Save();
-            var allUsersTestList = _unitOfWork.UserRepository.GetAll();
-            Assert.Empty(allUsersTestList);
-        }
+        //[TestMethod]
+        //public void DeleteTest()
+        //{
+        //    SeedInMemory(1);
+        //    _unitOfWork.UserRepository.Delete(_testUserObject.UserId);
+        //    //unitOfWork.MissionMemberRepository.Delete(testMissionMember.missionId,testMissionMember.userId);
+        //    //unitOfWork.RegistryRepository.Delete(testRegistryObject.registryId);
+        //    _unitOfWork.UserRepository.Save();
+        //    var allUsersTestList = _unitOfWork.UserRepository.GetAll();
+        //    Assert.Empty(allUsersTestList);
+        //}
 
         [TestMethod]
         public void DeleteTestComposite()

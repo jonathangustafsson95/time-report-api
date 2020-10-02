@@ -34,7 +34,6 @@ namespace TimeReportApi.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("Login")]
-        [EnableCors("MyPolicy")]
         public IActionResult Login([FromBody]User login)
         {
             IActionResult response = Unauthorized();
