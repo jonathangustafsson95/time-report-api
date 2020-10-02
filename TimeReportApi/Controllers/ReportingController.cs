@@ -164,6 +164,8 @@ namespace TimeReportApi.Controllers
                 registryViewModel.registryId = reg.RegistryId;
                 registryViewModel.day = reg.Date.DayOfWeek;
                 registryViewModel.hours = reg.Hours;
+                registryViewModel.created = reg.Created;
+                registryViewModel.date = reg.Date;
 
 
                 weekRegistries.Add(registryViewModel);
