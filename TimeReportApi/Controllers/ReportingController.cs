@@ -87,15 +87,18 @@ namespace TimeReportApi.Controllers
             try
             {
                 for (int i = 0; i < registryIdsToDelete.RegistriesToDelete.Count; i++)
-                {                   
+                {
+                    if (unitOfWork.RegistryRepository.GetById(registryIdsToDelete.RegistriesToDelete[i]).UserId != user.UserId)
+                        throw new Exception("You are trying to delete someone elses registries!");
+
                     unitOfWork.RegistryRepository.Delete(unitOfWork.RegistryRepository.GetById(registryIdsToDelete.RegistriesToDelete[i]).RegistryId);
                 }
                 unitOfWork.RegistryRepository.Save();
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return StatusCode(500, "Something went wrong!");
+                return StatusCode(500, e.Message);
             }
         }
 
