@@ -24,11 +24,9 @@ namespace TimeReportApi.Controllers
     {
         private readonly User user;
         private readonly UnitOfWork unitOfWork;
-        private readonly IHttpContextAccessor httpContextAccessor;
         public ReportingController(UnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
         {
             this.unitOfWork = unitOfWork;
-            this.httpContextAccessor = httpContextAccessor;
             int userId = Int32.Parse(httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "userId").Value);
             user = unitOfWork.UserRepository.GetById(userId);
         }
@@ -72,7 +70,6 @@ namespace TimeReportApi.Controllers
                 return StatusCode(500, e.Message);
             }
         }
-
 
         /// <summary>
         /// This method takes a list of registry ids from body of request, extracts
