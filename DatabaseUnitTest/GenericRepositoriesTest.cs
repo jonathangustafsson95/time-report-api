@@ -1,26 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.CompilerServices;
-using Castle.DynamicProxy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.AspNetCore.Mvc.Core;
 using CommonLibrary.Model;
 using DataAccessLayer;
-using DataAccessLayer.Repositories;
 using DataAccessLayer.UnitOfWork;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
-using Xunit;
-using Microsoft.EntityFrameworkCore.InMemory;
-using Microsoft.EntityFrameworkCore.Sqlite;
-using Microsoft.EntityFrameworkCore.InMemory.Storage.Internal;
 using Assert = Xunit.Assert;
 using TimeReportApi.Controllers;
 using TimeReportApi.Models;
 using Microsoft.AspNetCore.Http;
+using NSubstitute;
+using System.Security.Claims;
+using FakeItEasy;
 
 namespace DatabaseUnitTest
 {
@@ -179,56 +170,65 @@ namespace DatabaseUnitTest
         }
 
     }
-    //[TestClass]
-    //public class ControllerTest
-    //{
-    //    BulbasaurDevContext DbContext { get; set; }
-    //    UnitOfWork unitOfWork { get; set; }
-    //    private readonly IHttpContextAccessor _HttpContextAccessor;
-    //    public ControllerTest()
-    //    {
-    //        DbContext = inMemorydbcontext.GetContextWithData();
-    //        unitOfWork = new UnitOfWork(DbContext);
-    //    }
-    //    [TestMethod]
-    //    public void GetAllMissions()
-    //    {
-    //        //arrange
-    //        var controller = new MissionController(unitOfWork, _HttpContextAccessor);
-    //        inMemorydbcontext.UpdateContext(DbContext);
+    [TestClass]
+    public class ControllerTest
+    {
+        BulbasaurDevContext DbContext { get; set; }
+        UnitOfWork unitOfWork { get; set; }
 
-    //        List<Mission> trueList = (List<Mission>)unitOfWork.MissionRepository.GetAll();
-    //        //act 
-    //        List<Mission> userList = (List<Mission>)controller.GetAllMissions();
-    //        //assert
-    //        Assert.Equal(userList, trueList);
-    //    }
-    //    [TestMethod]
-    //    public void GetAllMissionsByUserId()
-    //    {
-    //        //arrange
-    //        var controller = new MissionController(unitOfWork, _HttpContextAccessor);
-    //        inMemorydbcontext.UpdateContext(DbContext);
+        private readonly MissionController missionController;
 
-    //        List<MissionMember> missionMembers = (List<MissionMember>)unitOfWork.MissionMemberRepository.GetAllByUserId(1);
-    //        List<int> trueIdList = new List<int>();
-    //        List<int> testIdList = new List<int>();
-    //        foreach (MissionMember mm in missionMembers)
-    //        {
-    //            Mission mission = unitOfWork.MissionRepository.GetById(mm.UserId);
-    //            trueIdList.Add(mission.MissionId);
-    //        }
+        public ControllerTest()
+        {
+            int userId = 1;
+            var userIdClaim = A.Fake<Claim>(x => x.WithArgumentsForConstructor(() => new Claim("userId", userId.ToString())));
+            var httpContextAccessor = A.Fake<IHttpContextAccessor>();
+            httpContextAccessor.HttpContext = A.Fake<HttpContext>();
+            httpContextAccessor.HttpContext.User = A.Fake<ClaimsPrincipal>();
+            A.CallTo(() => httpContextAccessor.HttpContext.User.Claims).Returns(new List<Claim> { userIdClaim });
+            DbContext = inMemorydbcontext.GetContextWithData();
+            unitOfWork = new UnitOfWork(DbContext);
+            missionController = new MissionController(unitOfWork, httpContextAccessor);
+        }
+        [TestMethod]
+        public void GetAllMissions()
+        {
+            //arrange
+            inMemorydbcontext.UpdateContext(DbContext);
 
-    //        //act 
-    //        List<MissionViewModel> missionList = (List<MissionViewModel>)controller.GetAllMissionByUserId(1);
-    //        foreach(MissionViewModel mission in missionList)
-    //        {
-    //            testIdList.Add(mission.missionId);
-    //        }
-    //        //assert
-    //        Assert.Equal(trueIdList, testIdList);
-    //    }
+            List<Mission> trueList = (List<Mission>)unitOfWork.MissionRepository.GetAll();
+            //act 
+            List<Mission> userList = (List<Mission>)missionController.GetAllMissions();
+            //assert
+            Assert.Equal(userList, trueList);
+        }
+        [TestMethod]
+        public void GetAllMissionsByUserId()
+        {
+            //arrange
+            inMemorydbcontext.UpdateContext(DbContext);
 
-    //}
+            List<MissionMember> missionMembers = (List<MissionMember>)unitOfWork.MissionMemberRepository.GetAllByUserId(1);
+            List<int> trueIdList = new List<int>();
+            List<int> testIdList = new List<int>();
+            foreach (MissionMember mm in missionMembers)
+            {
+                Mission mission = unitOfWork.MissionRepository.GetById(mm.UserId);
+                trueIdList.Add(mission.MissionId);
+            }
+
+            //act 
+            List<MissionViewModel> missionList = (List<MissionViewModel>)missionController.GetAllMissionByUserId(1);
+            foreach (MissionViewModel mission in missionList)
+            {
+                testIdList.Add(mission.missionId);
+            }
+            //assert
+            Assert.Equal(trueIdList, testIdList);
+        }
+
+    }
 
 }
+
+
