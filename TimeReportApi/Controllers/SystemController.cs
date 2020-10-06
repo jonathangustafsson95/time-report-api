@@ -36,7 +36,7 @@ namespace TimeReportApi.Controllers
         [Route("Login")]
         public IActionResult Login([FromBody]User login)
         {
-            IActionResult response = Unauthorized(new { Ok = false, ErrorMsg = "Invalid credentials..." }) ;
+            IActionResult response = Unauthorized();//new { Ok = false, ErrorMsg = "Invalid credentials..." }) ;
             User user = AuthenticateUser(login);
             if (user != null)
             {
