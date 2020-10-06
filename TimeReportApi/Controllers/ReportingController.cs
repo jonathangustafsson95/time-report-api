@@ -18,17 +18,15 @@ namespace TimeReportApi.Controllers
     [Route("api/[controller]")]
     // Kalla på Authorize vid specifika metoder för att begränsa dem,
     // sätter man Authorize på hela kontrollern blir alla metoder begränsade och kräver login
-    [Authorize]
+    //[Authorize]
     [ApiController]
     public class ReportingController : ControllerBase
     {
         private readonly User user;
         private readonly UnitOfWork unitOfWork;
-        private readonly IHttpContextAccessor httpContextAccessor;
         public ReportingController(UnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
         {
             this.unitOfWork = unitOfWork;
-            this.httpContextAccessor = httpContextAccessor;
             int userId = Int32.Parse(httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "userId").Value);
             user = unitOfWork.UserRepository.GetById(userId);
         }
@@ -42,12 +40,15 @@ namespace TimeReportApi.Controllers
         /// <returns>Http response message</returns>
         [HttpPost]
         [Route("TimeReport")]
-        public ActionResult<User> AddTimeReport([FromBody] Registries newRegistries)
+        public ActionResult<HttpResponse> AddTimeReport([FromBody] Registries newRegistries)
         {
             try
             {
                 for (int i = 0; i < newRegistries.registriesToReport.Count; i++)
                 {
+                    if (newRegistries.registriesToReport[i].UserId != user.UserId)
+                        throw new Exception("You are trying to edit someone elses registries!");
+
                     // En int kan aldrig  vara  null, så om vi skickar nya registries
                     // bör vi hantera det på något sätt i JSON, typ  sätta regID  till 0?
                     if (newRegistries.registriesToReport[i].RegistryId == 0)
@@ -64,9 +65,37 @@ namespace TimeReportApi.Controllers
                 unitOfWork.RegistryRepository.Save();
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return StatusCode(500, "Something went wrong!");
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        /// <summary>
+        /// This method takes a list of registry ids from body of request, extracts
+        /// and deletes the entries from the database.
+        /// </summary>
+        /// <param name="registryIdsToDelete"></param>
+        /// <returns>Http response message</returns>
+        [HttpDelete]
+        [Route("TimeReport")] 
+        public ActionResult<HttpResponse> DeleteTimeReport([FromBody]RegistriesDelete registryIdsToDelete)
+        {
+            try
+            {
+                for (int i = 0; i < registryIdsToDelete.RegistriesToDelete.Count; i++)
+                {
+                    if (unitOfWork.RegistryRepository.GetById(registryIdsToDelete.RegistriesToDelete[i]).UserId != user.UserId)
+                        throw new Exception("You are trying to delete someone elses registries!");
+
+                    unitOfWork.RegistryRepository.Delete(unitOfWork.RegistryRepository.GetById(registryIdsToDelete.RegistriesToDelete[i]).RegistryId);
+                }
+                unitOfWork.RegistryRepository.Save();
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -138,6 +167,8 @@ namespace TimeReportApi.Controllers
                 registryViewModel.registryId = reg.RegistryId;
                 registryViewModel.day = reg.Date.DayOfWeek;
                 registryViewModel.hours = reg.Hours;
+                registryViewModel.created = reg.Created;
+                registryViewModel.date = reg.Date;
 
 
                 weekRegistries.Add(registryViewModel);

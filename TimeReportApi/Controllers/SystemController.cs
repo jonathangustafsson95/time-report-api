@@ -14,6 +14,7 @@ using System.Text;
 using TimeReportApi.Models;
 using DataAccessLayer;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Cors;
 
 namespace TimeReportApi.Controllers
 {
@@ -45,17 +46,18 @@ namespace TimeReportApi.Controllers
                     token = tokenString,
                     userDetails = user,
                 });
-            }
+            };
+
             return response;
         }
 
-        User AuthenticateUser(User loginCredentials)
+        private User AuthenticateUser(User loginCredentials)
         {
             User user = unitOfWork.UserRepository.GetByName(loginCredentials.UserName).SingleOrDefault(x => x.UserName == loginCredentials.UserName && x.Password == loginCredentials.Password);
             return user;
         }
 
-        string GenerateJWTToken(User userInfo)
+        private string GenerateJWTToken(User userInfo)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:SecretKey"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);

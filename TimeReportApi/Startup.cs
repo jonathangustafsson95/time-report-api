@@ -30,10 +30,13 @@ namespace TimeReportApi
 
             // För att kalla på api med headers genom ajax
             services.AddCors(options =>
-                options.AddPolicy("MyPolicy",
+                options.AddDefaultPolicy(
                      builder =>
                      {
-                         builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
+                         builder
+                         .AllowAnyOrigin()
+                         .AllowAnyMethod()
+                         .AllowAnyHeader();
                      }
                 )
             );
@@ -76,7 +79,7 @@ namespace TimeReportApi
                 app.UseDeveloperExceptionPage();
             }
             // API anrop genom headers med ajax
-            app.UseCors("MyPolicy");
+            app.UseCors();
 
             app.UseHttpsRedirection();
 

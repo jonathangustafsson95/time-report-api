@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using CommonLibrary.Model;
 using DataAccessLayer.UnitOfWork;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TimeReportApi.Models;
+using TimeReportApi.Models.ViewModel;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,17 +17,12 @@ namespace TimeReportApi.Controllers
     public class MissionController : ControllerBase
     {
         private readonly UnitOfWork unitOfWork;
-        private readonly User dummy;
-        public MissionController(UnitOfWork unitOfWork)
+        private readonly User user;
+        public MissionController(UnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
         {
             this.unitOfWork = unitOfWork;
-            dummy = new User()
-            {
-                UserId = 1,
-                UserName = "John",
-                Password = "abc123",
-                EMail = "hej@lol.com"
-            };
+            int userId = Int32.Parse(httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "userId").Value);
+            user = unitOfWork.UserRepository.GetById(userId);
         }
 
         /// <summary>
@@ -165,5 +161,38 @@ namespace TimeReportApi.Controllers
             return mvmList;
         }
 
+        [HttpGet]
+        [Route("GetAllTasksInAMission/{id:int}")]
+        public IEnumerable<Task> GetAllTasksInAMission(int missionId)
+        {
+            IEnumerable<Task> allTasksForAMission = unitOfWork.TaskRepository.GetAll();
+            var allTasksInAMission = allTasksForAMission.ToList();
+            allTasksInAMission.Select(m => m.MissionId == missionId);
+            return allTasksInAMission;
+        }
+
+        [HttpGet]
+        [Route("UserMissions")]
+        public List<MissionTaskViewModel> GetMissionByUserId()
+        {
+            List<MissionMember> missionMemberList = unitOfWork.MissionMemberRepository.GetAllByUserId(user.UserId);
+            List<MissionTaskViewModel> missionTaskViewModel = new List<MissionTaskViewModel>();
+            for (int i = 0; i < missionMemberList.Count; i++)
+            {
+                Mission mission = unitOfWork.MissionRepository.GetById(missionMemberList[i].MissionId);
+                MissionTaskViewModel missionsVM = new MissionTaskViewModel
+                {
+                    MissionName = mission.MissionName,
+                    Description = mission.Description,
+                    Customer = mission.Customer.Name
+                };
+                foreach (var task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
+                {
+                    missionsVM.Tasks.Add(task);
+                }
+                missionTaskViewModel.Add(missionsVM);
+            }
+            return missionTaskViewModel;
+        }
     }
 }
