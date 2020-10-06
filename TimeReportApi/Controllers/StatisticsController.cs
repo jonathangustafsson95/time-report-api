@@ -6,6 +6,7 @@ using CommonLibrary.Model;
 using DataAccessLayer.UnitOfWork;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Microsoft.AspNetCore.Razor.Language;
 using TimeReportApi.Models;
 
@@ -29,10 +30,10 @@ namespace time_report_api.Controllers
             };
         }
         [HttpGet]
-        [Route("GetStatsInternVsCustomer/{numberOfWeeks:int}")]
-        public Statistic GetStatsInternVsCustomer(int numberOfWeeks)
+        [Route("GetStatsInternVsCustomer/{startDate}/{endDate}")]
+        public Dictionary<string,float> GetStatsInternVsCustomer(DateTime startDate, DateTime endDate)
         {
-            List<Registry> registryByDate = unitOfWork.RegistryRepository.GetRegistriesByNumberOfDays(numberOfWeeks * 7, dummy.UserId);
+            List<Registry> registryByDate = unitOfWork.RegistryRepository.GetRegistriesByDate(startDate, endDate, dummy.UserId);
             int internalCount = 0, customerCount = 0;
             float internalHours = 0, customerHours = 0;
             foreach (Registry reg in registryByDate)
@@ -49,18 +50,29 @@ namespace time_report_api.Controllers
                 }
             }
             float totalHours = internalHours + customerHours;
-            Statistic statistic = new Statistic()
-            {
-                totalTask = registryByDate.Count,
-                internalTaskCount = internalCount,
-                customerTaskCount = customerCount,
-                totalTime = totalHours,
-                internalTimePerc = (internalHours / totalHours)*100,
-                customerTimePerc = (customerHours / totalHours)*100
-            };
+            //Statistic statistic = new Statistic()
+            //{
+            //    TotalTask = registryByDate.Count,
+            //    InternalTaskCount = internalCount,
+            //    CustomerTaskCount = customerCount,
+            //    InternalTime = internalHours,
+            //    CustomerTime = customerHours,
+            //    TotalTime = totalHours,
+            //    InternalTimePerc = (internalHours / totalHours) * 100,
+            //    CustomerTimePerc = (customerHours / totalHours) * 100
+            //};
+            Statistic statistic = new Statistic();
+            statistic.StatisticDictionary["TotalTask"] = registryByDate.Count;
+            statistic.StatisticDictionary["InternalTaskCount"] = internalCount;
+            statistic.StatisticDictionary["CustomerTaskCount"] = customerCount;
+            statistic.StatisticDictionary["InternalTime"] = internalHours;
+            statistic.StatisticDictionary["CustomerTime"] = customerHours;
+            statistic.StatisticDictionary["TotalTime"] = totalHours;
+            statistic.StatisticDictionary["InternalTimePerc"] = (internalHours / totalHours) * 100;
+            statistic.StatisticDictionary["CustomerTimePerc"] = (customerHours / totalHours) * 100;
             //List<Registry> filteredByInternal=registryByDate.Where(t=>t.taskId==null).ToList();
 
-            return statistic;
+            return statistic.StatisticDictionary; 
         }
 
         [HttpGet]
