@@ -175,5 +175,21 @@ namespace TimeReportApi.Controllers
             }
             return weekRegistries;
         }
+
+        //[HttpGet]
+        //[Route("LatestRegistries")]
+        //public ActionResult<HttpResponse> GetLatestregistries()
+        //{
+        //    try
+        //    {
+               
+        //        }
+        //        return Ok();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return StatusCode(500, e.Message);
+        //    }
+        //}
     }
 }

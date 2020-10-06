@@ -183,6 +183,7 @@ namespace TimeReportApi.Controllers
                 MissionTaskViewModel missionsVM = new MissionTaskViewModel
                 {
                     MissionName = mission.MissionName,
+                    MissionId = mission.MissionId,
                     Description = mission.Description,
                     Customer = mission.Customer.Name
                 };

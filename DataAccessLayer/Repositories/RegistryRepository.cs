@@ -49,6 +49,14 @@ namespace DataAccessLayer.Repositories
             return allRegistriesBetweenDates != null ? allRegistriesBetweenDates.ToList() : new List<Registry>();
         }
 
+        public List<Registry> GetLatestRegistries(int nrOfRegs, int userId)
+        {
+            List<Registry> registries = GetAllByUserId(userId);
+            var enumerable = registries.ToList();
+            enumerable.OrderBy(d => d.RegistryId);
+            return enumerable.Take(nrOfRegs).ToList();
+        }
+
     }
     
 }

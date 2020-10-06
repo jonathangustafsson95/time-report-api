@@ -13,8 +13,8 @@ namespace DataAccessLayer.UnitOfWork
     {
         IGenericRepository<Customer> CustomerRepository { get; }
         IFavoriteMissionRepository FavoriteMissionRepository { get; }
-        IGenericRepository<Mission> MissionRepository { get; }
-        IMissionMember MissionMemberRepository { get; }
+        IMissionRepository MissionRepository { get; }
+        IMissionMemberRepository MissionMemberRepository { get; }
         IRegistryRepository RegistryRepository { get; }
         ITaskRepository TaskRepository { get; }
         IUserRepository UserRepository { get; }
