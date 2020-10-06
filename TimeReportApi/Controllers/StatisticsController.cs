@@ -7,6 +7,7 @@ using DataAccessLayer.UnitOfWork;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Razor.Language;
 using TimeReportApi.Models;
 
 namespace time_report_api.Controllers
@@ -72,6 +73,49 @@ namespace time_report_api.Controllers
             //List<Registry> filteredByInternal=registryByDate.Where(t=>t.taskId==null).ToList();
 
             return statistic.StatisticDictionary; 
+        }
+
+        [HttpGet]
+        [Route("GetStatsCustomerVsCustomer/{userId:int}/{startDate:DateTime}/{endDate:DateTime}")]
+        public Dictionary<string, float> GetStatsCustomerVsCustomer(int userId, DateTime startDate, DateTime endDate)
+        {
+            List<Registry> registryByDate = unitOfWork.RegistryRepository.GetRegistriesByDate(startDate, endDate, userId);
+
+            Dictionary<int, float> taskIdAndHoursSpent = new Dictionary<int, float>();
+            Dictionary<int, string> taskIdAndCustomerName = new Dictionary<int, string>();
+            Dictionary<string, float> customerNameAndHoursSpent = new Dictionary<string, float>();
+
+            foreach (Registry reg in registryByDate)
+            {
+                if (reg.TaskId.HasValue) 
+                { 
+                    if(!taskIdAndHoursSpent.ContainsKey(reg.TaskId.Value))
+                    {
+                        string customerName = (unitOfWork.CustomerRepository.GetById(unitOfWork.MissionRepository.GetById(unitOfWork.TaskRepository.GetById(reg.TaskId).MissionId.Value).CustomerId)).Name;
+                        taskIdAndCustomerName.Add(reg.TaskId.Value, customerName);
+                        taskIdAndHoursSpent.Add(reg.TaskId.Value, 0);
+
+                    }
+
+                    taskIdAndHoursSpent[reg.TaskId.Value] += (float)reg.Hours;
+                }
+
+            }
+
+            foreach (KeyValuePair<int, float> item in taskIdAndHoursSpent) 
+            {
+                if(customerNameAndHoursSpent.ContainsKey(taskIdAndCustomerName[item.Key]))
+                {
+                    customerNameAndHoursSpent[taskIdAndCustomerName[item.Key]] += taskIdAndHoursSpent[item.Key];
+
+                }
+                else 
+                {
+                    customerNameAndHoursSpent.Add(taskIdAndCustomerName[item.Key], taskIdAndHoursSpent[item.Key]);
+                }
+            }
+
+            return customerNameAndHoursSpent;
         }
     }
 }

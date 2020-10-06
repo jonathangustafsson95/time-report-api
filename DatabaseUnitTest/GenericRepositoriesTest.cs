@@ -1,25 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.CompilerServices;
-using Castle.DynamicProxy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.AspNetCore.Mvc.Core;
 using CommonLibrary.Model;
 using DataAccessLayer;
-using DataAccessLayer.Repositories;
 using DataAccessLayer.UnitOfWork;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
-using Xunit;
-using Microsoft.EntityFrameworkCore.InMemory;
-using Microsoft.EntityFrameworkCore.Sqlite;
-using Microsoft.EntityFrameworkCore.InMemory.Storage.Internal;
 using Assert = Xunit.Assert;
 using TimeReportApi.Controllers;
 using TimeReportApi.Models;
+using Microsoft.AspNetCore.Http;
+using NSubstitute;
+using System.Security.Claims;
+using FakeItEasy;
 
 namespace DatabaseUnitTest
 {
@@ -32,7 +24,7 @@ namespace DatabaseUnitTest
                 .Options;
             var context = new BulbasaurDevContext(options);
 
-            //context.Add(new User() { userId = 1, eMail = "bla@bla.com", password = "bla", userName = "blabla" });
+            //context.Add(new User() { userId = 1, eMail = "bla@bla.com", password = "bla", userName = "blabla" }); 
             context.SaveChanges();
 
             return context;
@@ -111,17 +103,17 @@ namespace DatabaseUnitTest
             Assert.Equal(allUsers, allUsersTestList);
         }
 
-        [TestMethod]
-        public void DeleteTest()
-        {
-            SeedInMemory(1);
-            _unitOfWork.UserRepository.Delete(_testUserObject.UserId);
-            //unitOfWork.MissionMemberRepository.Delete(testMissionMember.missionId,testMissionMember.userId);
-            //unitOfWork.RegistryRepository.Delete(testRegistryObject.registryId);
-            _unitOfWork.UserRepository.Save();
-            var allUsersTestList = _unitOfWork.UserRepository.GetAll();
-            Assert.Empty(allUsersTestList);
-        }
+        //[TestMethod]
+        //public void DeleteTest()
+        //{
+        //    SeedInMemory(1);
+        //    _unitOfWork.UserRepository.Delete(_testUserObject.UserId);
+        //    //unitOfWork.MissionMemberRepository.Delete(testMissionMember.missionId,testMissionMember.userId);
+        //    //unitOfWork.RegistryRepository.Delete(testRegistryObject.registryId);
+        //    _unitOfWork.UserRepository.Save();
+        //    var allUsersTestList = _unitOfWork.UserRepository.GetAll();
+        //    Assert.Empty(allUsersTestList);
+        //}
 
         [TestMethod]
         public void DeleteTestComposite()
@@ -183,22 +175,30 @@ namespace DatabaseUnitTest
     {
         BulbasaurDevContext DbContext { get; set; }
         UnitOfWork unitOfWork { get; set; }
+
+        private readonly MissionController missionController;
+
         public ControllerTest()
         {
+            int userId = 1;
+            var userIdClaim = A.Fake<Claim>(x => x.WithArgumentsForConstructor(() => new Claim("userId", userId.ToString())));
+            var httpContextAccessor = A.Fake<IHttpContextAccessor>();
+            httpContextAccessor.HttpContext = A.Fake<HttpContext>();
+            httpContextAccessor.HttpContext.User = A.Fake<ClaimsPrincipal>();
+            A.CallTo(() => httpContextAccessor.HttpContext.User.Claims).Returns(new List<Claim> { userIdClaim });
             DbContext = inMemorydbcontext.GetContextWithData();
             unitOfWork = new UnitOfWork(DbContext);
-
+            missionController = new MissionController(unitOfWork, httpContextAccessor);
         }
         [TestMethod]
         public void GetAllMissions()
         {
             //arrange
-            var controller = new MissionController(unitOfWork);
             inMemorydbcontext.UpdateContext(DbContext);
 
             List<Mission> trueList = (List<Mission>)unitOfWork.MissionRepository.GetAll();
             //act 
-            List<Mission> userList = (List<Mission>)controller.GetAllMissions();
+            List<Mission> userList = (List<Mission>)missionController.GetAllMissions();
             //assert
             Assert.Equal(userList, trueList);
         }
@@ -206,7 +206,6 @@ namespace DatabaseUnitTest
         public void GetAllMissionsByUserId()
         {
             //arrange
-            var controller = new MissionController(unitOfWork);
             inMemorydbcontext.UpdateContext(DbContext);
 
             List<MissionMember> missionMembers = (List<MissionMember>)unitOfWork.MissionMemberRepository.GetAllByUserId(1);
@@ -219,8 +218,8 @@ namespace DatabaseUnitTest
             }
 
             //act 
-            List<MissionViewModel> missionList = (List<MissionViewModel>)controller.GetAllMissionByUserId(1);
-            foreach(MissionViewModel mission in missionList)
+            List<MissionViewModel> missionList = (List<MissionViewModel>)missionController.GetAllMissionByUserId(1);
+            foreach (MissionViewModel mission in missionList)
             {
                 testIdList.Add(mission.missionId);
             }
@@ -231,3 +230,5 @@ namespace DatabaseUnitTest
     }
 
 }
+
+

@@ -20,5 +20,7 @@ namespace TimeReportApi.Models
         //public float CustomerTimePerc { get; set; }
         public Statistic()=> StatisticDictionary = new Dictionary<string, float>();
 
+        public Dictionary<string, float> statisticsDictionary { get; set; }
+
     }
 }
