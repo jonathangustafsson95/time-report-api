@@ -20,5 +20,7 @@ namespace TimeReportApi.Models
         public float customerTaskCount { get; set; }
         public float totalTask { get; set; }
 
+        public Dictionary<string, float> statisticsDictionary { get; set; }
+
     }
 }
