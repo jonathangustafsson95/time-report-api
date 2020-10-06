@@ -14,6 +14,8 @@ namespace TimeReportApi.Models
         public int? taskId { get; set; }
         public DayOfWeek day { get; set; }
         public double hours { get; set; }
+        public DateTime created { get; set; }
+        public DateTime date { get; set; }
         public InvoiceType invoice { get; set; }
     }
 }
