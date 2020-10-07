@@ -53,10 +53,7 @@ namespace DataAccessLayer.Repositories
         {
             List<Registry> registries = GetAllByUserId(userId);
             var enumerable = registries.ToList();
-            enumerable.OrderByDescending(d => d.RegistryId);
-            return enumerable.Take(nrOfRegs).ToList();
+            return enumerable.OrderByDescending(d => d.RegistryId).Take(nrOfRegs).ToList();
         }
-
-    }
-    
+    }  
 }

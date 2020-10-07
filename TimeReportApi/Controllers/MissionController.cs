@@ -109,10 +109,10 @@ namespace TimeReportApi.Controllers
         }
 
         // PUT api/<MissionMemberController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //}
 
         // DELETE api/<MissionMemberController>/5
         [HttpDelete]
@@ -173,9 +173,14 @@ namespace TimeReportApi.Controllers
             return allTasksInAMission;
         }
 
+        /// <summary>
+        /// This method returns a list of MissionTaskViewModel which contains the missions and corresponding 
+        /// tasks from which the user are a member of. 
+        /// </summary>
+        /// <returns>A list of MissionTaskViewModel items.</returns>
         [HttpGet]
         [Route("UserMissions")]
-        public ActionResult<List<MissionTaskViewModel>> GetMissionByUserId()
+        public ActionResult<List<MissionTaskViewModel>> GetUserMissions()
         {
             List<MissionMember> missionMemberList = unitOfWork.MissionMemberRepository.GetAllByUserId(user.UserId);
             List<MissionTaskViewModel> missionTaskViewModel = new List<MissionTaskViewModel>();
