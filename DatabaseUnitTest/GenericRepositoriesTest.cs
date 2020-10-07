@@ -202,30 +202,30 @@ namespace DatabaseUnitTest
             //assert
             Assert.Equal(userList, trueList);
         }
-        [TestMethod]
-        public void GetAllMissionsByUserId()
-        {
-            //arrange
-            inMemorydbcontext.UpdateContext(DbContext);
+        //[TestMethod]
+        //public void GetAllMissionsByUserId()
+        //{
+        //    //arrange
+        //    inMemorydbcontext.UpdateContext(DbContext);
 
-            List<MissionMember> missionMembers = (List<MissionMember>)unitOfWork.MissionMemberRepository.GetAllByUserId(1);
-            List<int> trueIdList = new List<int>();
-            List<int> testIdList = new List<int>();
-            foreach (MissionMember mm in missionMembers)
-            {
-                Mission mission = unitOfWork.MissionRepository.GetById(mm.UserId);
-                trueIdList.Add(mission.MissionId);
-            }
+        //    List<MissionMember> missionMembers = (List<MissionMember>)unitOfWork.MissionMemberRepository.GetAllByUserId(1);
+        //    List<int> trueIdList = new List<int>();
+        //    List<int> testIdList = new List<int>();
+        //    foreach (MissionMember mm in missionMembers)
+        //    {
+        //        Mission mission = unitOfWork.MissionRepository.GetById(mm.UserId);
+        //        trueIdList.Add(mission.MissionId);
+        //    }
 
-            //act 
-            List<MissionViewModel> missionList = (List<MissionViewModel>)missionController.GetAllMissionByUserId(1);
-            foreach (MissionViewModel mission in missionList)
-            {
-                testIdList.Add(mission.missionId);
-            }
-            //assert
-            Assert.Equal(trueIdList, testIdList);
-        }
+        //    //act 
+        //    List<MissionViewModel> missionList = (List<MissionViewModel>)missionController.GetAllMissionByUserId(1);
+        //    foreach (MissionViewModel mission in missionList)
+        //    {
+        //        testIdList.Add(mission.missionId);
+        //    }
+        //    //assert
+        //    Assert.Equal(trueIdList, testIdList);
+        //}
 
     }
 
