@@ -174,24 +174,35 @@ namespace TimeReportApi.Controllers
 
         [HttpGet]
         [Route("UserMissions")]
-        public List<MissionTaskViewModel> GetMissionByUserId()
+        public ActionResult<List<MissionTaskViewModel>> GetMissionByUserId()
         {
             List<MissionMember> missionMemberList = unitOfWork.MissionMemberRepository.GetAllByUserId(user.UserId);
             List<MissionTaskViewModel> missionTaskViewModel = new List<MissionTaskViewModel>();
+            List<TaskViewModel> tasksViewModelList = new List<TaskViewModel>();
+
             for (int i = 0; i < missionMemberList.Count; i++)
             {
                 Mission mission = unitOfWork.MissionRepository.GetById(missionMemberList[i].MissionId);
+                foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
+                {
+                    TaskViewModel taskVM = new TaskViewModel
+                    {
+                        TaskId = task.TaskId,
+                        MissionId = task.MissionId,
+                        UserId = task.UserId,
+                        Name = task.Name,
+                        Description = task.Description,
+                    };
+                    tasksViewModelList.Add(taskVM);
+                }
                 MissionTaskViewModel missionsVM = new MissionTaskViewModel
                 {
                     MissionName = mission.MissionName,
                     MissionId = mission.MissionId,
                     Description = mission.Description,
-                    Customer = mission.Customer.Name
+                    Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).ToString(),
+                    Tasks = tasksViewModelList
                 };
-                foreach (var task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
-                {
-                    missionsVM.Tasks.Add(task);
-                }
                 missionTaskViewModel.Add(missionsVM);
             }
             return missionTaskViewModel;
