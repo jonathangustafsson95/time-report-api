@@ -42,20 +42,20 @@ namespace TimeReportApi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns> IEnumerable<Mission> </returns>
-        [HttpGet]
-        [Route("GetAllMissionByUserId/{id:int}")]
-        public IEnumerable<MissionViewModel> GetAllMissionByUserId(int id)
-        {
-            List<MissionMember> missionMemberList= unitOfWork.MissionMemberRepository.GetAllByUserId(id);
-            List<MissionViewModel> mvmList = new List<MissionViewModel>();
-            for(int i=0;i< missionMemberList.Count;i++)
-            {
-                Mission mission = unitOfWork.MissionRepository.GetById(missionMemberList[i].MissionId);
-                mvmList.Add(new MissionViewModel().ConvertToViewModel(mission));
-            }
-            return mvmList;
+        //[HttpGet]
+        //[Route("GetAllMissionByUserId/{id:int}")]
+        //public IEnumerable<MissionViewModel> GetAllMissionByUserId(int id)
+        //{
+        //    List<MissionMember> missionMemberList= unitOfWork.MissionMemberRepository.GetAllByUserId(id);
+        //    List<MissionViewModel> mvmList = new List<MissionViewModel>();
+        //    for(int i=0;i< missionMemberList.Count;i++)
+        //    {
+        //        Mission mission = unitOfWork.MissionRepository.GetById(missionMemberList[i].MissionId);
+        //        mvmList.Add(new MissionViewModel().ConvertToViewModel(mission));
+        //    }
+        //    return mvmList;
 
-        }
+        //}
         /// <summary>
         /// This method returns all users associated to the mission id 
         /// </summary>
@@ -157,7 +157,8 @@ namespace TimeReportApi.Controllers
             for (int i = 0; i < favoriteMissionList.Count; i++)
             {
                 Mission mission = unitOfWork.MissionRepository.GetById(favoriteMissionList[i].MissionId);
-                mvmList.Add(new MissionViewModel().ConvertToViewModel(mission));
+                Customer customer = (Customer)unitOfWork.CustomerRepository.GetAll().Select(n => n.CustomerId == mission.CustomerId);
+                mvmList.Add(new MissionViewModel().ConvertToViewModel(mission,customer));
             }
             return mvmList;
         }
