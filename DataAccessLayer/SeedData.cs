@@ -19,6 +19,7 @@ namespace Data.Model
                 { 
                     Created=new DateTime(2020,8,5),
                     Description="Make cool stuffs",
+                    Color= "#F0D87B",
                     Finished=null,
                     MissionId=1,
                     MissionName="Operation Cool Stuffs",
@@ -31,6 +32,7 @@ namespace Data.Model
                 {
                     Created = new DateTime(2020, 9, 5), 
                     Description = "Lorem Ipsum ", 
+                    Color= "#5B8D76",
                     Finished = new DateTime(2020,10,1),
                     MissionId = 2,
                     MissionName = "dolor sit amet", 
@@ -38,6 +40,45 @@ namespace Data.Model
                     Status = 1,
                     UserId = 1,
                     CustomerId=1
+                },
+                new Mission
+                {
+                    Created = new DateTime(2021, 8, 1),
+                    Description = "Make sparkles",
+                    Color = "#E26B9D",
+                    Finished = null,
+                    MissionId = 3,
+                    MissionName = "sparkles",
+                    Start = new DateTime(2021, 8, 1),
+                    Status = 1,
+                    UserId = 1,
+                    CustomerId = 1
+                },
+                new Mission
+                {
+                    Created = new DateTime(2030, 8, 5),
+                    Description = "Make website now",
+                    Color = "#F08B7B",
+                    Finished = null,
+                    MissionId = 4,
+                    MissionName = "make website",
+                    Start = new DateTime(2020, 8, 6),
+                    Status = 1,
+                    UserId = 1,
+                    CustomerId = 1
+                },
+                new Mission
+                {
+                    Created = new DateTime(2020, 12, 5),
+                    Description = "no",
+                    Color = "#7BB6F0",
+                    Finished = null,
+                    MissionId = 5,
+                    MissionName = "yes",
+                    Start = new DateTime(2020, 12, 6),
+                    Status = 1,
+                    UserId = 1,
+                    CustomerId = 1
                 });
             modelBuilder.Entity<Task>().HasData(
                 new Task
