@@ -199,6 +199,7 @@ namespace TimeReportApi.Controllers
                 {
                     MissionName = mission.MissionName,
                     MissionId = mission.MissionId,
+                    StartDate = mission.Start,
                     Description = mission.Description,
                     Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).ToString(),
                     Tasks = tasksViewModelList
