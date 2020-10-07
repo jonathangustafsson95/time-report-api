@@ -22,6 +22,8 @@ namespace TimeReportApi
             Configuration = configuration;
         }
 
+        readonly string BulbasaurPolicy = "bulbasaurPolicy";
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -30,7 +32,7 @@ namespace TimeReportApi
 
             // För att kalla på api med headers genom ajax
             services.AddCors(options =>
-                options.AddDefaultPolicy(
+                options.AddPolicy(name: BulbasaurPolicy,
                      builder =>
                      {
                          builder
@@ -79,7 +81,7 @@ namespace TimeReportApi
                 app.UseDeveloperExceptionPage();
             }
             // API anrop genom headers med ajax
-            app.UseCors();
+            app.UseCors(BulbasaurPolicy);
 
             app.UseHttpsRedirection();
 

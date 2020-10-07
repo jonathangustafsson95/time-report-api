@@ -7,7 +7,7 @@ using DataAccessLayer.IReppositories;
 
 namespace DataAccessLayer.IRepositories
 {
-    public interface IMissionMember: IGenericRepository<MissionMember>
+    public interface IMissionMemberRepository: IGenericRepository<MissionMember>
     {
         List<MissionMember> GetAllByUserId(int id);
         List<MissionMember> GetAllByMissionId(int id);

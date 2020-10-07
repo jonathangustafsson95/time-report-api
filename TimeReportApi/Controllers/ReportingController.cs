@@ -109,11 +109,19 @@ namespace TimeReportApi.Controllers
         [Route("Week/{dateTime}")]
         public ActionResult<List<RegistryViewModel>> GetWeek(DateTime dateTime)
         {
-            DateTime startDate = GetWeekStartDate(dateTime, DayOfWeek.Monday);
-            DateTime endDate = startDate.AddDays(7);
+            try
+            {
+                DateTime startDate = GetWeekStartDate(dateTime, DayOfWeek.Monday);
+                DateTime endDate = startDate.AddDays(7);
 
-            List<Registry> weekRegistries = unitOfWork.RegistryRepository.GetRegistriesByDate(startDate, endDate, user.UserId);
-            return(ConvertRegistriesToViewModel(weekRegistries));     
+                List<Registry> weekRegistries = unitOfWork.RegistryRepository.GetRegistriesByDate(startDate, endDate, user.UserId);
+                return (ConvertRegistriesToViewModel(weekRegistries));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+
         }
 
         /// <summary>
@@ -175,5 +183,20 @@ namespace TimeReportApi.Controllers
             }
             return weekRegistries;
         }
+
+        [HttpGet]
+        [Route("LatestRegistries")]
+        public ActionResult<List<RegistryViewModel>> GetLatestregistries()
+        {
+            try
+            {
+                return (ConvertRegistriesToViewModel(unitOfWork.RegistryRepository.GetLatestRegistries(5, user.UserId)));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
     }
 }
+
