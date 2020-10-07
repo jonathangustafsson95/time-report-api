@@ -196,13 +196,15 @@ namespace TimeReportApi.Controllers
                     };
                     tasksViewModelList.Add(taskVM);
                 }
+                Customer customertest = unitOfWork.CustomerRepository.GetById(mission.CustomerId);
                 MissionTaskViewModel missionsVM = new MissionTaskViewModel
                 {
                     MissionName = mission.MissionName,
                     MissionId = mission.MissionId,
                     StartDate = mission.Start,
                     Description = mission.Description,
-                    Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).Name,
+                    Customer = customertest.Name,
+                    //unitOfWork.CustomerRepository.GetById(mission.CustomerId).Name,
                     Tasks = tasksViewModelList
                 };
                 missionTaskViewModel.Add(missionsVM);
