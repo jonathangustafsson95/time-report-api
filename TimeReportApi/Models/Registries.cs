@@ -8,6 +8,6 @@ namespace TimeReportApi.Models
 {
     public class Registries
     {
-        public List<Registry> registriesToReport { get; set; }
+        public List<Registry> RegistriesToReport { get; set; }
     }
 }

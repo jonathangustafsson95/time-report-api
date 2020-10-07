@@ -19,10 +19,11 @@ using Microsoft.AspNetCore.Cors;
 namespace TimeReportApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class SystemController : ControllerBase
     {
-        private UnitOfWork unitOfWork;
+        private readonly UnitOfWork unitOfWork;
         private readonly IConfiguration _config;
 
         public SystemController(UnitOfWork unitOfWork, IConfiguration config)

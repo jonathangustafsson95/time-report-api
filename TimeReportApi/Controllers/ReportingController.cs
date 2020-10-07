@@ -9,6 +9,8 @@ using CommonLibrary.Model;
 using TimeReportApi.Models;
 using DataAccessLayer;
 using System.Security.Claims;
+using TimeReportApi.Models.ViewModel;
+using System.Globalization;
 
 namespace TimeReportApi.Controllers
 {
@@ -16,9 +18,7 @@ namespace TimeReportApi.Controllers
     /// Controller for handlings rerporting events.
     /// </summary>
     [Route("api/[controller]")]
-    // Kalla på Authorize vid specifika metoder för att begränsa dem,
-    // sätter man Authorize på hela kontrollern blir alla metoder begränsade och kräver login
-    //[Authorize]
+    [Authorize]
     [ApiController]
     public class ReportingController : ControllerBase
     {
@@ -44,22 +44,22 @@ namespace TimeReportApi.Controllers
         {
             try
             {
-                for (int i = 0; i < newRegistries.registriesToReport.Count; i++)
+                for (int i = 0; i < newRegistries.RegistriesToReport.Count; i++)
                 {
-                    if (newRegistries.registriesToReport[i].UserId != user.UserId)
+                    if (newRegistries.RegistriesToReport[i].UserId != user.UserId)
                         throw new Exception("You are trying to edit someone elses registries!");
 
                     // En int kan aldrig  vara  null, så om vi skickar nya registries
                     // bör vi hantera det på något sätt i JSON, typ  sätta regID  till 0?
-                    if (newRegistries.registriesToReport[i].RegistryId == 0)
+                    if (newRegistries.RegistriesToReport[i].RegistryId == 0)
                     {
                         // Add new registry
-                        unitOfWork.RegistryRepository.Insert(newRegistries.registriesToReport[i]);
+                        unitOfWork.RegistryRepository.Insert(newRegistries.RegistriesToReport[i]);
                     }
                     else 
                     {
                         // Change  a existing registry
-                        unitOfWork.RegistryRepository.Update(newRegistries.registriesToReport[i]);
+                        unitOfWork.RegistryRepository.Update(newRegistries.RegistriesToReport[i]);
                     }
                 }
                 unitOfWork.RegistryRepository.Save();
@@ -148,7 +148,7 @@ namespace TimeReportApi.Controllers
         /// </summary>
         /// <param name="registries"></param>
         /// <returns>A list of RegistryViewModel items.</returns>
-        private List<RegistryViewModel> ConvertRegistriesToViewModel(List<Registry> registries)
+        private List<RegistryViewModel> ConvertRegistriesToViewModel(List<Registry> registries, bool suggestion = false)
         {
             List<RegistryViewModel> weekRegistries = new List<RegistryViewModel>();
             Task task;
@@ -160,37 +160,149 @@ namespace TimeReportApi.Controllers
                 
                 if (reg.TaskId == null)
                 {
-                    registryViewModel.taskId = null;
-                    registryViewModel.missionName = "Internal time";
+                    registryViewModel.TaskId = null;
+                    registryViewModel.MissionName = "Internal time";
                 }
                 else
                 {
                     task = unitOfWork.TaskRepository.GetById(reg.TaskId);
-                    registryViewModel.taskName = task.Name;
-                    registryViewModel.missionName = unitOfWork.MissionRepository.GetById(task.MissionId).MissionName;
-                    registryViewModel.invoice = task.Invoice;
-                    registryViewModel.taskId = task.TaskId;
+                    registryViewModel.TaskName = task.Name;
+                    registryViewModel.MissionName = unitOfWork.MissionRepository.GetById(task.MissionId).MissionName;
+                    registryViewModel.Invoice = task.Invoice;
+                    registryViewModel.TaskId = task.TaskId;
                 }
 
-                registryViewModel.registryId = reg.RegistryId;
-                registryViewModel.day = reg.Date.DayOfWeek;
-                registryViewModel.hours = reg.Hours;
-                registryViewModel.created = reg.Created;
-                registryViewModel.date = reg.Date;
+                registryViewModel.Day = reg.Date.DayOfWeek;
+                registryViewModel.Hours = reg.Hours;
+                registryViewModel.Created = reg.Created;
+                registryViewModel.Date = reg.Date;
 
+                if (!suggestion)
+                    registryViewModel.RegistryId = reg.RegistryId;
 
                 weekRegistries.Add(registryViewModel);
             }
             return weekRegistries;
         }
 
+        /// <summary>
+        /// This method returns a list of RegistryViewModel items extracted from the database
+        /// for the 5 last registries from the user.
+        /// </summary>
+        /// <returns>A list of RegistryViewModel items.</returns>
         [HttpGet]
         [Route("LatestRegistries")]
         public ActionResult<List<RegistryViewModel>> GetLatestregistries()
         {
+            // Set nr of registries to collect from DB
+            int nrOfRegistries = 5;
             try
             {
-                return (ConvertRegistriesToViewModel(unitOfWork.RegistryRepository.GetLatestRegistries(5, user.UserId)));
+                return (ConvertRegistriesToViewModel(unitOfWork.RegistryRepository.GetLatestRegistries(nrOfRegistries, user.UserId)));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        /// <summary>
+        /// This method returns a list of WeekTemplateViewModel which in turn holds RegistryViewModels 
+        /// for the latest weeks. Items are extracted from the database for 5 weeks prior to todays date.
+        /// </summary>
+        /// <param name="todaysDate"></param>
+        /// <returns>A list of WeekTemplateViewModel items.</returns>
+        [HttpGet]
+        [Route("WeekTemplates/{todaysDate}")]
+        public ActionResult<List<WeekTemplateViewModel>> GetWeekTemplates(DateTime todaysDate)
+        {
+            int nrOfWeeks = 5;
+            try
+            {
+                List<WeekTemplateViewModel> weekTemplates = new List<WeekTemplateViewModel>();
+                List<Registry> weekRegistries = new List<Registry>();
+                DateTime startDate = GetWeekStartDate(todaysDate, DayOfWeek.Monday);
+                DateTime endDate;
+
+                for (int i = 0; i < nrOfWeeks; i++)
+                {
+                    endDate = startDate;
+                    startDate = startDate.AddDays(-7);
+
+                    WeekTemplateViewModel weekVM = new WeekTemplateViewModel
+                    {
+                        WeekNr = GetWeekNumber(startDate),
+                        StartDate = startDate,
+                        EndDate = endDate,
+                        Week = ConvertRegistriesToViewModel(unitOfWork.RegistryRepository.GetRegistriesByDate(startDate, endDate, user.UserId))
+                    };
+
+                    foreach (var registry in weekVM.Week)
+                        registry.RegistryId = null;
+
+                    if (weekVM.Week.Count > 0) 
+                        weekTemplates.Add(weekVM);
+                }
+                return weekTemplates;
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        /// <summary>
+        /// This method returns an int representing the week number for a specific date that year. 
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns>An int representing the week number.</returns>
+        private int GetWeekNumber(DateTime date)
+        {
+            CultureInfo cultureInfo = CultureInfo.CurrentCulture;
+            return cultureInfo.Calendar.GetWeekOfYear(date, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+        }
+
+        /// <summary>
+        /// This method returns a list of MissionTaskViewModel which contains the missions and corresponding 
+        /// tasks from which the user are a member of. 
+        /// </summary>
+        /// <returns>A list of MissionTaskViewModel items.</returns>
+        [HttpGet]
+        [Route("FavoriteMissionTemplate")]
+        public ActionResult<List<MissionTaskViewModel>> GetFavoriteMissions()
+        {
+            try
+            {
+                List<FavoriteMission> favoriteMissionList = unitOfWork.FavoriteMissionRepository.GetFavoriteMissionsById(user.UserId);
+                List<MissionTaskViewModel> missionTaskViewModel = new List<MissionTaskViewModel>();
+                List<TaskViewModel> tasksViewModelList = new List<TaskViewModel>();
+
+                for (int i = 0; i < favoriteMissionList.Count; i++)
+                {
+                    Mission mission = unitOfWork.MissionRepository.GetById(favoriteMissionList[i].MissionId);
+                    foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
+                    {
+                        TaskViewModel taskVM = new TaskViewModel
+                        {
+                            TaskId = task.TaskId,
+                            MissionId = task.MissionId,
+                            UserId = task.UserId,
+                            Name = task.Name,
+                            Description = task.Description,
+                        };
+                        tasksViewModelList.Add(taskVM);
+                    }
+                    MissionTaskViewModel missionsVM = new MissionTaskViewModel
+                    {
+                        MissionName = mission.MissionName,
+                        MissionId = mission.MissionId,
+                        Description = mission.Description,
+                        Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).Name,
+                        Tasks = tasksViewModelList
+                    };
+                    missionTaskViewModel.Add(missionsVM);
+                }
+                return missionTaskViewModel;
             }
             catch (Exception e)
             {

@@ -15,7 +15,7 @@ using FakeItEasy;
 
 namespace DatabaseUnitTest
 {
-    public static class inMemorydbcontext
+    public static class InMemoryDbContext
     {
         public static BulbasaurDevContext GetContextWithData()
         {
@@ -48,7 +48,7 @@ namespace DatabaseUnitTest
 
         public GenericRepositoriesTest()
         {
-            var devContext = inMemorydbcontext.GetContextWithData();
+            var devContext = InMemoryDbContext.GetContextWithData();
             _unitOfWork=new UnitOfWork(devContext);
         }
 
@@ -173,8 +173,8 @@ namespace DatabaseUnitTest
     [TestClass]
     public class ControllerTest
     {
-        BulbasaurDevContext DbContext { get; set; }
-        UnitOfWork unitOfWork { get; set; }
+        private readonly BulbasaurDevContext DbContext;
+        private readonly UnitOfWork unitOfWork;
 
         private readonly MissionController missionController;
 
@@ -186,7 +186,7 @@ namespace DatabaseUnitTest
             httpContextAccessor.HttpContext = A.Fake<HttpContext>();
             httpContextAccessor.HttpContext.User = A.Fake<ClaimsPrincipal>();
             A.CallTo(() => httpContextAccessor.HttpContext.User.Claims).Returns(new List<Claim> { userIdClaim });
-            DbContext = inMemorydbcontext.GetContextWithData();
+            DbContext = InMemoryDbContext.GetContextWithData();
             unitOfWork = new UnitOfWork(DbContext);
             missionController = new MissionController(unitOfWork, httpContextAccessor);
         }
@@ -194,7 +194,7 @@ namespace DatabaseUnitTest
         public void GetAllMissions()
         {
             //arrange
-            inMemorydbcontext.UpdateContext(DbContext);
+            InMemoryDbContext.UpdateContext(DbContext);
 
             List<Mission> trueList = (List<Mission>)unitOfWork.MissionRepository.GetAll();
             //act 
@@ -206,7 +206,7 @@ namespace DatabaseUnitTest
         public void GetAllMissionsByUserId()
         {
             //arrange
-            inMemorydbcontext.UpdateContext(DbContext);
+            InMemoryDbContext.UpdateContext(DbContext);
 
             List<MissionMember> missionMembers = (List<MissionMember>)unitOfWork.MissionMemberRepository.GetAllByUserId(1);
             List<int> trueIdList = new List<int>();
