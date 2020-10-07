@@ -42,20 +42,20 @@ namespace TimeReportApi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns> IEnumerable<Mission> </returns>
-        [HttpGet]
-        [Route("GetAllMissionByUserId/{id:int}")]
-        public IEnumerable<MissionViewModel> GetAllMissionByUserId(int id)
-        {
-            List<MissionMember> missionMemberList= unitOfWork.MissionMemberRepository.GetAllByUserId(id);
-            List<MissionViewModel> mvmList = new List<MissionViewModel>();
-            for(int i=0;i< missionMemberList.Count;i++)
-            {
-                Mission mission = unitOfWork.MissionRepository.GetById(missionMemberList[i].MissionId);
-                mvmList.Add(new MissionViewModel().ConvertToViewModel(mission));
-            }
-            return mvmList;
+        //[HttpGet]
+        //[Route("GetAllMissionByUserId/{id:int}")]
+        //public IEnumerable<MissionViewModel> GetAllMissionByUserId(int id)
+        //{
+        //    List<MissionMember> missionMemberList= unitOfWork.MissionMemberRepository.GetAllByUserId(id);
+        //    List<MissionViewModel> mvmList = new List<MissionViewModel>();
+        //    for(int i=0;i< missionMemberList.Count;i++)
+        //    {
+        //        Mission mission = unitOfWork.MissionRepository.GetById(missionMemberList[i].MissionId);
+        //        mvmList.Add(new MissionViewModel().ConvertToViewModel(mission));
+        //    }
+        //    return mvmList;
 
-        }
+        //}
         /// <summary>
         /// This method returns all users associated to the mission id 
         /// </summary>
@@ -149,15 +149,16 @@ namespace TimeReportApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetFavoriteMissions/{id:int}")]
-        public ActionResult<List<MissionViewModel>> GetFavoriteMissions(int id)
+        [Route("GetFavoriteMissions")]
+        public ActionResult<List<MissionViewModel>> GetFavoriteMissions()
         {
-            List<FavoriteMission> favoriteMissionList = unitOfWork.FavoriteMissionRepository.GetFavoriteMissionsById(id);
+            List<FavoriteMission> favoriteMissionList = unitOfWork.FavoriteMissionRepository.GetFavoriteMissionsById(user.UserId);
             List<MissionViewModel> mvmList = new List<MissionViewModel>();
             for (int i = 0; i < favoriteMissionList.Count; i++)
             {
                 Mission mission = unitOfWork.MissionRepository.GetById(favoriteMissionList[i].MissionId);
-                mvmList.Add(new MissionViewModel().ConvertToViewModel(mission));
+                Customer customer = (Customer)unitOfWork.CustomerRepository.GetAll().Select(n => n.CustomerId == mission.CustomerId);
+                mvmList.Add(new MissionViewModel().ConvertToViewModel(mission,customer));
             }
             return mvmList;
         }
@@ -200,12 +201,14 @@ namespace TimeReportApi.Controllers
                     };
                     tasksViewModelList.Add(taskVM);
                 }
+        
                 MissionTaskViewModel missionsVM = new MissionTaskViewModel
                 {
                     MissionName = mission.MissionName,
                     MissionId = mission.MissionId,
+                    StartDate = mission.Start,
                     Description = mission.Description,
-                    Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).ToString(),
+                    Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).Name,
                     Tasks = tasksViewModelList
                 };
                 missionTaskViewModel.Add(missionsVM);
