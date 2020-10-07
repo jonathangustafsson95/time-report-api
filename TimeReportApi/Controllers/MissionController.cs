@@ -201,7 +201,7 @@ namespace TimeReportApi.Controllers
                     MissionId = mission.MissionId,
                     StartDate = mission.Start,
                     Description = mission.Description,
-                    Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).ToString(),
+                    Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).Name,
                     Tasks = tasksViewModelList
                 };
                 missionTaskViewModel.Add(missionsVM);
