@@ -11,10 +11,10 @@ namespace DataAccessLayer.UnitOfWork
 {
     public interface IUnitOfWork:IDisposable
     {
-        IGenericRepository<Customer> CustomerRepository { get; }
+        ICustomerRepository CustomerRepository { get; }
         IFavoriteMissionRepository FavoriteMissionRepository { get; }
-        IGenericRepository<Mission> MissionRepository { get; }
-        IMissionMember MissionMemberRepository { get; }
+        IMissionRepository MissionRepository { get; }
+        IMissionMemberRepository MissionMemberRepository { get; }
         IRegistryRepository RegistryRepository { get; }
         ITaskRepository TaskRepository { get; }
         IUserRepository UserRepository { get; }

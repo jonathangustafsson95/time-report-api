@@ -19,10 +19,11 @@ using Microsoft.AspNetCore.Cors;
 namespace TimeReportApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class SystemController : ControllerBase
     {
-        private UnitOfWork unitOfWork;
+        private readonly UnitOfWork unitOfWork;
         private readonly IConfiguration _config;
 
         public SystemController(UnitOfWork unitOfWork, IConfiguration config)
@@ -36,7 +37,7 @@ namespace TimeReportApi.Controllers
         [Route("Login")]
         public IActionResult Login([FromBody]User login)
         {
-            IActionResult response = Unauthorized();
+            IActionResult response = Unauthorized(new { Ok = false, ErrorMsg = "Invalid credentials..." }) ;
             User user = AuthenticateUser(login);
             if (user != null)
             {

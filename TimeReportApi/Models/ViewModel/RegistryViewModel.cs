@@ -8,14 +8,14 @@ namespace TimeReportApi.Models
 {
     public class RegistryViewModel
     {
-        public int registryId { get; set; }
-        public string missionName { get; set; }
-        public string taskName { get; set; }
-        public int? taskId { get; set; }
-        public DayOfWeek day { get; set; }
-        public double hours { get; set; }
-        public DateTime created { get; set; }
-        public DateTime date { get; set; }
-        public InvoiceType invoice { get; set; }
+        public int? RegistryId { get; set; }
+        public string MissionName { get; set; }
+        public string TaskName { get; set; }
+        public int? TaskId { get; set; }
+        public DayOfWeek Day { get; set; }
+        public double Hours { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Date { get; set; }
+        public InvoiceType Invoice { get; set; }
     }
 }

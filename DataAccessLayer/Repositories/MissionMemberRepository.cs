@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace DataAccessLayer.Repositories
 {
-    public class MissionMemberRepository : GenericRepository<MissionMember>, IMissionMember
+    public class MissionMemberRepository : GenericRepository<MissionMember>, IMissionMemberRepository
     {
         public MissionMemberRepository(BulbasaurDevContext context)
             :base(context)
