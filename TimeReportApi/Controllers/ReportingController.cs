@@ -238,7 +238,7 @@ namespace TimeReportApi.Controllers
                     };
 
                     foreach (var registry in weekVM.Week)
-                        registry.RegistryId = null;
+                        registry.RegistryId = 0;
 
                     if (weekVM.Week.Count > 0) 
                         weekTemplates.Add(weekVM);
