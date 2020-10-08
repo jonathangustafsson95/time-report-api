@@ -10,6 +10,7 @@ namespace DataAccessLayer.IRepositories
     {
         List<Mission> GetAllByUserId(int id);
         List<Mission> GetAllByMissionId(int id);
+        List<Mission> GetAllByCustomerId(int id);
     }
 }
 
