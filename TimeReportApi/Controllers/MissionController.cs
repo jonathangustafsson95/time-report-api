@@ -79,12 +79,26 @@ namespace TimeReportApi.Controllers
         /// <param name="id"></param>
         /// <returns> IEnumerable<Mission> </returns>
         [HttpGet]
-        [Route("GetAllUserByMissionName/{name}")]
+        [Route("GetAllMissionByMissionName/{name}")]
         public IEnumerable<Mission> GetAllMissionByMissionName(string name)
         {
             List<Mission> missionList = unitOfWork.MissionRepository.Search<Mission>(x => x.MissionName, name);
             return missionList;
         }
+
+        //[HttpGet]
+        //[Route("GetAllMissionByCustomerName/{name}")]
+        //public IEnumerable<Mission> GetAllMissionByCustomerName(string name)
+        //{
+        //    List<Customer> customerList = unitOfWork.CustomerRepository.Search<Customer>(x => x.Name, name);
+        //    List<Mission> missionsLinkedToCustomerID = new List<Mission>();
+        //    foreach (var customer in customerList)
+        //    {
+        //        missionsLinkedToCustomerID += unitOfWork.MissionRepository.Search<Mission>(x => x.CustomerId, customer.CustomerId);
+        //    }
+        //}
+
+
 
         /// <summary>
         /// This method adds a missionmember to the table when called
