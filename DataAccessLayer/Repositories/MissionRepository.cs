@@ -34,5 +34,15 @@ namespace DataAccessLayer.Repositories
 
         }
 
+        public List<Mission> GetAllByCustomerId(int id)
+        {
+            IEnumerable<Mission> all = GetAll();
+            IEnumerable<Mission> allByCustomerId = from a in all
+                                                    where a.CustomerId == id
+                                                    select a;
+            return allByCustomerId != null ? allByCustomerId.ToList() : new List<Mission>();
+
+        }
+
     }
 }

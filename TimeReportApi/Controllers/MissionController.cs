@@ -87,17 +87,20 @@ namespace TimeReportApi.Controllers
             return missionList;
         }
 
-        //[HttpGet]
-        //[Route("GetAllMissionByCustomerName/{name}")]
-        //public IEnumerable<Mission> GetAllMissionByCustomerName(string name)
-        //{
-        //    List<Customer> customerList = unitOfWork.CustomerRepository.Search<Customer>(x => x.Name, name);
-        //    List<Mission> missionsLinkedToCustomerID = new List<Mission>();
-        //    foreach (var customer in customerList)
-        //    {
-        //        missionsLinkedToCustomerID += unitOfWork.MissionRepository.Search<Mission>(x => x.CustomerId, customer.CustomerId);
-        //    }
-        //}
+        [HttpGet]
+        [Route("GetAllMissionByCustomerName/{name}")]
+        public IEnumerable<Mission> GetAllMissionByCustomerName(string name)
+        {
+            List<Customer> customerList = unitOfWork.CustomerRepository.Search<Customer>(x => x.Name, name);
+            List<Mission> missionsLinkedToCustomerID = new List<Mission>();
+            foreach (var customer in customerList)
+            {
+                List<Mission> allByCustomerId = unitOfWork.MissionRepository.GetAllByCustomerId(customer.CustomerId);
+                missionsLinkedToCustomerID.Concat(allByCustomerId);
+            }
+
+            return missionsLinkedToCustomerID;
+        }
 
 
 
