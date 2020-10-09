@@ -106,8 +106,9 @@ namespace TimeReportApi.Controllers
         [Route("GetAllMissionsBySearchString/{searchString}")]
         public IEnumerable<Mission> GetAllMissionsBySearchString(string searchString)
         {
-            List<Mission> missionList = unitOfWork.MissionRepository.Search<Mission>(x => x.MissionName, searchString);
-            List<Customer> customerList = unitOfWork.CustomerRepository.Search<Customer>(x => x.Name, searchString);
+            string lowerCaseSearchString = searchString.ToLower();
+            List<Mission> missionList = unitOfWork.MissionRepository.Search<Mission>(x => x.MissionName.ToLower(), lowerCaseSearchString);
+            List<Customer> customerList = unitOfWork.CustomerRepository.Search<Customer>(x => x.Name.ToLower(), lowerCaseSearchString);
             List<Mission> missionsLinkedToCustomerID = new List<Mission>();
 
             foreach (var customer in customerList)
