@@ -152,6 +152,7 @@ namespace TimeReportApi.Controllers
         {
             List<RegistryViewModel> weekRegistries = new List<RegistryViewModel>();
             Task task;
+            Mission mission;
             RegistryViewModel registryViewModel;
 
             foreach (var reg in registries)
@@ -166,8 +167,11 @@ namespace TimeReportApi.Controllers
                 else
                 {
                     task = unitOfWork.TaskRepository.GetById(reg.TaskId);
+                    mission = unitOfWork.MissionRepository.GetById(task.MissionId);
+
                     registryViewModel.TaskName = task.Name;
-                    registryViewModel.MissionName = unitOfWork.MissionRepository.GetById(task.MissionId).MissionName;
+                    registryViewModel.MissionName = mission.MissionName;
+                    registryViewModel.MissionColor = mission.Color;
                     registryViewModel.Invoice = task.Invoice;
                     registryViewModel.TaskId = task.TaskId;
                 }
@@ -298,6 +302,7 @@ namespace TimeReportApi.Controllers
                     {
                         MissionName = mission.MissionName,
                         MissionId = mission.MissionId,
+                        MissionColor = mission.Color,
                         Description = mission.Description,
                         Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).Name,
                         Tasks = tasksViewModelList

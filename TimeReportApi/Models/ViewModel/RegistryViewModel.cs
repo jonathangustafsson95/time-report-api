@@ -10,6 +10,7 @@ namespace TimeReportApi.Models
     {
         public int? RegistryId { get; set; }
         public string MissionName { get; set; }
+        public string MissionColor { get; set; }
         public string TaskName { get; set; }
         public int? TaskId { get; set; }
         public DayOfWeek Day { get; set; }
