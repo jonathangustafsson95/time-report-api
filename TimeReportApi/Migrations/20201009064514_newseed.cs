@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TimeReportApi.Migrations
 {
-    public partial class test : Migration
+    public partial class newseed : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,6 +46,7 @@ namespace TimeReportApi.Migrations
                     UserId = table.Column<int>(nullable: false),
                     CustomerId = table.Column<int>(nullable: false),
                     MissionName = table.Column<string>(nullable: true),
+                    Color = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     Start = table.Column<DateTime>(nullable: false),
                     Finished = table.Column<DateTime>(nullable: true),
