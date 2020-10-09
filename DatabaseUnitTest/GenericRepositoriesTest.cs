@@ -202,12 +202,11 @@ namespace DatabaseUnitTest
             //assert
             Assert.Equal(userList, trueList);
         }
-
         //[TestMethod]
         //public void GetAllMissionsByUserId()
         //{
         //    //arrange
-        //    inMemorydbcontext.UpdateContext(DbContext);
+        //    InMemoryDbContext.UpdateContext(DbContext);
 
         //    List<MissionMember> missionMembers = (List<MissionMember>)unitOfWork.MissionMemberRepository.GetAllByUserId(1);
         //    List<int> trueIdList = new List<int>();
@@ -227,6 +226,7 @@ namespace DatabaseUnitTest
         //    //assert
         //    Assert.Equal(trueIdList, testIdList);
         //}
+
     }
 
 }

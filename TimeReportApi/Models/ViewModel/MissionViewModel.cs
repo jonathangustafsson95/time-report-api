@@ -8,20 +8,20 @@ namespace TimeReportApi.Models
 {
     public class MissionViewModel
     {
-        public int missionId { get; set; }
-        public int? userId { get; set; }
-        public int? customerId { get; set; }
-        public string missionCustomerName { get; set; }
-        public string missionName { get; set; }
-        public string description { get; set; }
-        public DateTime start { get; set; }
-        public DateTime? finished { get; set; }
-        public DateTime created { get; set; }
-        public int status { get; set; }
+        public int MissionId { get; set; }
+        public int? UserId { get; set; }
+        public int? CustomerId { get; set; }
+        public string MissionCustomerName { get; set; }
+        public string MissionName { get; set; }
+        public string Description { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime? Finished { get; set; }
+        public DateTime Created { get; set; }
+        public int Status { get; set; }
 
         public  MissionViewModel ConvertToViewModel( Mission a, Customer c)
         {
-           return new MissionViewModel { missionId = a.MissionId, description = a.Description,missionCustomerName=c.Name, created = a.Created, customerId = a.CustomerId, finished = a.Finished, missionName = a.MissionName, start = a.Start, userId = a.UserId, status = a.Status };
+           return new MissionViewModel { MissionId = a.MissionId, Description = a.Description,MissionCustomerName=c.Name, Created = a.Created, CustomerId = a.CustomerId, Finished = a.Finished, MissionName = a.MissionName, Start = a.Start, UserId = a.UserId, Status = a.Status };
         }
     }
 }

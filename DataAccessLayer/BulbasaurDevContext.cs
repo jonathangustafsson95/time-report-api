@@ -10,19 +10,19 @@ namespace DataAccessLayer
         public BulbasaurDevContext(DbContextOptions<BulbasaurDevContext> options) : base(options)
         {
         }
-        DbSet<Customer> Customers { get; set; }
-        DbSet<FavoriteMission> FavoriteMissions { get; set; }
-        DbSet<Mission> Missions { get; set; }
-        DbSet<MissionMember> MissionMembers { get; set; }
-        DbSet<Registry> Registries { get; set; }
-        DbSet<Task> Tasks { get; set; }
-        DbSet<User> Users { get; set; }
+        public DbSet<Customer> Customer { get; set; }
+        public DbSet<FavoriteMission> FavoriteMission { get; set; }
+        public DbSet<Mission> Mission { get; set; }
+        public DbSet<MissionMember> MissionMember { get; set; }
+        public DbSet<Registry> Registry { get; set; }
+        public DbSet<Task> Task { get; set; }
+        public DbSet<User> User { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<FavoriteMission>()
-                .HasKey(fm => new { userId = fm.UserId, missionId = fm.MissionId });
+                .HasKey(fm => new { fm.UserId, fm.MissionId });
             modelBuilder.Entity<FavoriteMission>()
                 .HasOne(fm => fm.User)
                 .WithMany(fm => fm.MissionFavorites)
@@ -34,7 +34,7 @@ namespace DataAccessLayer
                 .HasForeignKey(fm => fm.MissionId)
                 .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<MissionMember>()
-                .HasKey(mm => new { mm.UserId, missionId = mm.MissionId });
+                .HasKey(mm => new { mm.UserId, mm.MissionId });
             modelBuilder.Entity<MissionMember>()
                 .HasOne(mm => mm.User)
                 .WithMany(mm => mm.MissionMemberships)
@@ -45,25 +45,6 @@ namespace DataAccessLayer
                 .WithMany(mm => mm.MissionMembers)
                 .HasForeignKey(mm => mm.MissionId)
                 .OnDelete(DeleteBehavior.NoAction);
-            //modelBuilder.Entity<User>()
-            //    .HasMany(u => u.Mission)
-            //    .WithOne(m => m.User)
-            //    .OnDelete(DeleteBehavior.NoAction);
-            //modelBuilder.Entity<User>()
-            //    .HasMany(u => u.missionMemberships)
-            //    .WithOne(m => m.User)
-            //    .OnDelete(DeleteBehavior.NoAction);
-            //modelBuilder.Entity<User>()
-            //    .HasMany(u => u.missionFavorites)
-            //    .WithOne(m => m.User)
-            //    .OnDelete(DeleteBehavior.NoAction);
-         
-
-            //foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
-            //{
-            //    relationship.DeleteBehavior = DeleteBehavior.Restrict;
-            //}
-            modelBuilder.Seed();
         }
     }
 }

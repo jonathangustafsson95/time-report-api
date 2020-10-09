@@ -16,7 +16,6 @@ namespace TimeReportApi
 {
     public class Startup
     {
-        //const string connection = @"Data Source=193.10.247.98, 1433;Database=BulbasaurDev;User ID=sa;Password=Pa55w0rd;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -43,7 +42,7 @@ namespace TimeReportApi
                 )
             );
             services.AddControllers();
-            services.AddDbContext<BulbasaurDevContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BulbasaurDevContext"), b => b.MigrationsAssembly("TimeReportApi")));
+            services.AddDbContext<BulbasaurDevContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BulbasaurDev"), b => b.MigrationsAssembly("TimeReportApi")));
             //services.AddSwaggerGen();
             services.AddScoped<UnitOfWork>();
 

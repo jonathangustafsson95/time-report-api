@@ -12,9 +12,9 @@ namespace CommonLibrary.Model
         public int MissionId { get; set; }
 
         [ForeignKey("User")]
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
         [ForeignKey("Customer")]
-        public int? CustomerId { get; set; }
+        public int CustomerId { get; set; }
         public string MissionName { get; set; }
         public string Color { get; set; }
         public string Description { get; set; }//ha kvar? enum/string
