@@ -275,11 +275,13 @@ namespace TimeReportApi.Controllers
             {
                 List<FavoriteMission> favoriteMissionList = unitOfWork.FavoriteMissionRepository.GetFavoriteMissionsById(user.UserId);
                 List<MissionTaskViewModel> missionTaskViewModel = new List<MissionTaskViewModel>();
-                List<TaskViewModel> tasksViewModelList = new List<TaskViewModel>();
+                List<TaskViewModel> tasksViewModelList;
 
                 for (int i = 0; i < favoriteMissionList.Count; i++)
                 {
                     Mission mission = unitOfWork.MissionRepository.GetById(favoriteMissionList[i].MissionId);
+                    tasksViewModelList = new List<TaskViewModel>();
+
                     foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
                     {
                         TaskViewModel taskVM = new TaskViewModel

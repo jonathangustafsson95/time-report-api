@@ -201,11 +201,13 @@ namespace TimeReportApi.Controllers
         {
             List<MissionMember> missionMemberList = unitOfWork.MissionMemberRepository.GetAllByUserId(user.UserId);
             List<MissionTaskViewModel> missionTaskViewModel = new List<MissionTaskViewModel>();
-            List<TaskViewModel> tasksViewModelList = new List<TaskViewModel>();
+            List<TaskViewModel> tasksViewModelList; 
 
             for (int i = 0; i < missionMemberList.Count; i++)
             {
                 Mission mission = unitOfWork.MissionRepository.GetById(missionMemberList[i].MissionId);
+                tasksViewModelList = new List<TaskViewModel>();
+
                 foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
                 {
                     TaskViewModel taskVM = new TaskViewModel
