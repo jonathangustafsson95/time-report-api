@@ -28,7 +28,7 @@ namespace TimeReportApi.Controllers
 
         /// <summary>
         /// This method returns all missions when called 
-        /// </summary>
+        /// </summary >
         /// <param></param>
         /// <returns> IEnumerable<Mission> </returns>
         [HttpGet]
@@ -206,7 +206,7 @@ namespace TimeReportApi.Controllers
             for (int i = 0; i < favoriteMissionList.Count; i++)
             {
                 Mission mission = unitOfWork.MissionRepository.GetById(favoriteMissionList[i].MissionId);
-                Customer customer = (Customer)unitOfWork.CustomerRepository.GetAll().Select(n => n.CustomerId == mission.CustomerId);
+                Customer customer = unitOfWork.CustomerRepository.GetAll().FirstOrDefault(n => n.CustomerId == mission.CustomerId);
                 mvmList.Add(new MissionViewModel().ConvertToViewModel(mission,customer));
             }
             return mvmList;
