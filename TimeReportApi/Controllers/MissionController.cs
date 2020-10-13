@@ -130,6 +130,9 @@ namespace TimeReportApi.Controllers
             missionList.Concat(missionsLinkedToCustomerID);
 
             List<MissionTaskViewModel> missionTasksViewModelList = new List<MissionTaskViewModel>();
+            List<MissionMember> mmList = unitOfWork.MissionMemberRepository.GetAllByUserId(user.UserId);
+
+
 
             foreach (var mission in missionList )
             {
@@ -156,8 +159,17 @@ namespace TimeReportApi.Controllers
                     StartDate = mission.Start,
                     Description = mission.Description,
                     Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).Name,
-                    Tasks = taskViewModelList
+                    Tasks = taskViewModelList,
+                    isMember = false,
+ 
                 };
+
+                if (mmList.FirstOrDefault(n => n.MissionId == mission.MissionId) != null) 
+                {
+                    missionsVM.isMember = true;
+                };
+
+
                 missionTasksViewModelList.Add(missionsVM);
             }
             return missionTasksViewModelList;
