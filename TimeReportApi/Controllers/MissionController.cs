@@ -104,7 +104,7 @@ namespace TimeReportApi.Controllers
 
         [HttpGet]
         [Route("GetAllMissionsBySearchString/{searchString}")]
-        public IEnumerable<Mission> GetAllMissionsBySearchString(string searchString)
+        public IEnumerable<MissionTaskViewModel> GetAllMissionsBySearchString(string searchString)
         {
             string lowerCaseSearchString = searchString.ToLower();
             List<Mission> missionList = unitOfWork.MissionRepository.Search<Mission>(x => x.MissionName.ToLower(), lowerCaseSearchString);
@@ -129,9 +129,41 @@ namespace TimeReportApi.Controllers
             }
 
             missionList.Concat(missionsLinkedToCustomerID);
-            return missionList;
 
-          
+            List<MissionTaskViewModel> missionTasksViewModelList = new List<MissionTaskViewModel>();
+
+            foreach (var mission in missionList )
+            {
+                List<TaskViewModel> taskViewModelList = new List<TaskViewModel>();
+
+                foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
+                {
+                    TaskViewModel taskVM = new TaskViewModel
+                    {
+                        TaskId = task.TaskId,
+                        MissionId = task.MissionId,
+                        UserId = task.UserId,
+                        Name = task.Name,
+                        Description = task.Description,
+                    };
+                    taskViewModelList.Add(taskVM);
+                }
+
+                MissionTaskViewModel missionsVM = new MissionTaskViewModel
+                {
+                    MissionName = mission.MissionName,
+                    MissionId = mission.MissionId,
+                    MissionColor = mission.Color,
+                    StartDate = mission.Start,
+                    Description = mission.Description,
+                    Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).Name,
+                    Tasks = taskViewModelList
+                };
+                missionTasksViewModelList.Add(missionsVM);
+            }
+            return missionTasksViewModelList;
+
+
         }
 
 
