@@ -101,7 +101,6 @@ namespace TimeReportApi.Controllers
 
             return missionsLinkedToCustomerID;
         }
-
         [HttpGet]
         [Route("GetAllMissionsBySearchString/{searchString}")]
         public IEnumerable<Mission> GetAllMissionsBySearchString(string searchString)
@@ -277,6 +276,7 @@ namespace TimeReportApi.Controllers
                     StartDate = mission.Start,
                     Description = mission.Description,
                     Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).Name,
+                    isMember=true,
                     Tasks = tasksViewModelList
                 };
                 missionTaskViewModel.Add(missionsVM);
