@@ -6,10 +6,11 @@ using CommonLibrary.Model;
 using Data.Model;
 using DataAccessLayer.IRepositories;
 using DataAccessLayer.IReppositories;
+using DataAccessLayer.Repositories;
 
 namespace DataAccessLayer.UnitOfWork
 {
-    public interface IUnitOfWork:IDisposable
+    public interface IUnitOfWork : IDisposable
     {
         ICustomerRepository CustomerRepository { get; }
         IFavoriteMissionRepository FavoriteMissionRepository { get; }
@@ -18,5 +19,7 @@ namespace DataAccessLayer.UnitOfWork
         IRegistryRepository RegistryRepository { get; }
         ITaskRepository TaskRepository { get; }
         IUserRepository UserRepository { get; }
+
+        void Save();
     }
 }

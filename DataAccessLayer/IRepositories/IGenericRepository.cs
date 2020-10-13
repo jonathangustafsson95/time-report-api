@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DataAccessLayer.IReppositories
 {
-    public interface IGenericRepository<T> where T:class
+    public interface IGenericRepository<T> where T : class
     {
         IEnumerable<T> GetAll();
         T GetById(object id);
