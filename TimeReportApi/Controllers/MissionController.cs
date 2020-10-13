@@ -174,6 +174,7 @@ namespace TimeReportApi.Controllers
             return Ok();
         }
 
+        
 
         /// <summary>
         /// This method adds a favorite mission to repository. 
@@ -188,6 +189,21 @@ namespace TimeReportApi.Controllers
             try
             {
                 unitOfWork.FavoriteMissionRepository.Insert(favoriteMission);
+                unitOfWork.FavoriteMissionRepository.Save();
+                return Ok();
+            }
+            catch
+            {
+                return ValidationProblem();
+            }
+        }
+        [HttpDelete]
+        [Route("FavoriteMission")]
+        public ActionResult DeleteFavoriteMission([FromBody] FavoriteMission favoriteMission)
+        {
+            try
+            {
+                unitOfWork.FavoriteMissionRepository.Delete(favoriteMission.UserId,favoriteMission.MissionId);
                 unitOfWork.FavoriteMissionRepository.Save();
                 return Ok();
             }
