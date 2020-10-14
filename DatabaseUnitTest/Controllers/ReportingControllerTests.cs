@@ -34,8 +34,19 @@ namespace DatabaseUnitTest.Controllers
         public void AddTimeReport_SuccessTest(Registries newRegistries)
         {
             //Arrange
+            User dbUser = new User
+            {
+                UserId = 1,
+                UserName = "Bengt",
+                Password = "bengt123",
+                EMail = "Bengt@bengt.se",
+                Role = "User"
+            };
+
             Mock<IUserRepository> userRepoMock = new Mock<IUserRepository>();
             userRepoMock.Setup(u => u.GetById(It.IsAny<int>()));
+            userRepoMock.Setup(u => u.Insert(It.IsAny<User>()));
+            userRepoMock.Object.Insert(dbUser);
 
             Mock<IRegistryRepository> registryRepoMock = new Mock<IRegistryRepository>();
             registryRepoMock.Setup(r => r.Insert(It.IsAny<Registry>()));
