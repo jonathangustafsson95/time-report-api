@@ -13,6 +13,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using FakeItEasy;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace DatabaseUnitTest.Controllers
 {
@@ -44,9 +45,7 @@ namespace DatabaseUnitTest.Controllers
             };
 
             Mock<IUserRepository> userRepoMock = new Mock<IUserRepository>();
-            userRepoMock.Setup(u => u.GetById(It.IsAny<int>()));
-            userRepoMock.Setup(u => u.Insert(It.IsAny<User>()));
-            userRepoMock.Object.Insert(dbUser);
+            userRepoMock.Setup(u => u.GetById(It.IsAny<int>())).Returns(dbUser);
 
             Mock<IRegistryRepository> registryRepoMock = new Mock<IRegistryRepository>();
             registryRepoMock.Setup(r => r.Insert(It.IsAny<Registry>()));
@@ -62,7 +61,10 @@ namespace DatabaseUnitTest.Controllers
             var result = controller.AddTimeReport(newRegistries);
 
             //Assert
-            Assert.IsType<OkObjectResult>(result);
+            Assert.IsType<ActionResult<HttpResponse>>(result);
+            int expected = (int)HttpStatusCode.OK;
+            int actual = (result.Result as StatusCodeResult).StatusCode;
+            Assert.Equal(expected, actual);
         }
 
 
@@ -87,8 +89,12 @@ namespace DatabaseUnitTest.Controllers
             var result = controller.AddTimeReport(newRegistries);
 
             //Assert
-            Assert.IsType<StatusCodeResult>(result);
-            //Assert.Equal((int)(StatusCodeResult)result.StatusCode,500);
+            Assert.IsType<ActionResult<HttpResponse>>(result);
+            
+            Assert.Equal((int)HttpStatusCode.InternalServerError, (result.Result as StatusCodeResult).StatusCode);
+
+            //(result.Result as StatusCodeResult).StatusCode.Should().Be((int)System.Net.HttpStatusCode.OK);
+
         }
 
         public static IEnumerable<object[]> GetRegistries()

@@ -29,7 +29,6 @@ namespace TimeReportApi.Controllers
             this.unitOfWork = unitOfWork;
             int userId = Int32.Parse(httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "userId").Value);
             user = unitOfWork.UserRepository.GetById(userId);
-            unitOfWork.UserRepository.GetById(1);
         }
 
         /// <summary>
