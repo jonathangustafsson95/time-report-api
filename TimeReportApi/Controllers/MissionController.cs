@@ -287,12 +287,20 @@ namespace TimeReportApi.Controllers
         /// </summary>
         /// <returns>A list of MissionTaskViewModel items.</returns>
         [HttpGet]
-        [Route("UserMissions")]
-        public ActionResult<List<MissionTaskViewModel>> GetUserMissions()
+        [Route("UserMissions/{taskId}")]
+        public ActionResult<List<MissionTaskViewModel>> GetUserMissions(int taskId)
         {
             List<MissionMember> missionMemberList = unitOfWork.MissionMemberRepository.GetAllByUserId(user.UserId);
             List<MissionTaskViewModel> missionTaskViewModel = new List<MissionTaskViewModel>();
-            List<TaskViewModel> tasksViewModelList; 
+            List<TaskViewModel> tasksViewModelList;
+
+            // Check if selected registry is a mission that the user is a member of
+            Task taskSelected = unitOfWork.TaskRepository.GetById(taskId);
+            int idx = missionMemberList.FindIndex(f => f.MissionId == taskSelected.MissionId);
+            if (idx < 0)
+            {
+                missionMemberList.Add(new MissionMember { UserId = user.UserId, MissionId = (int)taskSelected.MissionId});
+            }
 
             for (int i = 0; i < missionMemberList.Count; i++)
             {
