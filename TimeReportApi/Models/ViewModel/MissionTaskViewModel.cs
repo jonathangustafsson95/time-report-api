@@ -16,5 +16,7 @@ namespace TimeReportApi.Models.ViewModel
         public string Customer { get; set; }
         public bool isMember { get; set; }
         public List<TaskViewModel> Tasks { get; set; }
+        public List<UserViewModel> Users { get; set; }
+
     }
 }
