@@ -343,54 +343,57 @@ namespace TimeReportApi.Controllers
         /// tasks from which the user are a member of. 
         /// </summary>
         /// <returns>A list of MissionTaskViewModel items.</returns>
-        [HttpGet]
-        [Route("Mission/{missionId}")]
-        public ActionResult<List<MissionTaskViewModel>> GetSpecificMissions(int taskId)
-        {
-            List<MissionMember> missionMemberList = unitOfWork.MissionMemberRepository.GetAllByUserId(user.UserId);
-            List<MissionTaskViewModel> missionTaskViewModel = new List<MissionTaskViewModel>();
-            List<TaskViewModel> tasksViewModelList;
+        //[HttpGet]
+        //[Route("Mission/{missionId}")]
+        //public ActionResult<List<MissionTaskViewModel>> GetSpecificMissions(int missionId)
+        //{
+        //    Mission mission = unitOfWork.MissionRepository.GetById(missionId);
+        //    List<>
 
-            // Check if selected registry is a mission that the user is a member of
-            Task taskSelected = unitOfWork.TaskRepository.GetById(taskId);
-            int idx = missionMemberList.FindIndex(f => f.MissionId == taskSelected.MissionId);
-            if (idx < 0)
-            {
-                missionMemberList.Add(new MissionMember { UserId = user.UserId, MissionId = (int)taskSelected.MissionId });
-            }
+        //    List<MissionMember> missionMemberList = unitOfWork.MissionMemberRepository.GetAllByUserId(user.UserId);
+        //    List<MissionTaskViewModel> missionTaskViewModel = new List<MissionTaskViewModel>();
+        //    List<TaskViewModel> tasksViewModelList;
 
-            for (int i = 0; i < missionMemberList.Count; i++)
-            {
-                Mission mission = unitOfWork.MissionRepository.GetById(missionMemberList[i].MissionId);
-                tasksViewModelList = new List<TaskViewModel>();
+        //    // Check if selected registry is a mission that the user is a member of
+        //    Task taskSelected = unitOfWork.TaskRepository.GetById(taskId);
+        //    int idx = missionMemberList.FindIndex(f => f.MissionId == taskSelected.MissionId);
+        //    if (idx < 0)
+        //    {
+        //        missionMemberList.Add(new MissionMember { UserId = user.UserId, MissionId = (int)taskSelected.MissionId });
+        //    }
 
-                foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
-                {
-                    TaskViewModel taskVM = new TaskViewModel
-                    {
-                        TaskId = task.TaskId,
-                        MissionId = task.MissionId,
-                        UserId = task.UserId,
-                        Name = task.Name,
-                        Description = task.Description,
-                    };
-                    tasksViewModelList.Add(taskVM);
-                }
+        //    for (int i = 0; i < missionMemberList.Count; i++)
+        //    {
+        //        Mission mission = unitOfWork.MissionRepository.GetById(missionMemberList[i].MissionId);
+        //        tasksViewModelList = new List<TaskViewModel>();
 
-                MissionTaskViewModel missionsVM = new MissionTaskViewModel
-                {
-                    MissionName = mission.MissionName,
-                    MissionId = mission.MissionId,
-                    MissionColor = mission.Color,
-                    StartDate = mission.Start,
-                    Description = mission.Description,
-                    Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).Name,
-                    isMember = true,
-                    Tasks = tasksViewModelList
-                };
-                missionTaskViewModel.Add(missionsVM);
-            }
-            return missionTaskViewModel;
-        }
+        //        foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
+        //        {
+        //            TaskViewModel taskVM = new TaskViewModel
+        //            {
+        //                TaskId = task.TaskId,
+        //                MissionId = task.MissionId,
+        //                UserId = task.UserId,
+        //                Name = task.Name,
+        //                Description = task.Description,
+        //            };
+        //            tasksViewModelList.Add(taskVM);
+        //        }
+
+        //        MissionTaskViewModel missionsVM = new MissionTaskViewModel
+        //        {
+        //            MissionName = mission.MissionName,
+        //            MissionId = mission.MissionId,
+        //            MissionColor = mission.Color,
+        //            StartDate = mission.Start,
+        //            Description = mission.Description,
+        //            Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).Name,
+        //            isMember = true,
+        //            Tasks = tasksViewModelList
+        //        };
+        //        missionTaskViewModel.Add(missionsVM);
+        //    }
+        //    return missionTaskViewModel;
+        //}
     }
 }
