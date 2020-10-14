@@ -339,61 +339,57 @@ namespace TimeReportApi.Controllers
         }
 
         /// <summary>
-        /// This method returns a list of MissionTaskViewModel which contains the missions and corresponding 
-        /// tasks from which the user are a member of. 
+        /// This method returns a  MissionTaskViewModel which contains the mission and corresponding 
+        /// tasks and users for a given ID. 
         /// </summary>
-        /// <returns>A list of MissionTaskViewModel items.</returns>
-        //[HttpGet]
-        //[Route("Mission/{missionId}")]
-        //public ActionResult<List<MissionTaskViewModel>> GetSpecificMissions(int missionId)
-        //{
-        //    Mission mission = unitOfWork.MissionRepository.GetById(missionId);
-        //    List<>
+        /// <returns>A MissionTaskViewModel.</returns>
+        [HttpGet]
+        [Route("SpecificMission/{missionid}")]
+        public ActionResult<MissionTaskViewModel> GetSpecificMission(int missionId)
+        {
+            Mission mission = unitOfWork.MissionRepository.GetById(missionId);
+            List<TaskViewModel> tasksViewModelList = new List<TaskViewModel>();
+            List<UserViewModel> usersVM = new List<UserViewModel>();
 
-        //    List<MissionMember> missionMemberList = unitOfWork.MissionMemberRepository.GetAllByUserId(user.UserId);
-        //    List<MissionTaskViewModel> missionTaskViewModel = new List<MissionTaskViewModel>();
-        //    List<TaskViewModel> tasksViewModelList;
+            foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
+            {
+                TaskViewModel taskVM = new TaskViewModel
+                {
+                    TaskId = task.TaskId,
+                    MissionId = task.MissionId,
+                    UserId = task.UserId,
+                    Name = task.Name,
+                    Description = task.Description,
+                };
+                tasksViewModelList.Add(taskVM);
+            }
 
-        //    // Check if selected registry is a mission that the user is a member of
-        //    Task taskSelected = unitOfWork.TaskRepository.GetById(taskId);
-        //    int idx = missionMemberList.FindIndex(f => f.MissionId == taskSelected.MissionId);
-        //    if (idx < 0)
-        //    {
-        //        missionMemberList.Add(new MissionMember { UserId = user.UserId, MissionId = (int)taskSelected.MissionId });
-        //    }
+            List<MissionMember> missionMembers = unitOfWork.MissionMemberRepository.GetAllByMissionId(missionId);
+            foreach (MissionMember missionMember in missionMembers)
+            {
+                User userInMission = unitOfWork.UserRepository.GetById(missionMember.UserId);
+                UserViewModel userVm = new UserViewModel
+                {
+                    UserId = userInMission.UserId,
+                    UserName = userInMission.UserName,
+                    EMail = userInMission.EMail
+                };
+                usersVM.Add(userVm);
+            }
 
-        //    for (int i = 0; i < missionMemberList.Count; i++)
-        //    {
-        //        Mission mission = unitOfWork.MissionRepository.GetById(missionMemberList[i].MissionId);
-        //        tasksViewModelList = new List<TaskViewModel>();
-
-        //        foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
-        //        {
-        //            TaskViewModel taskVM = new TaskViewModel
-        //            {
-        //                TaskId = task.TaskId,
-        //                MissionId = task.MissionId,
-        //                UserId = task.UserId,
-        //                Name = task.Name,
-        //                Description = task.Description,
-        //            };
-        //            tasksViewModelList.Add(taskVM);
-        //        }
-
-        //        MissionTaskViewModel missionsVM = new MissionTaskViewModel
-        //        {
-        //            MissionName = mission.MissionName,
-        //            MissionId = mission.MissionId,
-        //            MissionColor = mission.Color,
-        //            StartDate = mission.Start,
-        //            Description = mission.Description,
-        //            Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).Name,
-        //            isMember = true,
-        //            Tasks = tasksViewModelList
-        //        };
-        //        missionTaskViewModel.Add(missionsVM);
-        //    }
-        //    return missionTaskViewModel;
-        //}
+            MissionTaskViewModel missionVM = new MissionTaskViewModel
+            {
+                MissionName = mission.MissionName,
+                MissionId = mission.MissionId,
+                MissionColor = mission.Color,
+                StartDate = mission.Start,
+                Description = mission.Description,
+                Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).Name,
+                isMember = true,
+                Tasks = tasksViewModelList,
+                Users = usersVM
+            };
+            return missionVM;
+        }
     }
 }
