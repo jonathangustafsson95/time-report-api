@@ -65,9 +65,9 @@ namespace TimeReportApi.Controllers
                 unitOfWork.RegistryRepository.Save();
                 return Ok();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 

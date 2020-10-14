@@ -54,7 +54,8 @@ namespace DatabaseUnitTest.Controllers
 
             Mock<IUnitOfWork> mockUOF = new Mock<IUnitOfWork>();
             mockUOF.Setup(uow => uow.UserRepository).Returns(userRepoMock.Object);
-            
+            mockUOF.Setup(uow => uow.RegistryRepository).Returns(registryRepoMock.Object);
+
             var controller = new ReportingController(mockUOF.Object, httpContextAccessorMock);
 
             //Act
@@ -62,9 +63,7 @@ namespace DatabaseUnitTest.Controllers
 
             //Assert
             Assert.IsType<ActionResult<HttpResponse>>(result);
-            int expected = (int)HttpStatusCode.OK;
-            int actual = (result.Result as StatusCodeResult).StatusCode;
-            Assert.Equal(expected, actual);
+            Assert.Equal((int)HttpStatusCode.OK, (result.Result as StatusCodeResult).StatusCode);
         }
 
 
@@ -73,8 +72,19 @@ namespace DatabaseUnitTest.Controllers
         public void AddTimeReport_ThrowsException(Registries newRegistries)
         {
             //Arrange
-             Mock<IUserRepository> userRepoMock = new Mock<IUserRepository>();
-            userRepoMock.Setup(u => u.GetById(It.IsAny<int>()));
+            User dbUser = new User
+            {
+                UserId = 1,
+                UserName = "Bengt",
+                Password = "bengt123",
+                EMail = "Bengt@bengt.se",
+                Role = "User"
+            };
+
+            newRegistries.RegistriesToReport[0].UserId = 2;
+
+            Mock<IUserRepository> userRepoMock = new Mock<IUserRepository>();
+            userRepoMock.Setup(u => u.GetById(It.IsAny<int>())).Returns(dbUser);
 
             Mock<IRegistryRepository> registryRepoMock = new Mock<IRegistryRepository>();
             registryRepoMock.Setup(r => r.Insert(It.IsAny<Registry>()));
@@ -83,17 +93,15 @@ namespace DatabaseUnitTest.Controllers
 
             Mock<IUnitOfWork> mockUOF = new Mock<IUnitOfWork>();
             mockUOF.Setup(uow => uow.UserRepository).Returns(userRepoMock.Object);
-            
+            mockUOF.Setup(uow => uow.RegistryRepository).Returns(registryRepoMock.Object);
+
             var controller = new ReportingController(mockUOF.Object, httpContextAccessorMock);  
             //Act
             var result = controller.AddTimeReport(newRegistries);
 
             //Assert
             Assert.IsType<ActionResult<HttpResponse>>(result);
-            
             Assert.Equal((int)HttpStatusCode.InternalServerError, (result.Result as StatusCodeResult).StatusCode);
-
-            //(result.Result as StatusCodeResult).StatusCode.Should().Be((int)System.Net.HttpStatusCode.OK);
 
         }
 
