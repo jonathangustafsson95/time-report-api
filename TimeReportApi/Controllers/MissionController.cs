@@ -17,9 +17,9 @@ namespace TimeReportApi.Controllers
     [ApiController]
     public class MissionController : ControllerBase
     {
-        private readonly UnitOfWork unitOfWork;
+        private readonly IUnitOfWork unitOfWork;
         private readonly User user;
-        public MissionController(UnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
+        public MissionController(IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
         {
             this.unitOfWork = unitOfWork;
             int userId = Int32.Parse(httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "userId").Value);

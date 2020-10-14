@@ -16,9 +16,9 @@ namespace time_report_api.Controllers
     [ApiController]
     public class StatisticsController : ControllerBase
     {
-        private readonly UnitOfWork unitOfWork;
+        private readonly IUnitOfWork unitOfWork;
         private readonly User dummy;
-        public StatisticsController(UnitOfWork unitOfWork)
+        public StatisticsController(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
             dummy = new User()
