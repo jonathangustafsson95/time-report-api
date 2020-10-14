@@ -23,8 +23,8 @@ namespace TimeReportApi.Controllers
     public class ReportingController : ControllerBase
     {
         private readonly User user;
-        private readonly UnitOfWork unitOfWork;
-        public ReportingController(UnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
+        private readonly IUnitOfWork unitOfWork;
+        public ReportingController(IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
         {
             this.unitOfWork = unitOfWork;
             int userId = Int32.Parse(httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "userId").Value);
@@ -65,9 +65,9 @@ namespace TimeReportApi.Controllers
                 unitOfWork.RegistryRepository.Save();
                 return Ok();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
@@ -260,7 +260,7 @@ namespace TimeReportApi.Controllers
         /// </summary>
         /// <param name="date"></param>
         /// <returns>An int representing the week number.</returns>
-        private int GetWeekNumber(DateTime date)
+        public int GetWeekNumber(DateTime date)
         {
             CultureInfo cultureInfo = CultureInfo.CurrentCulture;
             return cultureInfo.Calendar.GetWeekOfYear(date, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
@@ -285,7 +285,7 @@ namespace TimeReportApi.Controllers
                 {
                     Mission mission = unitOfWork.MissionRepository.GetById(favoriteMissionList[i].MissionId);
                     tasksViewModelList = new List<TaskViewModel>();
-
+                    
                     foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
                     {
                         TaskViewModel taskVM = new TaskViewModel
