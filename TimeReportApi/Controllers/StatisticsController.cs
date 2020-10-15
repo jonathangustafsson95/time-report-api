@@ -17,23 +17,22 @@ namespace time_report_api.Controllers
     public class StatisticsController : ControllerBase
     {
         private readonly UnitOfWork unitOfWork;
-        private readonly User dummy;
-        public StatisticsController(UnitOfWork unitOfWork)
+        private readonly User user;
+        public StatisticsController(UnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
         {
             this.unitOfWork = unitOfWork;
-            dummy = new User()
-            {
-                UserId = 1,
-                UserName = "John",
-                Password = "abc123",
-                EMail = "hej@lol.com"
-            };
+            int userId = Int32.Parse(httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "userId").Value);
+            user = unitOfWork.UserRepository.GetById(userId);
         }
+
+
+
+
         [HttpGet]
         [Route("GetStatsInternVsCustomer/{startDate}/{endDate}")]
         public Dictionary<string,float> GetStatsInternVsCustomer(DateTime startDate, DateTime endDate)
         {
-            List<Registry> registryByDate = unitOfWork.RegistryRepository.GetRegistriesByDate(startDate, endDate, dummy.UserId);
+            List<Registry> registryByDate = unitOfWork.RegistryRepository.GetRegistriesByDate(startDate, endDate, user.UserId);
             int internalCount = 0, customerCount = 0;
             float internalHours = 0, customerHours = 0;
             foreach (Registry reg in registryByDate)
@@ -76,14 +75,16 @@ namespace time_report_api.Controllers
         }
 
         [HttpGet]
-        [Route("GetStatsCustomerVsCustomer/{userId:int}/{startDate:DateTime}/{endDate:DateTime}")]
-        public Dictionary<string, float> GetStatsCustomerVsCustomer(int userId, DateTime startDate, DateTime endDate)
+        [Route("GetStatsCustomerVsCustomer/{startDate:DateTime}/{endDate:DateTime}")]
+        public Dictionary<string, float> GetStatsCustomerVsCustomer(DateTime startDate, DateTime endDate)
         {
-            List<Registry> registryByDate = unitOfWork.RegistryRepository.GetRegistriesByDate(startDate, endDate, userId);
+            List<Registry> registryByDate = unitOfWork.RegistryRepository.GetRegistriesByDate(startDate, endDate, user.UserId);
 
             Dictionary<int, float> taskIdAndHoursSpent = new Dictionary<int, float>();
             Dictionary<int, string> taskIdAndCustomerName = new Dictionary<int, string>();
             Dictionary<string, float> customerNameAndHoursSpent = new Dictionary<string, float>();
+            Dictionary<string, float> customerNameAndPercent = new Dictionary<string, float>();
+            float allHours = 0;
 
             foreach (Registry reg in registryByDate)
             {
@@ -104,10 +105,12 @@ namespace time_report_api.Controllers
 
             foreach (KeyValuePair<int, float> item in taskIdAndHoursSpent) 
             {
-                if(customerNameAndHoursSpent.ContainsKey(taskIdAndCustomerName[item.Key]))
+                allHours += taskIdAndHoursSpent[item.Key];
+
+                if (customerNameAndHoursSpent.ContainsKey(taskIdAndCustomerName[item.Key]))
                 {
                     customerNameAndHoursSpent[taskIdAndCustomerName[item.Key]] += taskIdAndHoursSpent[item.Key];
-
+                    
                 }
                 else 
                 {
@@ -115,7 +118,14 @@ namespace time_report_api.Controllers
                 }
             }
 
-            return customerNameAndHoursSpent;
+            foreach (KeyValuePair<string,float> item in customerNameAndHoursSpent)
+            {
+                customerNameAndPercent[item.Key + "%"] = (item.Value / allHours) * 100;
+            }
+
+            var customerStatistics = customerNameAndHoursSpent.Union(customerNameAndPercent).ToDictionary(k => k.Key, v => v.Value);
+            return customerStatistics;
+            
         }
     }
 }
