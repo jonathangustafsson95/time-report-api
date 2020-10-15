@@ -19,6 +19,9 @@ namespace time_report_api.Controllers
         private readonly UnitOfWork unitOfWork;
         private readonly User user;
         public StatisticsController(UnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
+        private readonly IUnitOfWork unitOfWork;
+        private readonly User dummy;
+        public StatisticsController(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
             int userId = Int32.Parse(httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "userId").Value);

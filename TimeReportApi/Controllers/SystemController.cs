@@ -23,10 +23,10 @@ namespace TimeReportApi.Controllers
     [ApiController]
     public class SystemController : ControllerBase
     {
-        private readonly UnitOfWork unitOfWork;
+        private readonly IUnitOfWork unitOfWork;
         private readonly IConfiguration _config;
 
-        public SystemController(UnitOfWork unitOfWork, IConfiguration config)
+        public SystemController(IUnitOfWork unitOfWork, IConfiguration config)
         {
             this.unitOfWork = unitOfWork;
             _config = config;

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DataAccessLayer.Repositories
 {
-    public class GenericRepository<T>:IGenericRepository<T> where T:class
+    public class GenericRepository<T>:IGenericRepository<T> where T : class
     {
         private readonly DbContext _context = null;
         private readonly DbSet<T> _table = null;
