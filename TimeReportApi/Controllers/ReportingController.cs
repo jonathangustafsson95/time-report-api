@@ -126,6 +126,28 @@ namespace TimeReportApi.Controllers
         }
 
         /// <summary>
+        /// This method returns a list of RegistryViewModel items extracted from the database
+        /// for the week in which provided date exists.
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns>A list of RegistryViewModel items.</returns>
+        [HttpGet]
+        [Route("Day/{dateTime}")]
+        public ActionResult<List<RegistryViewModel>> GetDay(DateTime dateTime)
+        {
+            try
+            {
+                List<Registry> weekRegistries = unitOfWork.RegistryRepository.GetRegistriesByDate(dateTime, dateTime.AddDays(1), user.UserId);
+                return (ConvertRegistriesToViewModel(weekRegistries));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+        }
+
+        /// <summary>
         /// This method finds the date of the first day in a week which it the returns.
         /// The method takes a optional argument id week should start on a day that is 
         /// not equal to Monday.
