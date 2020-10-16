@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Razor.Language;
 using TimeReportApi.Models;
+using TimeReportApi.Models.ViewModel;
+using System.Security.Cryptography.X509Certificates;
 
 namespace time_report_api.Controllers
 {
@@ -127,5 +129,48 @@ namespace time_report_api.Controllers
             return customerStatistics;
             
         }
+
+        [HttpGet]
+        [Route("GetTaskStats/{missionId:int}")]
+        public List<TaskStatsViewModel> getTaskStats(int missionId)
+        {
+            List<TaskStatsViewModel> tsVMList = new List<TaskStatsViewModel>();
+            double actualHours = 0;
+            DateTime endDateForTaskCheck = new DateTime();
+            List<CommonLibrary.Model.Task> taskList = unitOfWork.TaskRepository.GetAllByMissionId(missionId);
+            foreach (var task in taskList)
+            {
+                if(task.Finished == null)
+                {
+                    endDateForTaskCheck = DateTime.Now;
+                }
+                else
+                {
+                    endDateForTaskCheck = task.Finished ?? default(DateTime);
+                }
+
+
+                List<Registry> tasksRegistries = unitOfWork.RegistryRepository.GetRegistriesByTask(task.Start, endDateForTaskCheck, task.TaskId);
+                foreach (var registry in tasksRegistries)
+                {
+                    actualHours += registry.Hours;
+                }
+                
+                TaskStatsViewModel tsVM = new TaskStatsViewModel
+                {
+                    TaskId = task.TaskId,
+                    TaskName = task.Name,
+                    EstimatedHours = task.EstimatedHour,
+                    ActualHours = actualHours
+                };
+
+                tsVMList.Add(tsVM);
+                actualHours = 0;
+            }
+
+            return tsVMList;
+
+        }
+
     }
 }

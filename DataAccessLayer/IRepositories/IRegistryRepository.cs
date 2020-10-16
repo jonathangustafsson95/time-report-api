@@ -11,6 +11,6 @@ namespace DataAccessLayer.IRepositories
         List<Registry> GetAllByUserId(int id);
         List<Registry> GetRegistriesByDate(DateTime startDate, DateTime endDate, int userId);
         List<Registry> GetLatestRegistries(int nrOfRegs, int userId);
-
+        List<Registry> GetRegistriesByTask(DateTime startDate, DateTime endDate, int taskId);
     }
 }

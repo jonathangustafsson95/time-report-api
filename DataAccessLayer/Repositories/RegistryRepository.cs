@@ -55,5 +55,15 @@ namespace DataAccessLayer.Repositories
             var enumerable = registries.ToList();
             return enumerable.OrderByDescending(d => d.RegistryId).Take(nrOfRegs).ToList();
         }
+
+        public List<Registry> GetRegistriesByTask(DateTime startDate, DateTime endDate, int taskId)
+        {
+            IEnumerable<Registry> all = GetAll();
+            IEnumerable<Registry> allRegistriesBetweenDates = from a in all
+                                                              where a.TaskId == taskId
+                                                              && (a.Date <= endDate && a.Date >= startDate)
+                                                              select a;
+            return allRegistriesBetweenDates != null ? allRegistriesBetweenDates.ToList() : new List<Registry>();
+        }
     }  
 }
