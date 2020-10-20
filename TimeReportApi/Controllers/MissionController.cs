@@ -25,84 +25,8 @@ namespace TimeReportApi.Controllers
             int userId = Int32.Parse(httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "userId").Value);
             user = unitOfWork.UserRepository.GetById(userId);
         }
-
-        /// <summary>
-        /// This method returns all missions when called 
-        /// </summary >
-        /// <param></param>
-        /// <returns> IEnumerable<Mission> </returns>
         [HttpGet]
-        [Route("GetAllMission")]
-        public IEnumerable<Mission> GetAllMissions()
-        {
-            return unitOfWork.MissionRepository.GetAll();
-        }
-        /// <summary>
-        /// This method returns all missions associated to the user id 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns> IEnumerable<Mission> </returns>
-        //[HttpGet]
-        //[Route("GetAllMissionByUserId/{id:int}")]
-        //public IEnumerable<MissionViewModel> GetAllMissionByUserId(int id)
-        //{
-        //    List<MissionMember> missionMemberList= unitOfWork.MissionMemberRepository.GetAllByUserId(id);
-        //    List<MissionViewModel> mvmList = new List<MissionViewModel>();
-        //    for(int i=0;i< missionMemberList.Count;i++)
-        //    {
-        //        Mission mission = unitOfWork.MissionRepository.GetById(missionMemberList[i].MissionId);
-        //        mvmList.Add(new MissionViewModel().ConvertToViewModel(mission));
-        //    }
-        //    return mvmList;
-
-        //}
-        /// <summary>
-        /// This method returns all users associated to the mission id 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns> IEnumerable<User> </returns>
-        [HttpGet]
-        [Route("GetAllUserByMissionId/{id:int}")]
-        public IEnumerable<UserViewModel> GetAllUserByMissionId(int id)
-        {
-            List<MissionMember> missionMemberList = unitOfWork.MissionMemberRepository.GetAllByMissionId(id);
-            List<UserViewModel> userList = new List<UserViewModel>();
-            for (int i = 0; i < missionMemberList.Count; i++)
-            {
-                User user = unitOfWork.UserRepository.GetById(missionMemberList[i].MissionId);
-                userList.Add(new UserViewModel().ConvertToViewModel(user));
-            }
-            return userList;
-        }
-        /// <summary>
-        /// This method returns all missions associated to the mission name
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns> IEnumerable<Mission> </returns>
-        [HttpGet]
-        [Route("GetAllMissionByMissionName/{name}")]
-        public IEnumerable<Mission> GetAllMissionByMissionName(string name)
-        {
-            List<Mission> missionList = unitOfWork.MissionRepository.Search<Mission>(x => x.MissionName, name);
-            return missionList;
-        }
-
-        [HttpGet]
-        [Route("GetAllMissionByCustomerName/{name}")]
-        public IEnumerable<Mission> GetAllMissionByCustomerName(string name)
-        {
-            List<Customer> customerList = unitOfWork.CustomerRepository.Search<Customer>(x => x.Name, name);
-            List<Mission> missionsLinkedToCustomerID = new List<Mission>();
-            foreach (var customer in customerList)
-            {
-                List<Mission> allByCustomerId = unitOfWork.MissionRepository.GetAllByCustomerId(customer.CustomerId);
-                missionsLinkedToCustomerID.Concat(allByCustomerId);
-            }
-
-            return missionsLinkedToCustomerID;
-        }
-        [HttpGet]
-        [Route("GetAllMissionsBySearchString/{searchString}")]
+        [Route("SearchMission/{searchString}")]
         public IEnumerable<MissionTaskViewModel> GetAllMissionsBySearchString(string searchString)
         {
             string lowerCaseSearchString = searchString.ToLower();
@@ -131,8 +55,6 @@ namespace TimeReportApi.Controllers
 
             List<MissionTaskViewModel> missionTasksViewModelList = new List<MissionTaskViewModel>();
             List<MissionMember> mmList = unitOfWork.MissionMemberRepository.GetAllByUserId(user.UserId);
-
-
 
             foreach (var mission in missionList )
             {
@@ -173,11 +95,7 @@ namespace TimeReportApi.Controllers
                 missionTasksViewModelList.Add(missionsVM);
             }
             return missionTasksViewModelList;
-
-
         }
-
-
 
         /// <summary>
         /// This method adds a missionmember to the table when called
@@ -185,7 +103,7 @@ namespace TimeReportApi.Controllers
         /// <param name=" _missionMember"></param>
         /// <returns> ActionResult </returns>
         [HttpPost]
-        [Route("AddMissionMember")]
+        [Route("MissionMember")]
         public ActionResult AddMissionMember([FromBody] MissionMember _missionMember)
         {
             try
@@ -200,24 +118,24 @@ namespace TimeReportApi.Controllers
             }
         }
 
-        // PUT api/<MissionMemberController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
         // DELETE api/<MissionMemberController>/5
         [HttpDelete]
-        [Route("DeleteMissionMember/{userId}/{missionId}")]
-        public ActionResult DeleteMissionMember(int userId, int missionId)
+        [Route("MissionMember/{missionId}")]
+        public ActionResult DeleteMissionMember(int missionId)
         {
-            //unitOfWork.MissionMemberRepository.Insert(new MissionMember() { userId=2,});
-            unitOfWork.MissionMemberRepository.Delete(userId, missionId);
-            unitOfWork.MissionMemberRepository.Save();
-            return Ok();
-        }
+            try
+            {
+                //unitOfWork.MissionMemberRepository.Insert(new MissionMember() { userId=2,});
+                unitOfWork.MissionMemberRepository.Delete(user.UserId, missionId);
+                unitOfWork.MissionMemberRepository.Save();
+                return Ok();
+            }
+            catch (Exception e)
+            {
 
-        
+                return StatusCode(500,e.Message);
+            }
+        }
 
         /// <summary>
         /// This method adds a favorite mission to repository. 
@@ -226,7 +144,7 @@ namespace TimeReportApi.Controllers
         /// <returns> ActionResult </returns>
 
         [HttpPost]
-        [Route("AddFavoriteMission")]
+        [Route("FavoriteMission")]
         public ActionResult AddFavoriteMission([FromBody] FavoriteMission favoriteMission)
         {
             try
@@ -257,28 +175,25 @@ namespace TimeReportApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetFavoriteMissions")]
+        [Route("FavoriteMissions")]
         public ActionResult<List<MissionViewModel>> GetFavoriteMissions()
         {
-            List<FavoriteMission> favoriteMissionList = unitOfWork.FavoriteMissionRepository.GetFavoriteMissionsById(user.UserId);
-            List<MissionViewModel> mvmList = new List<MissionViewModel>();
-            for (int i = 0; i < favoriteMissionList.Count; i++)
+            try
             {
-                Mission mission = unitOfWork.MissionRepository.GetById(favoriteMissionList[i].MissionId);
-                Customer customer = unitOfWork.CustomerRepository.GetAll().FirstOrDefault(n => n.CustomerId == mission.CustomerId);
-                mvmList.Add(new MissionViewModel().ConvertToViewModel(mission,customer));
+                List<FavoriteMission> favoriteMissionList = unitOfWork.FavoriteMissionRepository.GetFavoriteMissionsById(user.UserId);
+                List<MissionViewModel> mvmList = new List<MissionViewModel>();
+                for (int i = 0; i < favoriteMissionList.Count; i++)
+                {
+                    Mission mission = unitOfWork.MissionRepository.GetById(favoriteMissionList[i].MissionId);
+                    Customer customer = unitOfWork.CustomerRepository.GetAll().FirstOrDefault(n => n.CustomerId == mission.CustomerId);
+                    mvmList.Add(new MissionViewModel().ConvertToViewModel(mission, customer));
+                }
+                return mvmList;
             }
-            return mvmList;
-        }
-
-        [HttpGet]
-        [Route("GetAllTasksInAMission/{id:int}")]
-        public IEnumerable<Task> GetAllTasksInAMission(int missionId)
-        {
-            IEnumerable<Task> allTasksForAMission = unitOfWork.TaskRepository.GetAll();
-            var allTasksInAMission = allTasksForAMission.ToList();
-            allTasksInAMission.Select(m => m.MissionId == missionId);
-            return allTasksInAMission;
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
 
         /// <summary>
@@ -290,24 +205,74 @@ namespace TimeReportApi.Controllers
         [Route("UserMissions/{taskId}")]
         public ActionResult<List<MissionTaskViewModel>> GetUserMissions(int taskId)
         {
-            List<MissionMember> missionMemberList = unitOfWork.MissionMemberRepository.GetAllByUserId(user.UserId);
-            List<MissionTaskViewModel> missionTaskViewModel = new List<MissionTaskViewModel>();
-            List<TaskViewModel> tasksViewModelList;
-            if (taskId != 0)
+            try
             {
-                // Check if selected registry is a mission that the user is a member of
-                Task taskSelected = unitOfWork.TaskRepository.GetById(taskId);
-                int idx = missionMemberList.FindIndex(f => f.MissionId == taskSelected.MissionId);
-                if (idx < 0)
+                List<MissionMember> missionMemberList = unitOfWork.MissionMemberRepository.GetAllByUserId(user.UserId);
+                List<MissionTaskViewModel> missionTaskViewModel = new List<MissionTaskViewModel>();
+                List<TaskViewModel> tasksViewModelList;
+                if (taskId != 0)
                 {
-                    missionMemberList.Add(new MissionMember { UserId = user.UserId, MissionId = (int)taskSelected.MissionId });
+                    Task taskSelected = unitOfWork.TaskRepository.GetById(taskId);
+                    int idx = missionMemberList.FindIndex(f => f.MissionId == taskSelected.MissionId);
+                    if (idx < 0)
+                    {
+                        missionMemberList.Add(new MissionMember { UserId = user.UserId, MissionId = (int)taskSelected.MissionId });
+                    }
                 }
+
+                for (int i = 0; i < missionMemberList.Count; i++)
+                {
+                    Mission mission = unitOfWork.MissionRepository.GetById(missionMemberList[i].MissionId);
+                    tasksViewModelList = new List<TaskViewModel>();
+
+                    foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
+                    {
+                        TaskViewModel taskVM = new TaskViewModel
+                        {
+                            TaskId = task.TaskId,
+                            MissionId = task.MissionId,
+                            UserId = task.UserId,
+                            Name = task.Name,
+                            Description = task.Description,
+                        };
+                        tasksViewModelList.Add(taskVM);
+                    }
+
+                    MissionTaskViewModel missionsVM = new MissionTaskViewModel
+                    {
+                        MissionName = mission.MissionName,
+                        MissionId = mission.MissionId,
+                        MissionColor = mission.Color,
+                        StartDate = mission.Start,
+                        Description = mission.Description,
+                        Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).Name,
+                        isMember = true,
+                        Tasks = tasksViewModelList
+                    };
+                    missionTaskViewModel.Add(missionsVM);
+                }
+                return missionTaskViewModel;
             }
-            
-            for (int i = 0; i < missionMemberList.Count; i++)
+            catch (Exception e)
             {
-                Mission mission = unitOfWork.MissionRepository.GetById(missionMemberList[i].MissionId);
-                tasksViewModelList = new List<TaskViewModel>();
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        /// <summary>
+        /// This method returns a  MissionTaskViewModel which contains the mission and corresponding 
+        /// tasks and users for a given ID. 
+        /// </summary>
+        /// <returns>A MissionTaskViewModel.</returns>
+        [HttpGet]
+        [Route("SpecificMission/{missionid}")]
+        public ActionResult<MissionTaskViewModel> GetSpecificMission(int missionId)
+        {
+            try
+            {
+                Mission mission = unitOfWork.MissionRepository.GetById(missionId);
+                List<TaskViewModel> tasksViewModelList = new List<TaskViewModel>();
+                List<UserViewModel> usersVM = new List<UserViewModel>();
 
                 foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
                 {
@@ -321,8 +286,21 @@ namespace TimeReportApi.Controllers
                     };
                     tasksViewModelList.Add(taskVM);
                 }
-        
-                MissionTaskViewModel missionsVM = new MissionTaskViewModel
+
+                List<MissionMember> missionMembers = unitOfWork.MissionMemberRepository.GetAllByMissionId(missionId);
+                foreach (MissionMember missionMember in missionMembers)
+                {
+                    User userInMission = unitOfWork.UserRepository.GetById(missionMember.UserId);
+                    UserViewModel userVm = new UserViewModel
+                    {
+                        UserId = userInMission.UserId,
+                        UserName = userInMission.UserName,
+                        EMail = userInMission.EMail
+                    };
+                    usersVM.Add(userVm);
+                }
+
+                MissionTaskViewModel missionVM = new MissionTaskViewModel
                 {
                     MissionName = mission.MissionName,
                     MissionId = mission.MissionId,
@@ -330,66 +308,16 @@ namespace TimeReportApi.Controllers
                     StartDate = mission.Start,
                     Description = mission.Description,
                     Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).Name,
-                    isMember=true,
-                    Tasks = tasksViewModelList
+                    isMember = true,
+                    Tasks = tasksViewModelList,
+                    Users = usersVM
                 };
-                missionTaskViewModel.Add(missionsVM);
+                return missionVM;
             }
-            return missionTaskViewModel;
-        }
-
-        /// <summary>
-        /// This method returns a  MissionTaskViewModel which contains the mission and corresponding 
-        /// tasks and users for a given ID. 
-        /// </summary>
-        /// <returns>A MissionTaskViewModel.</returns>
-        [HttpGet]
-        [Route("SpecificMission/{missionid}")]
-        public ActionResult<MissionTaskViewModel> GetSpecificMission(int missionId)
-        {
-            Mission mission = unitOfWork.MissionRepository.GetById(missionId);
-            List<TaskViewModel> tasksViewModelList = new List<TaskViewModel>();
-            List<UserViewModel> usersVM = new List<UserViewModel>();
-
-            foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
+            catch (Exception e)
             {
-                TaskViewModel taskVM = new TaskViewModel
-                {
-                    TaskId = task.TaskId,
-                    MissionId = task.MissionId,
-                    UserId = task.UserId,
-                    Name = task.Name,
-                    Description = task.Description,
-                };
-                tasksViewModelList.Add(taskVM);
+                return StatusCode(500, e.Message);
             }
-
-            List<MissionMember> missionMembers = unitOfWork.MissionMemberRepository.GetAllByMissionId(missionId);
-            foreach (MissionMember missionMember in missionMembers)
-            {
-                User userInMission = unitOfWork.UserRepository.GetById(missionMember.UserId);
-                UserViewModel userVm = new UserViewModel
-                {
-                    UserId = userInMission.UserId,
-                    UserName = userInMission.UserName,
-                    EMail = userInMission.EMail
-                };
-                usersVM.Add(userVm);
-            }
-
-            MissionTaskViewModel missionVM = new MissionTaskViewModel
-            {
-                MissionName = mission.MissionName,
-                MissionId = mission.MissionId,
-                MissionColor = mission.Color,
-                StartDate = mission.Start,
-                Description = mission.Description,
-                Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).Name,
-                isMember = true,
-                Tasks = tasksViewModelList,
-                Users = usersVM
-            };
-            return missionVM;
         }
     }
 }
