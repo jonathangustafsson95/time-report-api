@@ -37,11 +37,11 @@ namespace time_report_api.Controllers
         {
             DateTime firstDayOfMonth = new DateTime(startDate.Year, startDate.Month, 1);
             float internalHours = 0, customerHours = 0;
-            List<StatisticCustomerInternalViewModel> listStatistic=new List<StatisticCustomerInternalViewModel>();
+            List<StatisticCustomerInternalViewModel> listStatistic = new List<StatisticCustomerInternalViewModel>();
             for (int i = 0; i <= 5; i++)
             {
                 DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
-                List<Registry> registryByDate = unitOfWork.RegistryRepository.GetRegistriesByDate(firstDayOfMonth, lastDayOfMonth ,user.UserId);
+                List<Registry> registryByDate = unitOfWork.RegistryRepository.GetRegistriesByDate(firstDayOfMonth, lastDayOfMonth, user.UserId);
                 foreach (Registry reg in registryByDate)
                 {
                     if (reg.TaskId.HasValue)
@@ -49,68 +49,85 @@ namespace time_report_api.Controllers
                     else
                         internalHours += (float)reg.Hours;
                 }
-                listStatistic.Add(new StatisticCustomerInternalViewModel { Month= dateFormater.GetMonthName(firstDayOfMonth.Month), CustomerTime=customerHours, InternalTime=internalHours });
-                firstDayOfMonth=firstDayOfMonth.AddMonths(-1);
-                internalHours = 0; 
-                customerHours=0;
-            }                
-            return listStatistic; 
+                listStatistic.Add(new StatisticCustomerInternalViewModel { Month = dateFormater.GetMonthName(firstDayOfMonth.Month), CustomerTime = customerHours, InternalTime = internalHours });
+                firstDayOfMonth = firstDayOfMonth.AddMonths(-1);
+                internalHours = 0;
+                customerHours = 0;
+            }
+            return listStatistic;
         }
 
         [HttpGet]
-        [Route("GetStatsCustomerVsCustomer/{startDate:DateTime}/{endDate:DateTime}")]
-        public Dictionary<string, float> GetStatsCustomerVsCustomer(DateTime startDate, DateTime endDate)
+        [Route("CustomerVsCustomer/{date}")]
+        public List<CustomerVsCustomerStatsViewModel> GetStatsCustomerVsCustomer(DateTime date)
         {
+            DateTime firstDayOfMonth = new DateTime(date.Year, date.Month, 1);
+            DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
 
-            List<Registry> registryByDate = unitOfWork.RegistryRepository.GetRegistriesByDate(startDate, endDate,user.UserId);
+            List<Registry> registryByDate = unitOfWork.RegistryRepository.GetRegistriesByDate(firstDayOfMonth, lastDayOfMonth, user.UserId);
 
             Dictionary<int, float> taskIdAndHoursSpent = new Dictionary<int, float>();
             Dictionary<int, string> taskIdAndCustomerName = new Dictionary<int, string>();
             Dictionary<string, float> customerNameAndHoursSpent = new Dictionary<string, float>();
-            Dictionary<string, float> customerNameAndPercent = new Dictionary<string, float>();
+            List<CustomerVsCustomerStatsViewModel> CVSCViewModelList = new List<CustomerVsCustomerStatsViewModel>();
             float allHours = 0;
+            string customerName = "";
+            float internalHours = 0;
 
             foreach (Registry reg in registryByDate)
             {
-                if (reg.TaskId.HasValue) 
-                { 
-                    if(!taskIdAndHoursSpent.ContainsKey(reg.TaskId.Value))
+                if (reg.TaskId.HasValue)
+                {
+                    if (!taskIdAndHoursSpent.ContainsKey(reg.TaskId.Value))
                     {
-                        string customerName = (unitOfWork.CustomerRepository.GetById(unitOfWork.MissionRepository.GetById(unitOfWork.TaskRepository.GetById(reg.TaskId).MissionId.Value).CustomerId)).Name;
+                        customerName = (unitOfWork.CustomerRepository.GetById(unitOfWork.MissionRepository.GetById(unitOfWork.TaskRepository.GetById(reg.TaskId).MissionId.Value).CustomerId)).Name;
+
                         taskIdAndCustomerName.Add(reg.TaskId.Value, customerName);
                         taskIdAndHoursSpent.Add(reg.TaskId.Value, 0);
-
                     }
-
                     taskIdAndHoursSpent[reg.TaskId.Value] += (float)reg.Hours;
                 }
-
+                else
+                {
+                    internalHours += (float)reg.Hours;
+                }
             }
 
-            foreach (KeyValuePair<int, float> item in taskIdAndHoursSpent) 
+            foreach (KeyValuePair<int, float> item in taskIdAndHoursSpent)
             {
                 allHours += taskIdAndHoursSpent[item.Key];
 
                 if (customerNameAndHoursSpent.ContainsKey(taskIdAndCustomerName[item.Key]))
                 {
                     customerNameAndHoursSpent[taskIdAndCustomerName[item.Key]] += taskIdAndHoursSpent[item.Key];
-                    
                 }
-                else 
+                else
                 {
                     customerNameAndHoursSpent.Add(taskIdAndCustomerName[item.Key], taskIdAndHoursSpent[item.Key]);
                 }
             }
 
-            foreach (KeyValuePair<string,float> item in customerNameAndHoursSpent)
+            foreach (var item in customerNameAndHoursSpent)
             {
-                customerNameAndPercent[item.Key + "%"] = (item.Value / allHours) * 100;
+                CVSCViewModelList.Add(new CustomerVsCustomerStatsViewModel
+                {
+                    CustomerName = item.Key,
+                    Hours = item.Value
+                });
             }
 
-            var customerStatistics = customerNameAndHoursSpent.Union(customerNameAndPercent).ToDictionary(k => k.Key, v => v.Value);
-            return customerStatistics;
-            
+            CVSCViewModelList.Add(new CustomerVsCustomerStatsViewModel
+            {
+                CustomerName = "Internal",
+                Hours = internalHours
+            });
+
+
+            return CVSCViewModelList;
         }
+        
+
+    
 
         [HttpGet]
         [Route("GetTaskStats/{missionId:int}")]
