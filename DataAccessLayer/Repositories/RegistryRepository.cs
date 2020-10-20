@@ -48,7 +48,17 @@ namespace DataAccessLayer.Repositories
                                                               select a;
             return allRegistriesBetweenDates != null ? allRegistriesBetweenDates.ToList() : new List<Registry>();
         }
-
+        //public List<Registry> GetRegistriesByDate(DateTime date, int userId)
+        //{
+        //    DateTime firstDayOfMonth = new DateTime(date.Year, date.Month, 1);
+        //    DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+        //    IEnumerable<Registry> all = GetAll();
+        //    IEnumerable<Registry> allRegistriesBetweenDates = from a in all
+        //                                                      where a.UserId == userId
+        //                                                      && (a.Date <= lastDayOfMonth && a.Date >= firstDayOfMonth)
+        //                                                      select a;
+        //    return allRegistriesBetweenDates != null ? allRegistriesBetweenDates.ToList() : new List<Registry>();
+        //}
         public List<Registry> GetLatestRegistries(int nrOfRegs, int userId)
         {
             List<Registry> registries = GetAllByUserId(userId);

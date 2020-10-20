@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Razor.Language;
 using TimeReportApi.Models;
 using TimeReportApi.Models.ViewModel;
 using System.Security.Cryptography.X509Certificates;
+using System.Globalization;
 
 namespace time_report_api.Controllers
 {
@@ -20,67 +21,48 @@ namespace time_report_api.Controllers
     {
         private readonly User user;
         private readonly IUnitOfWork unitOfWork;
+        private readonly DateTimeFormatInfo dateFormater;
+
         public StatisticsController(IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
         {
+            dateFormater = CultureInfo.GetCultureInfo("en-US").DateTimeFormat;
             this.unitOfWork = unitOfWork;
             int userId = Int32.Parse(httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "userId").Value);
             user = unitOfWork.UserRepository.GetById(userId);
         }
 
-
-
-
         [HttpGet]
-        [Route("GetStatsInternVsCustomer/{startDate}/{endDate}")]
-        public Dictionary<string,float> GetStatsInternVsCustomer(DateTime startDate, DateTime endDate)
+        [Route("InternalVsCustomer/{startDate}")]
+        public List<StatisticCustomerInternalViewModel> GetStatsInternVsCustomer(DateTime startDate)
         {
-            List<Registry> registryByDate = unitOfWork.RegistryRepository.GetRegistriesByDate(startDate, endDate, user.UserId);
-            int internalCount = 0, customerCount = 0;
+            DateTime firstDayOfMonth = new DateTime(startDate.Year, startDate.Month, 1);
             float internalHours = 0, customerHours = 0;
-            foreach (Registry reg in registryByDate)
+            List<StatisticCustomerInternalViewModel> listStatistic=new List<StatisticCustomerInternalViewModel>();
+            for (int i = 0; i <= 5; i++)
             {
-                if (reg.TaskId.HasValue)
+                DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+                List<Registry> registryByDate = unitOfWork.RegistryRepository.GetRegistriesByDate(firstDayOfMonth, lastDayOfMonth ,user.UserId);
+                foreach (Registry reg in registryByDate)
                 {
-                    customerCount++;
-                    customerHours += (float)reg.Hours;
+                    if (reg.TaskId.HasValue)
+                        customerHours += (float)reg.Hours;
+                    else
+                        internalHours += (float)reg.Hours;
                 }
-                else
-                {
-                    internalCount++;
-                    internalHours = (float)reg.Hours;
-                }
-            }
-            float totalHours = internalHours + customerHours;
-            //Statistic statistic = new Statistic()
-            //{
-            //    TotalTask = registryByDate.Count,
-            //    InternalTaskCount = internalCount,
-            //    CustomerTaskCount = customerCount,
-            //    InternalTime = internalHours,
-            //    CustomerTime = customerHours,
-            //    TotalTime = totalHours,
-            //    InternalTimePerc = (internalHours / totalHours) * 100,
-            //    CustomerTimePerc = (customerHours / totalHours) * 100
-            //};
-            Statistic statistic = new Statistic();
-            statistic.StatisticDictionary["TotalTask"] = registryByDate.Count;
-            statistic.StatisticDictionary["InternalTaskCount"] = internalCount;
-            statistic.StatisticDictionary["CustomerTaskCount"] = customerCount;
-            statistic.StatisticDictionary["InternalTime"] = internalHours;
-            statistic.StatisticDictionary["CustomerTime"] = customerHours;
-            statistic.StatisticDictionary["TotalTime"] = totalHours;
-            statistic.StatisticDictionary["InternalTimePerc"] = (internalHours / totalHours) * 100;
-            statistic.StatisticDictionary["CustomerTimePerc"] = (customerHours / totalHours) * 100;
-            //List<Registry> filteredByInternal=registryByDate.Where(t=>t.taskId==null).ToList();
-
-            return statistic.StatisticDictionary; 
+                listStatistic.Add(new StatisticCustomerInternalViewModel { Month= dateFormater.GetMonthName(firstDayOfMonth.Month), CustomerTime=customerHours, InternalTime=internalHours });
+                firstDayOfMonth=firstDayOfMonth.AddMonths(-1);
+                internalHours = 0; 
+                customerHours=0;
+            }                
+            return listStatistic; 
         }
 
         [HttpGet]
         [Route("GetStatsCustomerVsCustomer/{startDate:DateTime}/{endDate:DateTime}")]
         public Dictionary<string, float> GetStatsCustomerVsCustomer(DateTime startDate, DateTime endDate)
         {
-            List<Registry> registryByDate = unitOfWork.RegistryRepository.GetRegistriesByDate(startDate, endDate, user.UserId);
+
+            List<Registry> registryByDate = unitOfWork.RegistryRepository.GetRegistriesByDate(startDate, endDate,user.UserId);
 
             Dictionary<int, float> taskIdAndHoursSpent = new Dictionary<int, float>();
             Dictionary<int, string> taskIdAndCustomerName = new Dictionary<int, string>();
