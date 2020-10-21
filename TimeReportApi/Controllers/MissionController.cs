@@ -114,10 +114,9 @@ namespace TimeReportApi.Controllers
                     unitOfWork.MissionMemberRepository.Save();
                     return Ok();
                 }
-                else if (unitOfWork.MissionRepository.Exists(missionId) == false)
-                    throw new Exception("Mission does not exist");
-                else
-                    throw new Exception("something went wrong");
+                else 
+                    throw new Exception();
+               
             }
             catch (Exception)
             {
