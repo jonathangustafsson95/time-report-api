@@ -151,17 +151,24 @@ namespace TimeReportApi.Controllers
 
         [HttpPost]
         [Route("FavoriteMission/{missionId}")]
-        public ActionResult AddFavoriteMission(int missionId)
+        public ActionResult<HttpResponse> AddFavoriteMission(int missionId)
         {
             try
             {
+
+                if (unitOfWork.MissionRepository.Exists(missionId))
+                {
                 unitOfWork.FavoriteMissionRepository.Insert(new FavoriteMission() { UserId = user.UserId, MissionId = missionId});
                 unitOfWork.FavoriteMissionRepository.Save();
                 return Ok();
+                }
+                else
+                  throw new Exception();
+
             }
-            catch
+            catch (Exception)
             {
-                return ValidationProblem();
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
         [HttpDelete]
@@ -213,6 +220,9 @@ namespace TimeReportApi.Controllers
         {
             try
             {
+                if (unitOfWork.TaskRepository.Exists(taskId))
+                {
+
                 List<MissionMember> missionMemberList = unitOfWork.MissionMemberRepository.GetAllByUserId(user.UserId);
                 List<MissionTaskViewModel> missionTaskViewModel = new List<MissionTaskViewModel>();
                 List<TaskViewModel> tasksViewModelList;
@@ -258,6 +268,9 @@ namespace TimeReportApi.Controllers
                     missionTaskViewModel.Add(missionsVM);
                 }
                 return missionTaskViewModel;
+            }
+            else
+                throw  new Exception();
             }
             catch (Exception e)
             {
