@@ -103,12 +103,13 @@ namespace TimeReportApi.Controllers
         /// <param name=" _missionMember"></param>
         /// <returns> ActionResult </returns>
         [HttpPost]
-        [Route("MissionMember")]
-        public ActionResult AddMissionMember([FromBody] MissionMember _missionMember)
+        [Route("MissionMember/{missionId}")]
+        public ActionResult AddMissionMember(int missionId)
         {
+
             try
             {
-                unitOfWork.MissionMemberRepository.Insert(_missionMember);
+                unitOfWork.MissionMemberRepository.Insert(new MissionMember() { UserId = user.UserId, MissionId = missionId});
                 unitOfWork.MissionMemberRepository.Save();
                 return Ok();
             }
@@ -144,12 +145,12 @@ namespace TimeReportApi.Controllers
         /// <returns> ActionResult </returns>
 
         [HttpPost]
-        [Route("FavoriteMission")]
-        public ActionResult AddFavoriteMission([FromBody] FavoriteMission favoriteMission)
+        [Route("FavoriteMission/{missionId}")]
+        public ActionResult AddFavoriteMission(int missionId)
         {
             try
             {
-                unitOfWork.FavoriteMissionRepository.Insert(favoriteMission);
+                unitOfWork.FavoriteMissionRepository.Insert(new FavoriteMission() { UserId = user.UserId, MissionId = missionId});
                 unitOfWork.FavoriteMissionRepository.Save();
                 return Ok();
             }
@@ -159,12 +160,12 @@ namespace TimeReportApi.Controllers
             }
         }
         [HttpDelete]
-        [Route("FavoriteMission")]
-        public ActionResult DeleteFavoriteMission([FromBody] FavoriteMission favoriteMission)
+        [Route("FavoriteMission/{missionId}")]
+        public ActionResult DeleteFavoriteMission(int missionId)
         {
             try
             {
-                unitOfWork.FavoriteMissionRepository.Delete(favoriteMission.UserId,favoriteMission.MissionId);
+                unitOfWork.FavoriteMissionRepository.Delete(user.UserId, missionId);
                 unitOfWork.FavoriteMissionRepository.Save();
                 return Ok();
             }
