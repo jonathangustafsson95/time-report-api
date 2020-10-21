@@ -39,7 +39,6 @@ namespace TimeReportApi.Controllers
         {
             try
             {
-
                 IActionResult response = Unauthorized(new { Ok = false, ErrorMsg = "Invalid credentials..." });
                 User user = AuthenticateUser(login);
                 if (user != null)

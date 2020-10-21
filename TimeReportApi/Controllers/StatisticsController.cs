@@ -38,7 +38,7 @@ namespace time_report_api.Controllers
             DateTime firstDayOfMonth = new DateTime(startDate.Year, startDate.Month, 1);
             float internalHours = 0, customerHours = 0;
             List<StatisticCustomerInternalViewModel> listStatistic = new List<StatisticCustomerInternalViewModel>();
-            for (int i = 0; i <= 5; i++)
+            for (int i = 0; i < 5; i++)
             {
                 DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
                 List<Registry> registryByDate = unitOfWork.RegistryRepository.GetRegistriesByDate(firstDayOfMonth, lastDayOfMonth, user.UserId);
@@ -51,6 +51,7 @@ namespace time_report_api.Controllers
                 }
                 listStatistic.Add(new StatisticCustomerInternalViewModel { Month = dateFormater.GetMonthName(firstDayOfMonth.Month), CustomerTime = customerHours, InternalTime = internalHours });
                 firstDayOfMonth = firstDayOfMonth.AddMonths(-1);
+                listStatistic.Reverse();
                 internalHours = 0;
                 customerHours = 0;
             }
