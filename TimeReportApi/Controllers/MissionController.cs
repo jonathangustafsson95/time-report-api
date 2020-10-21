@@ -104,18 +104,24 @@ namespace TimeReportApi.Controllers
         /// <returns> ActionResult </returns>
         [HttpPost]
         [Route("MissionMember/{missionId}")]
-        public ActionResult AddMissionMember(int missionId)
+        public ActionResult<HttpResponse> AddMissionMember(int missionId)
         {
-
             try
             {
-                unitOfWork.MissionMemberRepository.Insert(new MissionMember() { UserId = user.UserId, MissionId = missionId});
-                unitOfWork.MissionMemberRepository.Save();
-                return Ok();
+                if (unitOfWork.MissionRepository.Exists(missionId))
+                {
+                    unitOfWork.MissionMemberRepository.Insert(new MissionMember() { UserId = user.UserId, MissionId = missionId });
+                    unitOfWork.MissionMemberRepository.Save();
+                    return Ok();
+                }
+                else if (unitOfWork.MissionRepository.Exists(missionId) == false)
+                    throw new Exception("Mission does not exist");
+                else
+                    throw new Exception("something went wrong");
             }
-            catch
+            catch (Exception)
             {
-                return ValidationProblem();
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
