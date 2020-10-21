@@ -37,19 +37,27 @@ namespace TimeReportApi.Controllers
         [Route("Login")]
         public IActionResult Login([FromBody]User login)
         {
-            IActionResult response = Unauthorized(new { Ok = false, ErrorMsg = "Invalid credentials..." }) ;
-            User user = AuthenticateUser(login);
-            if (user != null)
+            try
             {
-                var tokenString = GenerateJWTToken(user);
-                response = Ok(new
-                {
-                    token = tokenString,
-                    userDetails = user,
-                });
-            };
 
-            return response;
+                IActionResult response = Unauthorized(new { Ok = false, ErrorMsg = "Invalid credentials..." });
+                User user = AuthenticateUser(login);
+                if (user != null)
+                {
+                    var tokenString = GenerateJWTToken(user);
+                    response = Ok(new
+                    {
+                        token = tokenString,
+                        userDetails = user,
+                    });
+                };
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
 
         private User AuthenticateUser(User loginCredentials)

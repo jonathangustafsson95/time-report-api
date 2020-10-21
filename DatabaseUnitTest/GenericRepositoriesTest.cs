@@ -190,18 +190,18 @@ namespace DatabaseUnitTest
             unitOfWork = new UnitOfWork(DbContext);
             missionController = new MissionController(unitOfWork, httpContextAccessor);
         }
-        [TestMethod]
-        public void GetAllMissions()
-        {
-            //arrange
-            InMemoryDbContext.UpdateContext(DbContext);
+        //[TestMethod]
+        //public void GetAllMissions()
+        //{
+        //    //arrange
+        //    InMemoryDbContext.UpdateContext(DbContext);
 
-            List<Mission> trueList = (List<Mission>)unitOfWork.MissionRepository.GetAll();
-            //act 
-            List<Mission> userList = (List<Mission>)missionController.GetAllMissions();
-            //assert
-            Assert.Equal(userList, trueList);
-        }
+        //    List<Mission> trueList = (List<Mission>)unitOfWork.MissionRepository.GetAll();
+        //    //act 
+        //    List<Mission> userList = (List<Mission>)missionController.GetAllMissions();
+        //    //assert
+        //    Assert.Equal(userList, trueList);
+        //}
         //[TestMethod]
         //public void GetAllMissionsByUserId()
         //{
