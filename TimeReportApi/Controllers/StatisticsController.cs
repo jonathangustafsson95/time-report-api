@@ -53,11 +53,11 @@ namespace time_report_api.Controllers
                             internalHours += (float)reg.Hours;
                     }
                     listStatistic.Add(new StatisticCustomerInternalViewModel { Month = dateFormater.GetMonthName(firstDayOfMonth.Month), CustomerTime = customerHours, InternalTime = internalHours });
-                    listStatistic.Reverse();
                     firstDayOfMonth = firstDayOfMonth.AddMonths(-1);
                     internalHours = 0;
                     customerHours = 0;
                 }
+                listStatistic.Reverse();
                 return listStatistic;
             }
             catch (Exception e)
