@@ -171,19 +171,28 @@ namespace TimeReportApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
         [HttpDelete]
         [Route("FavoriteMission/{missionId}")]
-        public ActionResult DeleteFavoriteMission(int missionId)
+        public ActionResult<HttpResponse> DeleteFavoriteMission(int missionId)
         {
             try
             {
+                if (unitOfWork.MissionMemberRepository.Exists(missionId))
+                {
+
                 unitOfWork.FavoriteMissionRepository.Delete(user.UserId, missionId);
                 unitOfWork.FavoriteMissionRepository.Save();
                 return Ok();
+                }
+                else
+                {
+                    throw new Exception();
+                }
             }
-            catch
+            catch (Exception)
             {
-                return ValidationProblem();
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
