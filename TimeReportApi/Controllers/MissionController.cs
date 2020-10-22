@@ -23,7 +23,7 @@ namespace TimeReportApi.Controllers
         {
             this.unitOfWork = unitOfWork;
             int userId = Int32.Parse(httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "userId").Value);
-            user = unitOfWork.UserRepository.GetById(userId);
+            user = new User { UserId = userId };
         }
         [HttpGet]
         [Route("SearchMission/{searchString}")]
@@ -118,7 +118,7 @@ namespace TimeReportApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
 
@@ -140,7 +140,7 @@ namespace TimeReportApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
 
@@ -169,7 +169,7 @@ namespace TimeReportApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
         [HttpDelete]
@@ -191,7 +191,7 @@ namespace TimeReportApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
 
@@ -214,7 +214,7 @@ namespace TimeReportApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
 
@@ -280,7 +280,7 @@ namespace TimeReportApi.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
 
