@@ -56,7 +56,7 @@ namespace TimeReportApi.Controllers
             List<MissionTaskViewModel> missionTasksViewModelList = new List<MissionTaskViewModel>();
             List<MissionMember> mmList = unitOfWork.MissionMemberRepository.GetAllByUserId(user.UserId);
 
-            foreach (var mission in missionList )
+            foreach (var mission in missionList)
             {
                 List<TaskViewModel> taskViewModelList = new List<TaskViewModel>();
 
@@ -83,15 +83,13 @@ namespace TimeReportApi.Controllers
                     Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).Name,
                     Tasks = taskViewModelList,
                     isMember = false,
- 
+
                 };
 
-                if (mmList.FirstOrDefault(n => n.MissionId == mission.MissionId) != null) 
+                if (mmList.FirstOrDefault(n => n.MissionId == mission.MissionId) != null)
                 {
                     missionsVM.isMember = true;
                 };
-
-
                 missionTasksViewModelList.Add(missionsVM);
             }
             return missionTasksViewModelList;
@@ -114,9 +112,9 @@ namespace TimeReportApi.Controllers
                     unitOfWork.MissionMemberRepository.Save();
                     return Ok();
                 }
-                else 
+                else
                     throw new Exception();
-               
+
             }
             catch (Exception)
             {
@@ -132,7 +130,7 @@ namespace TimeReportApi.Controllers
             try
             {
                 if (unitOfWork.MissionRepository.Exists(missionId))
-                { 
+                {
                     unitOfWork.MissionMemberRepository.Delete(user.UserId, missionId);
                     unitOfWork.MissionMemberRepository.Save();
                     return Ok();
@@ -161,12 +159,12 @@ namespace TimeReportApi.Controllers
 
                 if (unitOfWork.MissionRepository.Exists(missionId))
                 {
-                unitOfWork.FavoriteMissionRepository.Insert(new FavoriteMission() { UserId = user.UserId, MissionId = missionId});
-                unitOfWork.FavoriteMissionRepository.Save();
-                return Ok();
+                    unitOfWork.FavoriteMissionRepository.Insert(new FavoriteMission() { UserId = user.UserId, MissionId = missionId });
+                    unitOfWork.FavoriteMissionRepository.Save();
+                    return Ok();
                 }
                 else
-                  throw new Exception();
+                    throw new Exception();
 
             }
             catch (Exception)
@@ -174,14 +172,16 @@ namespace TimeReportApi.Controllers
                 return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
+
         [HttpDelete]
         [Route("FavoriteMission/{missionId}")]
         public ActionResult<HttpResponse> DeleteFavoriteMission(int missionId)
         {
             try
             {
-                if (unitOfWork.MissionRepository.Exists(missionId))
+                if (unitOfWork.MissionMemberRepository.Exists(missionId))
                 {
+
                     unitOfWork.FavoriteMissionRepository.Delete(user.UserId, missionId);
                     unitOfWork.FavoriteMissionRepository.Save();
                     return Ok();
@@ -191,6 +191,7 @@ namespace TimeReportApi.Controllers
                     throw new Exception();
                 }
             }
+
             catch (Exception)
             {
                 return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
@@ -209,7 +210,21 @@ namespace TimeReportApi.Controllers
                 {
                     Mission mission = unitOfWork.MissionRepository.GetById(favoriteMissionList[i].MissionId);
                     Customer customer = unitOfWork.CustomerRepository.GetAll().FirstOrDefault(n => n.CustomerId == mission.CustomerId);
-                    mvmList.Add(new MissionViewModel().ConvertToViewModel(mission, customer));
+                    List<TaskViewModel>tasksViewModelList = new List<TaskViewModel>();
+
+                    foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
+                    {
+                        TaskViewModel taskVM = new TaskViewModel
+                        {
+                            TaskId = task.TaskId,
+                            MissionId = task.MissionId,
+                            UserId = task.UserId,
+                            Name = task.Name,
+                            Description = task.Description,
+                        };
+                        tasksViewModelList.Add(taskVM);
+                    }
+                    mvmList.Add(new MissionViewModel().ConvertToViewModel(mission, customer,tasksViewModelList));
                 }
                 
                 return mvmList;
@@ -231,8 +246,7 @@ namespace TimeReportApi.Controllers
         {
             try
             {
-                if (unitOfWork.TaskRepository.Exists(taskId))
-                {
+               
 
                 List<MissionMember> missionMemberList = unitOfWork.MissionMemberRepository.GetAllByUserId(user.UserId);
                 List<MissionTaskViewModel> missionTaskViewModel = new List<MissionTaskViewModel>();
@@ -279,11 +293,9 @@ namespace TimeReportApi.Controllers
                     missionTaskViewModel.Add(missionsVM);
                 }
                 return missionTaskViewModel;
+            
             }
-            else
-                throw  new Exception();
-            }
-            catch (Exception)
+            catch (Exception e)
             {
                 return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
@@ -300,6 +312,8 @@ namespace TimeReportApi.Controllers
         {
             try
             {
+                if (!unitOfWork.MissionRepository.Exists(missionId))
+                    throw new Exception();
                 Mission mission = unitOfWork.MissionRepository.GetById(missionId);
                 List<TaskViewModel> tasksViewModelList = new List<TaskViewModel>();
                 List<UserViewModel> usersVM = new List<UserViewModel>();
@@ -346,8 +360,10 @@ namespace TimeReportApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
     }
 }
+
+       
