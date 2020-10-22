@@ -299,6 +299,7 @@ namespace Database_UnitTest.Controllers
             var controller = new MissionController(mockUOF.Object, httpContextAccessorMock);
 
             //Act
+            //ActionResult<List<MissionTaskViewModel>> viewResult = controller.GetUserMissions(id);
             var result = controller.GetUserMissions(id);
 
             //Assert
