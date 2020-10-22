@@ -90,8 +90,6 @@ namespace TimeReportApi.Controllers
                 {
                     missionsVM.isMember = true;
                 };
-
-
                 missionTasksViewModelList.Add(missionsVM);
             }
             return missionTasksViewModelList;
@@ -231,8 +229,7 @@ namespace TimeReportApi.Controllers
         {
             try
             {
-                if (unitOfWork.TaskRepository.Exists(taskId))
-                {
+               
 
                 List<MissionMember> missionMemberList = unitOfWork.MissionMemberRepository.GetAllByUserId(user.UserId);
                 List<MissionTaskViewModel> missionTaskViewModel = new List<MissionTaskViewModel>();
@@ -279,9 +276,7 @@ namespace TimeReportApi.Controllers
                     missionTaskViewModel.Add(missionsVM);
                 }
                 return missionTaskViewModel;
-            }
-            else
-                throw  new Exception();
+            
             }
             catch (Exception e)
             {
@@ -300,6 +295,8 @@ namespace TimeReportApi.Controllers
         {
             try
             {
+                if (unitOfWork.MissionRepository.Exists(missionId))
+                    throw new Exception();
                 Mission mission = unitOfWork.MissionRepository.GetById(missionId);
                 List<TaskViewModel> tasksViewModelList = new List<TaskViewModel>();
                 List<UserViewModel> usersVM = new List<UserViewModel>();
@@ -344,9 +341,9 @@ namespace TimeReportApi.Controllers
                 };
                 return missionVM;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
     }
