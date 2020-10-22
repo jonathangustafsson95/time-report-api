@@ -33,7 +33,7 @@ namespace Database_UnitTest.Controllers
         }
 
         [Theory]
-        [MemberData(nameof(GetData), parameters: 1)]
+        [MemberData(nameof(GetData), parameters: 2)]
         public void AddMissionMember(int id, bool exists, int expected)
         {
             //Arrange
@@ -69,10 +69,18 @@ namespace Database_UnitTest.Controllers
 
             //Assert
             Assert.IsType<ActionResult<HttpResponse>>(result);
-            Assert.Equal(expected, (result.Result as StatusCodeResult).StatusCode);
+            if (expected == StatusCodes.Status500InternalServerError)
+            {
+                Assert.Equal(expected, (result.Result as ObjectResult).StatusCode);
+            }
+            else
+            {
+                Assert.Equal(expected, (result.Result as StatusCodeResult).StatusCode);
+
+            }
         }
         [Theory]
-        [MemberData(nameof(GetData), parameters: 1)]
+        [MemberData(nameof(GetData), parameters: 2)]
         public void DeleteFavoriteMission(int id, bool exists, int expected)
         {
             //Arrange
@@ -120,10 +128,17 @@ namespace Database_UnitTest.Controllers
 
             //Assert
             Assert.IsType<ActionResult<HttpResponse>>(result);
-            Assert.Equal(expected, (result.Result as StatusCodeResult).StatusCode);
+            if (expected == StatusCodes.Status500InternalServerError)
+            {
+                Assert.Equal(expected, (result.Result as ObjectResult).StatusCode);
+            }
+            else
+            {
+                Assert.Equal(expected, (result.Result as StatusCodeResult).StatusCode);
+            }
         }
         [Theory]
-        [MemberData(nameof(GetData), parameters: 1)]
+        [MemberData(nameof(GetData), parameters: 2)]
         public void DeleteMissionMember(int id, bool exists, int expected)
         {
             //Arrange
@@ -159,11 +174,19 @@ namespace Database_UnitTest.Controllers
 
             //Assert
             Assert.IsType<ActionResult<HttpResponse>>(result);
-            Assert.Equal(expected, (result.Result as StatusCodeResult).StatusCode);
+            if (expected == StatusCodes.Status500InternalServerError)
+            {
+                Assert.Equal(expected, (result.Result as StatusCodeResult).StatusCode);
+            }
+            else
+            {
+                Assert.Equal(expected, (result.Result as ObjectResult).StatusCode);
+
+            }
         }
 
         [Theory]
-        [MemberData(nameof(GetData), parameters: 1)]
+        [MemberData(nameof(GetData), parameters: 2)]
         public void AddFavoriteMission(int id, bool exists, int expected)
         {
             //Arrange
@@ -197,10 +220,18 @@ namespace Database_UnitTest.Controllers
 
             //Assert
             Assert.IsType<ActionResult<HttpResponse>>(result);
-            Assert.Equal(expected, (result.Result as StatusCodeResult).StatusCode);
+            if(expected==StatusCodes.Status500InternalServerError)
+            {
+                Assert.Equal(expected, (result.Result as ObjectResult).StatusCode);
+            }
+            else
+            {
+                Assert.Equal(expected, (result.Result as StatusCodeResult).StatusCode);
+
+            }
         }
         [Theory]
-        [MemberData(nameof(GetData), parameters: 1)]
+        [MemberData(nameof(GetData), parameters: 2)]
         public void GetUserMissions(int id, bool exists, int expected)
         {
             //Arrange
