@@ -176,11 +176,11 @@ namespace Database_UnitTest.Controllers
             Assert.IsType<ActionResult<HttpResponse>>(result);
             if (expected == StatusCodes.Status500InternalServerError)
             {
-                Assert.Equal(expected, (result.Result as StatusCodeResult).StatusCode);
+                Assert.Equal(expected, (result.Result as ObjectResult).StatusCode);
             }
             else
             {
-                Assert.Equal(expected, (result.Result as ObjectResult).StatusCode);
+                Assert.Equal(expected, (result.Result as StatusCodeResult).StatusCode);
 
             }
         }
