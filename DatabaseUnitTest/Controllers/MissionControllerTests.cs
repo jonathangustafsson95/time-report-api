@@ -33,7 +33,7 @@ namespace Database_UnitTest.Controllers
         }
 
         [Theory]
-        [MemberData(nameof(GetData), parameters: 2)]
+        [MemberData(nameof(GetData), parameters: 1)]
         public void AddMissionMember(int id, bool exists, int expected)
         {
             //Arrange
@@ -72,7 +72,7 @@ namespace Database_UnitTest.Controllers
             Assert.Equal(expected, (result.Result as StatusCodeResult).StatusCode);
         }
         [Theory]
-        [MemberData(nameof(GetData), parameters: 2)]
+        [MemberData(nameof(GetData), parameters: 1)]
         public void DeleteFavoriteMission(int id, bool exists, int expected)
         {
             //Arrange
@@ -123,7 +123,7 @@ namespace Database_UnitTest.Controllers
             Assert.Equal(expected, (result.Result as StatusCodeResult).StatusCode);
         }
         [Theory]
-        [MemberData(nameof(GetData), parameters: 2)]
+        [MemberData(nameof(GetData), parameters: 1)]
         public void DeleteMissionMember(int id, bool exists, int expected)
         {
             //Arrange
@@ -163,7 +163,7 @@ namespace Database_UnitTest.Controllers
         }
 
         [Theory]
-        [MemberData(nameof(GetData), parameters: 2)]
+        [MemberData(nameof(GetData), parameters: 1)]
         public void AddFavoriteMission(int id, bool exists, int expected)
         {
             //Arrange
@@ -200,7 +200,7 @@ namespace Database_UnitTest.Controllers
             Assert.Equal(expected, (result.Result as StatusCodeResult).StatusCode);
         }
         [Theory]
-        [MemberData(nameof(GetData), parameters: 2)]
+        [MemberData(nameof(GetData), parameters: 1)]
         public void GetUserMissions(int id, bool exists, int expected)
         {
             //Arrange
@@ -336,8 +336,8 @@ namespace Database_UnitTest.Controllers
         //    //Assert.Equal(expected, (result.Result. as List<MissionViewModel>)));
         //}
         //[Theory]
-        //[MemberData(nameof(GetData), parameters: 2)]
-        //public void GetSpecificMission(int id, Mission mission,bool exists, int expected)
+        //[MemberData(nameof(GetData), parameters: 1)]
+        //public void GetSpecificMission(int id, Mission mission, List<Task> listTask ,bool exists, MissionTaskViewModel expected)
         //{
         //    //Arrange
         //    User dbUser = new User
@@ -357,25 +357,28 @@ namespace Database_UnitTest.Controllers
         //    missionRepoMock.Setup(r => r.Exists(It.IsAny<int>())).Returns(exists);
         //    missionRepoMock.Setup(r => r.GetById(It.IsAny<int>())).Returns(mission);
 
-
-        //    Mock<IFavoriteMissionRepository> favoriteMissionRepoMock = new Mock<IFavoriteMissionRepository>();
-        //    favoriteMissionRepoMock.Setup(r => r.Insert(It.IsAny<FavoriteMission>()));
-        //    favoriteMissionRepoMock.Setup(r => r.Update(It.IsAny<FavoriteMission>()));
-        //    favoriteMissionRepoMock.Setup(r => r.Save());
+        //    Mock<ITaskRepository> taskRepoMock = new Mock<ITaskRepository>();
+        //    taskRepoMock.Setup(r => r.GetAllByMissionId(It.IsAny<int>())).Returns(listTask);
+          
+        //    Mock<IMissionMemberRepository> missionMemberRepoMock = new Mock<IMissionMemberRepository>();
+        //    missionMemberRepoMock.Setup(r => r.GetAllByMissionId(It.IsAny<int>()));
+          
 
         //    Mock<IUnitOfWork> mockUOF = new Mock<IUnitOfWork>();
         //    mockUOF.Setup(uow => uow.UserRepository).Returns(userRepoMock.Object);
         //    mockUOF.Setup(uow => uow.MissionRepository).Returns(missionRepoMock.Object);
-        //    mockUOF.Setup(uow => uow.FavoriteMissionRepository).Returns(favoriteMissionRepoMock.Object);
+        //    mockUOF.Setup(uow => uow.MissionMemberRepository).Returns(missionMemberRepoMock.Object);
+        //    mockUOF.Setup(uow => uow.TaskRepository).Returns(taskRepoMock.Object);
 
         //    var controller = new MissionController(mockUOF.Object, httpContextAccessorMock);
 
         //    //Act
         //    var result = controller.GetSpecificMission(id);
-
+        //    //ej klar
         //    //Assert
-        //    Assert.IsType<ActionResult<HttpResponse>>(result);
-        //    Assert.Equal(expected, (result.Result as StatusCodeResult).StatusCode);
+        //    Assert.IsAssignableFrom<MissionTaskViewModel>(expected);
+        //    //Assert.IsType<ActionResult<HttpResponse>>(result);
+        //    //Assert.Equal(expected, (result.Result as StatusCodeResult).StatusCode);
         //}
         public static IEnumerable<object[]> GetData(int numTests)
         {
@@ -391,7 +394,7 @@ namespace Database_UnitTest.Controllers
         {
             var allData = new List<object[]>
             {
-                new object[] { 1,true,new Mission { MissionId=1, CustomerId=1} ,(int)HttpStatusCode.OK },
+                new object[] { 1,true,new Mission { MissionId=1, CustomerId=1},new List<Task> { new Task { TaskId=1, } } ,new MissionTaskViewModel { MissionId=1 , } },
                 new object[] { 99,false, (int)HttpStatusCode.InternalServerError },
             };
 

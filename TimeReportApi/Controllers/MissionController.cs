@@ -295,7 +295,7 @@ namespace TimeReportApi.Controllers
         {
             try
             {
-                if (unitOfWork.MissionRepository.Exists(missionId))
+                if (!unitOfWork.MissionRepository.Exists(missionId))
                     throw new Exception();
                 Mission mission = unitOfWork.MissionRepository.GetById(missionId);
                 List<TaskViewModel> tasksViewModelList = new List<TaskViewModel>();
