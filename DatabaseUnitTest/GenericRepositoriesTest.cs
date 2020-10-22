@@ -170,64 +170,7 @@ namespace DatabaseUnitTest
         }
 
     }
-    [TestClass]
-    public class ControllerTest
-    {
-        private readonly BulbasaurDevContext DbContext;
-        private readonly UnitOfWork unitOfWork;
-
-        private readonly MissionController missionController;
-
-        public ControllerTest()
-        {
-            int userId = 1;
-            var userIdClaim = A.Fake<Claim>(x => x.WithArgumentsForConstructor(() => new Claim("userId", userId.ToString())));
-            var httpContextAccessor = A.Fake<IHttpContextAccessor>();
-            httpContextAccessor.HttpContext = A.Fake<HttpContext>();
-            httpContextAccessor.HttpContext.User = A.Fake<ClaimsPrincipal>();
-            A.CallTo(() => httpContextAccessor.HttpContext.User.Claims).Returns(new List<Claim> { userIdClaim });
-            DbContext = InMemoryDbContext.GetContextWithData();
-            unitOfWork = new UnitOfWork(DbContext);
-            missionController = new MissionController(unitOfWork, httpContextAccessor);
-        }
-        //[TestMethod]
-        //public void GetAllMissions()
-        //{
-        //    //arrange
-        //    InMemoryDbContext.UpdateContext(DbContext);
-
-        //    List<Mission> trueList = (List<Mission>)unitOfWork.MissionRepository.GetAll();
-        //    //act 
-        //    List<Mission> userList = (List<Mission>)missionController.GetAllMissions();
-        //    //assert
-        //    Assert.Equal(userList, trueList);
-        //}
-        //[TestMethod]
-        //public void GetAllMissionsByUserId()
-        //{
-        //    //arrange
-        //    InMemoryDbContext.UpdateContext(DbContext);
-
-        //    List<MissionMember> missionMembers = (List<MissionMember>)unitOfWork.MissionMemberRepository.GetAllByUserId(1);
-        //    List<int> trueIdList = new List<int>();
-        //    List<int> testIdList = new List<int>();
-        //    foreach (MissionMember mm in missionMembers)
-        //    {
-        //        Mission mission = unitOfWork.MissionRepository.GetById(mm.UserId);
-        //        trueIdList.Add(mission.MissionId);
-        //    }
-
-        //    //act 
-        //    List<MissionViewModel> missionList = (List<MissionViewModel>)missionController.GetAllMissionByUserId(1);
-        //    foreach (MissionViewModel mission in missionList)
-        //    {
-        //        testIdList.Add(mission.missionId);
-        //    }
-        //    //assert
-        //    Assert.Equal(trueIdList, testIdList);
-        //}
-
-    }
+   
 
 }
 

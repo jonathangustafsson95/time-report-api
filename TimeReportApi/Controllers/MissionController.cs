@@ -104,14 +104,19 @@ namespace TimeReportApi.Controllers
         /// <returns> ActionResult </returns>
         [HttpPost]
         [Route("MissionMember/{missionId}")]
-        public ActionResult AddMissionMember(int missionId)
+        public ActionResult<HttpResponse> AddMissionMember(int missionId)
         {
-
             try
             {
-                unitOfWork.MissionMemberRepository.Insert(new MissionMember() { UserId = user.UserId, MissionId = missionId});
-                unitOfWork.MissionMemberRepository.Save();
-                return Ok();
+                if (unitOfWork.MissionRepository.Exists(missionId))
+                {
+                    unitOfWork.MissionMemberRepository.Insert(new MissionMember() { UserId = user.UserId, MissionId = missionId });
+                    unitOfWork.MissionMemberRepository.Save();
+                    return Ok();
+                }
+                else 
+                    throw new Exception();
+               
             }
             catch (Exception)
             {
@@ -122,14 +127,18 @@ namespace TimeReportApi.Controllers
         // DELETE api/<MissionMemberController>/5
         [HttpDelete]
         [Route("MissionMember/{missionId}")]
-        public ActionResult DeleteMissionMember(int missionId)
+        public ActionResult<HttpResponse> DeleteMissionMember(int missionId)
         {
             try
             {
-                //unitOfWork.MissionMemberRepository.Insert(new MissionMember() { userId=2,});
-                unitOfWork.MissionMemberRepository.Delete(user.UserId, missionId);
-                unitOfWork.MissionMemberRepository.Save();
-                return Ok();
+                if (unitOfWork.MissionRepository.Exists(missionId))
+                { 
+                    unitOfWork.MissionMemberRepository.Delete(user.UserId, missionId);
+                    unitOfWork.MissionMemberRepository.Save();
+                    return Ok();
+                }
+                else
+                    throw new Exception();
             }
             catch (Exception)
             {
@@ -145,13 +154,20 @@ namespace TimeReportApi.Controllers
 
         [HttpPost]
         [Route("FavoriteMission/{missionId}")]
-        public ActionResult AddFavoriteMission(int missionId)
+        public ActionResult<HttpResponse> AddFavoriteMission(int missionId)
         {
             try
             {
+
+                if (unitOfWork.MissionRepository.Exists(missionId))
+                {
                 unitOfWork.FavoriteMissionRepository.Insert(new FavoriteMission() { UserId = user.UserId, MissionId = missionId});
                 unitOfWork.FavoriteMissionRepository.Save();
                 return Ok();
+                }
+                else
+                  throw new Exception();
+
             }
             catch (Exception)
             {
@@ -160,13 +176,20 @@ namespace TimeReportApi.Controllers
         }
         [HttpDelete]
         [Route("FavoriteMission/{missionId}")]
-        public ActionResult DeleteFavoriteMission(int missionId)
+        public ActionResult<HttpResponse> DeleteFavoriteMission(int missionId)
         {
             try
             {
-                unitOfWork.FavoriteMissionRepository.Delete(user.UserId, missionId);
-                unitOfWork.FavoriteMissionRepository.Save();
-                return Ok();
+                if (unitOfWork.MissionRepository.Exists(missionId))
+                {
+                    unitOfWork.FavoriteMissionRepository.Delete(user.UserId, missionId);
+                    unitOfWork.FavoriteMissionRepository.Save();
+                    return Ok();
+                }
+                else
+                {
+                    throw new Exception();
+                }
             }
             catch (Exception)
             {
@@ -188,6 +211,7 @@ namespace TimeReportApi.Controllers
                     Customer customer = unitOfWork.CustomerRepository.GetAll().FirstOrDefault(n => n.CustomerId == mission.CustomerId);
                     mvmList.Add(new MissionViewModel().ConvertToViewModel(mission, customer));
                 }
+                
                 return mvmList;
             }
             catch (Exception)
@@ -207,6 +231,9 @@ namespace TimeReportApi.Controllers
         {
             try
             {
+                if (unitOfWork.TaskRepository.Exists(taskId))
+                {
+
                 List<MissionMember> missionMemberList = unitOfWork.MissionMemberRepository.GetAllByUserId(user.UserId);
                 List<MissionTaskViewModel> missionTaskViewModel = new List<MissionTaskViewModel>();
                 List<TaskViewModel> tasksViewModelList;
@@ -252,6 +279,9 @@ namespace TimeReportApi.Controllers
                     missionTaskViewModel.Add(missionsVM);
                 }
                 return missionTaskViewModel;
+            }
+            else
+                throw  new Exception();
             }
             catch (Exception)
             {
