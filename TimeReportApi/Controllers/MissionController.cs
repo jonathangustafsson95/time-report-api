@@ -154,7 +154,7 @@ namespace TimeReportApi.Controllers
 
         [HttpPost]
         [Route("FavoriteMission/{missionId}")]
-        public ActionResult AddFavoriteMission(int missionId)
+        public ActionResult<HttpResponse> AddFavoriteMission(int missionId)
         {
             try
             {
