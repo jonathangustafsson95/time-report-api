@@ -116,7 +116,7 @@ namespace Database_UnitTest.Controllers
 
             //Assert
             Assert.IsType<ActionResult<HttpResponse>>(result);
-            Assert.Equal(expected, (result.Result as StatusCodeResult).StatusCode);
+            Assert.Equal(expected, (result.Result as ObjectResult).StatusCode);
         }
         [Theory]
         [MemberData(nameof(GetData), parameters: 2)]

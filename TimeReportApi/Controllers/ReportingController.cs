@@ -70,7 +70,7 @@ namespace TimeReportApi.Controllers
             
             catch (Exception)
             {
-                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An error occured when trying to communicate with the database." });
             }
         }
 
@@ -97,7 +97,7 @@ namespace TimeReportApi.Controllers
                 return Ok();
             }
 
-            catch(AccessViolationException e)
+            catch (AccessViolationException e)
             {
                 return StatusCode(403, new { message = e.Message });
             }
