@@ -23,7 +23,7 @@ namespace TimeReportApi.Controllers
         {
             this.unitOfWork = unitOfWork;
             int userId = Int32.Parse(httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "userId").Value);
-            user = unitOfWork.UserRepository.GetById(userId);
+            user = new User { UserId = userId };
         }
         [HttpGet]
         [Route("SearchMission/{searchString}")]
@@ -90,8 +90,6 @@ namespace TimeReportApi.Controllers
                 {
                     missionsVM.isMember = true;
                 };
-
-
                 missionTasksViewModelList.Add(missionsVM);
             }
             return missionTasksViewModelList;
@@ -120,26 +118,29 @@ namespace TimeReportApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
 
         // DELETE api/<MissionMemberController>/5
         [HttpDelete]
         [Route("MissionMember/{missionId}")]
-        public ActionResult DeleteMissionMember(int missionId)
+        public ActionResult<HttpResponse> DeleteMissionMember(int missionId)
         {
             try
             {
-                //unitOfWork.MissionMemberRepository.Insert(new MissionMember() { userId=2,});
-                unitOfWork.MissionMemberRepository.Delete(user.UserId, missionId);
-                unitOfWork.MissionMemberRepository.Save();
-                return Ok();
+                if (unitOfWork.MissionRepository.Exists(missionId))
+                { 
+                    unitOfWork.MissionMemberRepository.Delete(user.UserId, missionId);
+                    unitOfWork.MissionMemberRepository.Save();
+                    return Ok();
+                }
+                else
+                    throw new Exception();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-
-                return StatusCode(500,e.Message);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
 
@@ -168,7 +169,7 @@ namespace TimeReportApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
 
@@ -191,8 +192,20 @@ namespace TimeReportApi.Controllers
                 }
             }
             catch (Exception)
+                if (unitOfWork.MissionRepository.Exists(missionId))
+                {
+                    unitOfWork.FavoriteMissionRepository.Delete(user.UserId, missionId);
+                    unitOfWork.FavoriteMissionRepository.Save();
+                    return Ok();
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+            catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
 
@@ -210,11 +223,12 @@ namespace TimeReportApi.Controllers
                     Customer customer = unitOfWork.CustomerRepository.GetAll().FirstOrDefault(n => n.CustomerId == mission.CustomerId);
                     mvmList.Add(new MissionViewModel().ConvertToViewModel(mission, customer));
                 }
+                
                 return mvmList;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
 
@@ -229,8 +243,7 @@ namespace TimeReportApi.Controllers
         {
             try
             {
-                if (unitOfWork.TaskRepository.Exists(taskId))
-                {
+               
 
                 List<MissionMember> missionMemberList = unitOfWork.MissionMemberRepository.GetAllByUserId(user.UserId);
                 List<MissionTaskViewModel> missionTaskViewModel = new List<MissionTaskViewModel>();
@@ -277,13 +290,11 @@ namespace TimeReportApi.Controllers
                     missionTaskViewModel.Add(missionsVM);
                 }
                 return missionTaskViewModel;
-            }
-            else
-                throw  new Exception();
+            
             }
             catch (Exception e)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
 
@@ -298,6 +309,8 @@ namespace TimeReportApi.Controllers
         {
             try
             {
+                if (!unitOfWork.MissionRepository.Exists(missionId))
+                    throw new Exception();
                 Mission mission = unitOfWork.MissionRepository.GetById(missionId);
                 List<TaskViewModel> tasksViewModelList = new List<TaskViewModel>();
                 List<UserViewModel> usersVM = new List<UserViewModel>();
@@ -342,9 +355,9 @@ namespace TimeReportApi.Controllers
                 };
                 return missionVM;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
     }
