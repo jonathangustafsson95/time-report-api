@@ -15,6 +15,7 @@ namespace TimeReportApi.Models
         public string MissionCustomerName { get; set; }
         public string MissionName { get; set; }
         public string Description { get; set; }
+        public string Color { get; set; }
         public DateTime Start { get; set; }
         public DateTime? Finished { get; set; }
         public DateTime Created { get; set; }
@@ -23,7 +24,7 @@ namespace TimeReportApi.Models
 
         public  MissionViewModel ConvertToViewModel( Mission a, Customer c,List<TaskViewModel> tasksList)
         {
-           return new MissionViewModel { MissionId = a.MissionId, Description = a.Description,MissionCustomerName=c.Name, Created = a.Created, CustomerId = a.CustomerId, Finished = a.Finished, MissionName = a.MissionName, Start = a.Start, UserId = a.UserId, Status = a.Status ,Tasks=tasksList};
+           return new MissionViewModel { MissionId = a.MissionId, Description = a.Description,MissionCustomerName=c.Name, Created = a.Created, CustomerId = a.CustomerId, Finished = a.Finished, MissionName = a.MissionName, Start = a.Start, UserId = a.UserId, Status = a.Status ,Tasks=tasksList,Color=a.Color};
         }
     }
 }
