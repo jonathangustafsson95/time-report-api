@@ -127,19 +127,22 @@ namespace TimeReportApi.Controllers
         // DELETE api/<MissionMemberController>/5
         [HttpDelete]
         [Route("MissionMember/{missionId}")]
-        public ActionResult DeleteMissionMember(int missionId)
+        public ActionResult<HttpResponse> DeleteMissionMember(int missionId)
         {
             try
             {
-                //unitOfWork.MissionMemberRepository.Insert(new MissionMember() { userId=2,});
-                unitOfWork.MissionMemberRepository.Delete(user.UserId, missionId);
-                unitOfWork.MissionMemberRepository.Save();
-                return Ok();
+                if (unitOfWork.MissionRepository.Exists(missionId))
+                { 
+                    unitOfWork.MissionMemberRepository.Delete(user.UserId, missionId);
+                    unitOfWork.MissionMemberRepository.Save();
+                    return Ok();
+                }
+                else
+                    throw new Exception();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-
-                return StatusCode(500,e.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
@@ -166,17 +169,24 @@ namespace TimeReportApi.Controllers
         }
         [HttpDelete]
         [Route("FavoriteMission/{missionId}")]
-        public ActionResult DeleteFavoriteMission(int missionId)
+        public ActionResult<HttpResponse> DeleteFavoriteMission(int missionId)
         {
             try
             {
-                unitOfWork.FavoriteMissionRepository.Delete(user.UserId, missionId);
-                unitOfWork.FavoriteMissionRepository.Save();
-                return Ok();
+                if (unitOfWork.MissionRepository.Exists(missionId))
+                {
+                    unitOfWork.FavoriteMissionRepository.Delete(user.UserId, missionId);
+                    unitOfWork.FavoriteMissionRepository.Save();
+                    return Ok();
+                }
+                else
+                {
+                    throw new Exception();
+                }
             }
-            catch
+            catch (Exception)
             {
-                return ValidationProblem();
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
@@ -194,11 +204,12 @@ namespace TimeReportApi.Controllers
                     Customer customer = unitOfWork.CustomerRepository.GetAll().FirstOrDefault(n => n.CustomerId == mission.CustomerId);
                     mvmList.Add(new MissionViewModel().ConvertToViewModel(mission, customer));
                 }
+                
                 return mvmList;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
