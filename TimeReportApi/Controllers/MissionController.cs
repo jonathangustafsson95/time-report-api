@@ -23,7 +23,7 @@ namespace TimeReportApi.Controllers
         {
             this.unitOfWork = unitOfWork;
             int userId = Int32.Parse(httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "userId").Value);
-            user = unitOfWork.UserRepository.GetById(userId);
+            user = new User { UserId = userId };
         }
         [HttpGet]
         [Route("SearchMission/{searchString}")]
@@ -113,9 +113,9 @@ namespace TimeReportApi.Controllers
                 unitOfWork.MissionMemberRepository.Save();
                 return Ok();
             }
-            catch
+            catch (Exception)
             {
-                return ValidationProblem();
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
 
@@ -131,10 +131,9 @@ namespace TimeReportApi.Controllers
                 unitOfWork.MissionMemberRepository.Save();
                 return Ok();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-
-                return StatusCode(500,e.Message);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
 
@@ -154,9 +153,9 @@ namespace TimeReportApi.Controllers
                 unitOfWork.FavoriteMissionRepository.Save();
                 return Ok();
             }
-            catch
+            catch (Exception)
             {
-                return ValidationProblem();
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
         [HttpDelete]
@@ -169,9 +168,9 @@ namespace TimeReportApi.Controllers
                 unitOfWork.FavoriteMissionRepository.Save();
                 return Ok();
             }
-            catch
+            catch (Exception)
             {
-                return ValidationProblem();
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
 
@@ -191,9 +190,9 @@ namespace TimeReportApi.Controllers
                 }
                 return mvmList;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
 
@@ -254,9 +253,9 @@ namespace TimeReportApi.Controllers
                 }
                 return missionTaskViewModel;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
 
@@ -315,9 +314,9 @@ namespace TimeReportApi.Controllers
                 };
                 return missionVM;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
     }

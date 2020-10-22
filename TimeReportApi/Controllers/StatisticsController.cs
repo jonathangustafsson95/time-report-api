@@ -28,14 +28,13 @@ namespace time_report_api.Controllers
             dateFormater = CultureInfo.GetCultureInfo("en-US").DateTimeFormat;
             this.unitOfWork = unitOfWork;
             int userId = Int32.Parse(httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "userId").Value);
-            user = unitOfWork.UserRepository.GetById(userId);
+            user = new User { UserId = userId };
         }
 
         [HttpGet]
         [Route("InternalVsCustomer/{startDate}")]
         public ActionResult<List<StatisticCustomerInternalViewModel>> GetStatsInternVsCustomer(DateTime startDate)
         {
-
             try
             {
                 DateTime firstDayOfMonth = new DateTime(startDate.Year, startDate.Month, 1);
@@ -59,9 +58,9 @@ namespace time_report_api.Controllers
                 }
                 return listStatistic;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
 
@@ -71,7 +70,6 @@ namespace time_report_api.Controllers
         {
             try
             {
-
                 DateTime firstDayOfMonth = new DateTime(date.Year, date.Month, 1);
                 DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
 
@@ -132,18 +130,14 @@ namespace time_report_api.Controllers
                     CustomerName = "Internal",
                     Hours = internalHours
                 });
-
-
                 return CVSCViewModelList;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
         
-
-    
 
         [HttpGet]
         [Route("TaskStats/{missionId:int}")]
@@ -166,7 +160,6 @@ namespace time_report_api.Controllers
                         endDateForTaskCheck = task.Finished ?? default(DateTime);
                     }
 
-
                     List<Registry> tasksRegistries = unitOfWork.RegistryRepository.GetRegistriesByTask(task.Start, endDateForTaskCheck, task.TaskId);
                     foreach (var registry in tasksRegistries)
                     {
@@ -180,19 +173,16 @@ namespace time_report_api.Controllers
                         EstimatedHours = task.EstimatedHour,
                         ActualHours = actualHours
                     };
-
                     tsVMList.Add(tsVM);
                     actualHours = 0;
                 }
 
                 return tsVMList;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
-
         }
-
     }
 }

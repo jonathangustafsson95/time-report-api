@@ -40,7 +40,7 @@ namespace TimeReportApi.Controllers
             try
             {
 
-                IActionResult response = Unauthorized(new { Ok = false, ErrorMsg = "Invalid credentials..." });
+                IActionResult response = Unauthorized(new { message = "Invalid credentials..." });
                 User user = AuthenticateUser(login);
                 if (user != null)
                 {
@@ -54,9 +54,9 @@ namespace TimeReportApi.Controllers
 
                 return response;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
 
