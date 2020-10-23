@@ -44,6 +44,8 @@ namespace time_report_api.Controllers
         {
             try
             {
+                if (startDate > DateTime.Now)
+                    throw new Exception();
                 DateTime firstDayOfMonth = new DateTime(startDate.Year, startDate.Month, 1);
                 float internalHours = 0, customerHours = 0;
                 List<StatisticCustomerInternalViewModel> listStatistic = new List<StatisticCustomerInternalViewModel>();
@@ -86,6 +88,8 @@ namespace time_report_api.Controllers
         {
             try
             {
+                if (date > DateTime.Now) 
+                    throw new Exception();
                 DateTime firstDayOfMonth = new DateTime(date.Year, date.Month, 1);
                 DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
 

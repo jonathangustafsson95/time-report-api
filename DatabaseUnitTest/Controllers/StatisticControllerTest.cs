@@ -34,7 +34,7 @@ namespace Database_UnitTest.Controllers
             A.CallTo(() => httpContextAccessorMock.HttpContext.User.Claims).Returns(new List<Claim> { userIdClaim });
         }
         [Theory]
-        [MemberData(nameof(GetInternalCustomerData), parameters: 1)]
+        [MemberData(nameof(GetInternalCustomerData), parameters: 2)]
         public void GetStatsInternVsCustomer(DateTime startDate,object expected)
         {
             List<Registry> dbRegistries = new List<Registry>();
@@ -59,7 +59,7 @@ namespace Database_UnitTest.Controllers
             }
         }
         [Theory]
-        [MemberData(nameof(GetCustomerVsCustomerData), parameters: 1)]
+        [MemberData(nameof(GetCustomerVsCustomerData), parameters: 2)]
         public void GetStatsCustomerVsCustomer(DateTime date, object expected)
         {
             Customer dbCustomer = new Customer
@@ -197,20 +197,23 @@ namespace Database_UnitTest.Controllers
         }
         public static IEnumerable<object[]> GetInternalCustomerData(int numTests)
         {
+            DateTime currentDate = DateTime.Now;
+
             var allData = new List<object[]>
             {
                 new object[] { new DateTime(2020,10,23) ,new List<StatisticCustomerInternalViewModel>() },
-                new object[] { new DateTime() , (int)HttpStatusCode.InternalServerError },
+                new object[] {currentDate.AddDays(360) , (int)HttpStatusCode.InternalServerError },
             };
 
             return allData.Take(numTests);
         }
         public static IEnumerable<object[]> GetCustomerVsCustomerData(int numTests)
         {
+            DateTime currentDate = DateTime.Now;
             var allData = new List<object[]>
             {
                 new object[] { new DateTime(2020,10,23) ,new List<CustomerVsCustomerStatsViewModel>() },
-                new object[] { new DateTime() , (int)HttpStatusCode.InternalServerError },
+                new object[] { currentDate.AddDays(360), (int)HttpStatusCode.InternalServerError },
             };
 
             return allData.Take(numTests);
