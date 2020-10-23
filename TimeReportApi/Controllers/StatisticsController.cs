@@ -31,12 +31,21 @@ namespace time_report_api.Controllers
             user = new User { UserId = userId };
         }
 
+        /// <summary>
+        /// This method gets statistics for a user's time spent on internal tasks versus customer tasks. It gets statistic
+        /// from startDate and five months back. Input is startDate which is usually the present time. UserId is received from
+        /// token.
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <returns> A list of statistics for five months in the shape of five StatisticCustomerInternalViewModel items. </returns>
         [HttpGet]
         [Route("InternalVsCustomer/{startDate}")]
         public ActionResult<List<StatisticCustomerInternalViewModel>> GetStatsInternVsCustomer(DateTime startDate)
         {
             try
             {
+                if (startDate > DateTime.Now)
+                    throw new Exception();
                 DateTime firstDayOfMonth = new DateTime(startDate.Year, startDate.Month, 1);
                 float internalHours = 0, customerHours = 0;
                 List<StatisticCustomerInternalViewModel> listStatistic = new List<StatisticCustomerInternalViewModel>();
@@ -61,9 +70,17 @@ namespace time_report_api.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
+                return StatusCode(500, new { message = "Invalid DateTime" });
             }
         }
+
+        /// <summary>
+        /// This method gets statistics for a user's time spent on different customers. It gets statistic
+        /// from input-date and five months back. Input is usually the present time. UserId is received from
+        /// token.
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns> A list of statistics for five months in the shape of five CustomerVsCustomerStatsViewModel items. </returns>
 
         [HttpGet]
         [Route("CustomerVsCustomer/{date}")]
@@ -71,6 +88,8 @@ namespace time_report_api.Controllers
         {
             try
             {
+                if (date > DateTime.Now) 
+                    throw new Exception();
                 DateTime firstDayOfMonth = new DateTime(date.Year, date.Month, 1);
                 DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
 
@@ -135,10 +154,16 @@ namespace time_report_api.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
+                return StatusCode(500, new { message = "Invalid DateTime" });
             }
         }
-        
+
+        /// <summary>
+        /// This method gets statistics for time spent on the different tasks of a specific mission. 
+        /// </summary>
+        /// <param name="int missionId"></param>
+        /// <returns> A list of TaskStatsViewModel items that compares the EstimatedHours for a task
+        /// versus how many hours have actually been spent on the task. </returns>
 
         [HttpGet]
         [Route("TaskStats/{missionId:int}")]
@@ -146,6 +171,8 @@ namespace time_report_api.Controllers
         {
             try
             {
+                if (unitOfWork.MissionRepository.Exists(missionId))
+                {
                 List<TaskStatsViewModel> tsVMList = new List<TaskStatsViewModel>();
                 double actualHours = 0;
                 DateTime endDateForTaskCheck = new DateTime();
@@ -180,9 +207,14 @@ namespace time_report_api.Controllers
 
                 return tsVMList;
             }
+                else
+                {
+                    throw new Exception();
+                }
+                }
             catch (Exception)
             {
-                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
+                return StatusCode(500, new { message = "Invalid DateTime" });
             }
         }
     }
