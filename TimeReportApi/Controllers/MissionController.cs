@@ -25,6 +25,13 @@ namespace TimeReportApi.Controllers
             int userId = Int32.Parse(httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "userId").Value);
             user = new User { UserId = userId };
         }
+
+        /// <summary>
+        /// This method searches for missions based on a searchstring. It matches the searchstring 
+        /// against either Mission name or Customer name.
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <returns> A list of MissionTaskViewModel items. </returns>
         [HttpGet]
         [Route("SearchMission/{searchString}")]
         public IEnumerable<MissionTaskViewModel> GetAllMissionsBySearchString(string searchString)
@@ -96,10 +103,10 @@ namespace TimeReportApi.Controllers
         }
 
         /// <summary>
-        /// This method adds a missionmember to the table when called
+        /// This method adds a missionmember to the database when called
         /// </summary>
-        /// <param name=" _missionMember"></param>
-        /// <returns> ActionResult </returns>
+        /// <param name="missionId"></param>
+        /// <returns> ActionResult<HttpResponse> </returns>
         [HttpPost]
         [Route("MissionMember/{missionId}")]
         public ActionResult<HttpResponse> AddMissionMember(int missionId)
@@ -122,7 +129,13 @@ namespace TimeReportApi.Controllers
             }
         }
 
-        // DELETE api/<MissionMemberController>/5
+        /// <summary>
+        /// This method deletes a member from the database when called. Which
+        /// user to link to the missionmember-row in the database-table is received
+        /// from token.
+        /// </summary>
+        /// <param name="missionId"></param>
+        /// <returns> ActionResult<HttpResponse> </returns>
         [HttpDelete]
         [Route("MissionMember/{missionId}")]
         public ActionResult<HttpResponse> DeleteMissionMember(int missionId)
@@ -145,10 +158,12 @@ namespace TimeReportApi.Controllers
         }
 
         /// <summary>
-        /// This method adds a favorite mission to repository. 
+        /// This method adds a favorite mission to database. Which
+        /// user to link to the FavoriteMission-row in the database-table is received
+        /// from token.
         /// </summary>
-        /// <param name=" favoriteMission"></param>
-        /// <returns> ActionResult </returns>
+        /// <param name="missionId"></param>
+        /// <returns> ActionResult<HttpResponse> </returns>
 
         [HttpPost]
         [Route("FavoriteMission/{missionId}")]
@@ -173,6 +188,13 @@ namespace TimeReportApi.Controllers
             }
         }
 
+        /// <summary>
+        /// This method deletes a favorite mission from database. Which
+        /// user to link to the FavoriteMission-row in the database-table is received
+        /// from token.
+        /// </summary>
+        /// <param name="missionId"></param>
+        /// <returns> ActionResult<HttpResponse> </returns>
         [HttpDelete]
         [Route("FavoriteMission/{missionId}")]
         public ActionResult<HttpResponse> DeleteFavoriteMission(int missionId)
@@ -198,6 +220,12 @@ namespace TimeReportApi.Controllers
             }
         }
 
+        /// <summary>
+        /// This method gets all the favorite missions for a specific user. Which
+        /// user is received from token.
+        /// </summary>
+        /// <param></param>
+        /// <returns> A list of MissionViewModel items. </returns>
         [HttpGet]
         [Route("FavoriteMissions")]
         public ActionResult<List<MissionViewModel>> GetFavoriteMissions()
@@ -237,8 +265,9 @@ namespace TimeReportApi.Controllers
 
         /// <summary>
         /// This method returns a list of MissionTaskViewModel which contains the missions and corresponding 
-        /// tasks from which the user are a member of. 
+        /// tasks from which the user are a member of. Which user is received from token.
         /// </summary>
+        /// <param name="taskId"></param>
         /// <returns>A list of MissionTaskViewModel items.</returns>
         [HttpGet]
         [Route("UserMissions/{taskId}")]
