@@ -146,6 +146,8 @@ namespace time_report_api.Controllers
         {
             try
             {
+                if (unitOfWork.MissionRepository.Exists(missionId))
+                {
                 List<TaskStatsViewModel> tsVMList = new List<TaskStatsViewModel>();
                 double actualHours = 0;
                 DateTime endDateForTaskCheck = new DateTime();
@@ -180,6 +182,11 @@ namespace time_report_api.Controllers
 
                 return tsVMList;
             }
+                else
+                {
+                    throw new Exception();
+                }
+                }
             catch (Exception)
             {
                 return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
