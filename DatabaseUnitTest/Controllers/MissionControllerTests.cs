@@ -22,6 +22,8 @@ namespace Database_UnitTest.Controllers
     public class MissionControllerTests
     {
         private IHttpContextAccessor httpContextAccessorMock;
+
+
         public MissionControllerTests()
         {
             int userId = 1;
@@ -30,6 +32,7 @@ namespace Database_UnitTest.Controllers
             httpContextAccessorMock.HttpContext = A.Fake<HttpContext>();
             httpContextAccessorMock.HttpContext.User = A.Fake<ClaimsPrincipal>();
             A.CallTo(() => httpContextAccessorMock.HttpContext.User.Claims).Returns(new List<Claim> { userIdClaim });
+
         }
 
         [Theory]
@@ -318,6 +321,72 @@ namespace Database_UnitTest.Controllers
             //Assert.Equal(dbMissionTaskViewModel, result);
             //Assert.IsType<ActionResult<List<MissionTaskViewModel>>>(model);
         }
+        [Theory]
+        [MemberData(nameof(GetAllMissionBySearchData),parameters:2)]
+        public void GetAllMissionsBySearchStringType(ActionResult<IEnumerable<MissionTaskViewModel>> expected, int expCode)
+        {
+            //Arrange
+            Mission dbMission = new Mission
+            {
+                Created = new DateTime(2020, 8, 5),
+                Description = "Project1 for DHL",
+                Finished = null,
+                MissionName = "DHL Project1",
+                Color = "#F0D87B",
+                Start = new DateTime(2020, 8, 6),
+                Status = 1,
+                UserId = 1,
+                CustomerId = 1
+            };
+            Customer dbCustomer = new Customer
+            {
+                Name = "DHL",
+                Created = new DateTime(2020, 8, 5)
+            };
+            Task dbTask = new Task
+            {
+                UserId = 1,
+                MissionId = 1,
+                Status = 0,
+                ActualHours = null,
+                Created = new DateTime(2020, 10, 5),
+                Description = "DHL Project 1 Task1",
+                EstimatedHour = 8.30,
+                Invoice = InvoiceType.Invoicable,
+                Name = "Task1 DHL Project1",
+                Start = new DateTime(2020, 10, 6),
+                Finished = null
+            };
+            string searchString = "";
+            Mock<IMissionRepository> missionRepoMock = new Mock<IMissionRepository>();
+            //missionRepoMock.Setup(r => r.Exists(It.IsAny<int>())).Returns(exists);
+            missionRepoMock.Setup(m => m.GetById(It.IsAny<int>())).Returns(dbMission);
+            Mock<ICustomerRepository> customerRepoMock = new Mock<ICustomerRepository>();
+            customerRepoMock.Setup(c => c.GetById(It.IsAny<int>())).Returns(dbCustomer);
+            Mock<ITaskRepository> taskRepoMock = new Mock<ITaskRepository>();
+            taskRepoMock.Setup(t => t.GetById(It.IsAny<int>())).Returns(dbTask);
+
+            Mock<IUnitOfWork> mockUOF = new Mock<IUnitOfWork>();
+            mockUOF.Setup(uow => uow.MissionRepository).Returns(missionRepoMock.Object);
+            mockUOF.Setup(uow => uow.TaskRepository).Returns(taskRepoMock.Object);
+            mockUOF.Setup(uow => uow.CustomerRepository).Returns(customerRepoMock.Object);
+
+            var controller = new MissionController(mockUOF.Object, httpContextAccessorMock);
+            //Act
+
+            var result = controller.GetAllMissionsBySearchString(searchString);
+
+            //Assert
+
+            if (expected.GetType() != StatusCodes.Status500InternalServerError.GetType())
+            {
+                Assert.IsType(expected.GetType(), result);
+            }
+            else
+            {
+                Assert.Equal(expCode, (result.Result as StatusCodeResult).StatusCode);
+            }
+        }
         //[Theory]
         //[MemberData(nameof(GetData), parameters: 2)]
         //public void GetFavoriteMissions(int userId, Mission mission, List<Customer> customers, List<FavoriteMission> favoriteMissions, List<MissionViewModel> expected)
@@ -400,10 +469,10 @@ namespace Database_UnitTest.Controllers
 
         //    Mock<ITaskRepository> taskRepoMock = new Mock<ITaskRepository>();
         //    taskRepoMock.Setup(r => r.GetAllByMissionId(It.IsAny<int>())).Returns(listTask);
-          
+
         //    Mock<IMissionMemberRepository> missionMemberRepoMock = new Mock<IMissionMemberRepository>();
         //    missionMemberRepoMock.Setup(r => r.GetAllByMissionId(It.IsAny<int>()));
-          
+
 
         //    Mock<IUnitOfWork> mockUOF = new Mock<IUnitOfWork>();
         //    mockUOF.Setup(uow => uow.UserRepository).Returns(userRepoMock.Object);
@@ -421,6 +490,7 @@ namespace Database_UnitTest.Controllers
         //    //Assert.IsType<ActionResult<HttpResponse>>(result);
         //    //Assert.Equal(expected, (result.Result as StatusCodeResult).StatusCode);
         //}
+
         public static IEnumerable<object[]> GetData(int numTests)
         {
             var allData = new List<object[]>
@@ -491,11 +561,25 @@ namespace Database_UnitTest.Controllers
         public static IEnumerable<object[]> GetUserMissionsData(int numTests)
         {
             List<MissionTaskViewModel> listOfExpected = new List<MissionTaskViewModel>();
-           
+   
+
             var allData = new List<object[]>
             {
                 new object[] { 1,true , listOfExpected,4},
-                new object[] { 99,false,listOfExpected, (int)HttpStatusCode.InternalServerError },
+                new object[] { 99,false,listOfExpected,(int)HttpStatusCode.InternalServerError },
+            };
+
+            return allData.Take(numTests);
+        }
+        public static IEnumerable<object[]> GetAllMissionBySearchData(int numTests)
+        {
+            IEnumerable<MissionTaskViewModel> listOfExpected = new List<MissionTaskViewModel>();
+
+
+            var allData = new List<object[]>
+            {
+                new object[] { listOfExpected,4},
+                new object[] { listOfExpected,(int)HttpStatusCode.InternalServerError },
             };
 
             return allData.Take(numTests);
