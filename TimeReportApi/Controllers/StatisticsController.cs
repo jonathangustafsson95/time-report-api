@@ -31,6 +31,13 @@ namespace time_report_api.Controllers
             user = new User { UserId = userId };
         }
 
+        /// <summary>
+        /// This method gets statistics for a user's time spent on internal tasks versus customer tasks. It gets statistic
+        /// from startDate and five months back. Input is startDate which is usually the present time. UserId is received from
+        /// token.
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <returns> A list of statistics for five months in the shape of five StatisticCustomerInternalViewModel items. </returns>
         [HttpGet]
         [Route("InternalVsCustomer/{startDate}")]
         public ActionResult<List<StatisticCustomerInternalViewModel>> GetStatsInternVsCustomer(DateTime startDate)
@@ -64,6 +71,14 @@ namespace time_report_api.Controllers
                 return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
+
+        /// <summary>
+        /// This method gets statistics for a user's time spent on different customers. It gets statistic
+        /// from input-date and five months back. Input is usually the present time. UserId is received from
+        /// token.
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns> A list of statistics for five months in the shape of five CustomerVsCustomerStatsViewModel items. </returns>
 
         [HttpGet]
         [Route("CustomerVsCustomer/{date}")]
@@ -138,7 +153,13 @@ namespace time_report_api.Controllers
                 return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
-        
+
+        /// <summary>
+        /// This method gets statistics for time spent on the different tasks of a specific mission. 
+        /// </summary>
+        /// <param name="int missionId"></param>
+        /// <returns> A list of TaskStatsViewModel items that compares the EstimatedHours for a task
+        /// versus how many hours have actually been spent on the task. </returns>
 
         [HttpGet]
         [Route("TaskStats/{missionId:int}")]
