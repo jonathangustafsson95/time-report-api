@@ -257,7 +257,6 @@ namespace TimeReportApi.Controllers
             try
             {
                
-
                 List<MissionMember> missionMemberList = unitOfWork.MissionMemberRepository.GetAllByUserId(user.UserId);
                 List<MissionTaskViewModel> missionTaskViewModel = new List<MissionTaskViewModel>();
                 List<TaskViewModel> tasksViewModelList;
