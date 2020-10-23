@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Http;
 using FakeItEasy;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using Times = Moq.Times;
 
 namespace DatabaseUnitTest.Controllers
 {
@@ -158,27 +159,28 @@ namespace DatabaseUnitTest.Controllers
         [MemberData(nameof(GetRegistriesToDelete))]
         public void DeleteTimeReport_SuccessTest(RegistriesDelete registries)
         {
-                Registry reg1 = new Registry
-                {
-                    RegistryId = 1,
-                    TaskId = 1,
-                    UserId = 1,
-                    Hours = 2,
-                    Created = new DateTime(2021 - 01 - 04),
-                    Date = new DateTime(2021 - 01 - 04),
-                    Invoice = InvoiceType.Invoicable
-                };
-                Registry reg2 = new Registry
-                {
-                    RegistryId = 2,
-                    TaskId = 1,
-                    UserId = 1,
-                    Hours = 2,
-                    Created = new DateTime(2021 - 01 - 04),
-                    Date = new DateTime(2021 - 01 - 04),
-                    Invoice = InvoiceType.Invoicable
-                };
-                Registry reg3 = new Registry
+            //Arrange
+            Registry reg1 = new Registry
+            {
+                RegistryId = 1,
+                TaskId = 1,
+                UserId = 1,
+                Hours = 2,
+                Created = new DateTime(2021 - 01 - 04),
+                Date = new DateTime(2021 - 01 - 04),
+                Invoice = InvoiceType.Invoicable
+            };
+            Registry reg2 = new Registry
+            {
+                RegistryId = 2,
+                TaskId = 1,
+                UserId = 1,
+                Hours = 2,
+                Created = new DateTime(2021 - 01 - 04),
+                Date = new DateTime(2021 - 01 - 04),
+                Invoice = InvoiceType.Invoicable
+            };
+            Registry reg3 = new Registry
             {
                 RegistryId = 3,
                 TaskId = 1,
@@ -188,21 +190,15 @@ namespace DatabaseUnitTest.Controllers
                 Date = new DateTime(2021 - 01 - 04),
                 Invoice = InvoiceType.Invoicable
             };
-            //Arrange
             List<Registry> mockedRegistries = new List<Registry>{ reg1, reg2, reg3 };
 
             Mock<IRegistryRepository> registryRepoMock = new Mock<IRegistryRepository>();
-            registryRepoMock.Setup(r => r.GetById(It.IsAny<int>())).Returns(It.IsAny<Registry>);
-            registryRepoMock.Setup(r => r.GetById(It.IsInRange<int>(0,4, Moq.Range.Exclusive)));
 
             registryRepoMock.Setup(r => r.GetById(1)).Returns(reg1);
             registryRepoMock.Setup(r => r.GetById(2)).Returns(reg2);
             registryRepoMock.Setup(r => r.GetById(3)).Returns(reg3);
 
-            registryRepoMock.Setup(r => r.Delete(It.IsAny<Registry>()));
-            // registryRepoMock.Setup(r => r.Delete(reg1)).Callback(mockedRegistries.Remove(reg1));
-            // registryRepoMock.Setup(r => r.Delete(reg2)).Callback<Registry>(reg => mockedRegistries.Remove(reg));
-            // registryRepoMock.Setup(r => r.Delete(reg3)).Callback<Registry>(reg => mockedRegistries.Remove(reg));
+            registryRepoMock.Setup(r => r.Delete(It.IsAny<object>())).Callback<object>(regId => mockedRegistries.RemoveAll(reg => reg.RegistryId == (int)regId));
             registryRepoMock.Setup(r => r.Save());
 
             Mock<IUnitOfWork> mockUOF = new Mock<IUnitOfWork>();
@@ -216,76 +212,78 @@ namespace DatabaseUnitTest.Controllers
             //Assert
             Assert.IsType<ActionResult<HttpResponse>>(result);
             Assert.Equal((int)HttpStatusCode.OK, (result.Result as StatusCodeResult).StatusCode);
+            Assert.Empty(mockedRegistries);
+            registryRepoMock.Verify(r => r.Delete(It.IsAny<object>()), Times.Exactly(3));
+            registryRepoMock.Verify(r => r.Save(), Times.Once);
         }
 
 
-        //[Theory]
-        //[MemberData(nameof(GetRegistriesToDelete))]
-        //public void DeleteTimeReport_ThrowsAccessViolationException(RegistriesDelete registries)
-        //{
-        //    //Arrange
-        //    User dbUser = new User
-        //    {
-        //        UserId = 1,
-        //        UserName = "Bengt",
-        //        Password = "bengt123",
-        //        EMail = "Bengt@bengt.se",
-        //        Role = "User"
-        //    };
+        [Theory]
+        [MemberData(nameof(GetRegistriesToDelete))]
+        public void DeleteTimeReport_ThrowsAccessViolationException(RegistriesDelete registries)
+        {
+            //Arrange
+            Registry reg1 = new Registry
+            {
+                RegistryId = 1,
+                TaskId = 1,
+                UserId = 2,
+                Hours = 2,
+                Created = new DateTime(2021 - 01 - 04),
+                Date = new DateTime(2021 - 01 - 04),
+                Invoice = InvoiceType.Invoicable
+            };
+            List<Registry> mockedRegistries = new List<Registry>{ reg1 };
 
-        //    Mock<IUserRepository> userRepoMock = new Mock<IUserRepository>();
-        //    userRepoMock.Setup(u => u.GetById(It.IsAny<int>())).Returns(dbUser);
+            Mock<IRegistryRepository> registryRepoMock = new Mock<IRegistryRepository>();
 
-        //    Mock<IRegistryRepository> registryRepoMock = new Mock<IRegistryRepository>();
-        //    registryRepoMock.Setup(r => r.Delete(It.IsAny<Registry>()));
-        //    registryRepoMock.Setup(r => r.Save());
+            registryRepoMock.Setup(r => r.GetById(1)).Returns(reg1);
 
-        //    Mock<IUnitOfWork> mockUOF = new Mock<IUnitOfWork>();
-        //    mockUOF.Setup(uow => uow.UserRepository).Returns(userRepoMock.Object);
-        //    mockUOF.Setup(uow => uow.RegistryRepository).Returns(registryRepoMock.Object);
+            Mock<IUnitOfWork> mockUOF = new Mock<IUnitOfWork>();
+            mockUOF.Setup(uow => uow.RegistryRepository).Returns(registryRepoMock.Object);
 
-        //    var controller = new ReportingController(mockUOF.Object, httpContextAccessorMock);  
-        //    //Act
-        //    var result = controller.DeleteTimeReport(registries);
+            var controller = new ReportingController(mockUOF.Object, httpContextAccessorMock);
 
-        //    //Assert
-        //    Assert.IsType<ActionResult<HttpResponse>>(result);
-        //    Assert.Equal((int)HttpStatusCode.Forbidden, (result.Result as StatusCodeResult).StatusCode);
-        //}
+            //Act
+            var result = controller.DeleteTimeReport(registries);
 
-        //[Theory]
-        //[MemberData(nameof(GetRegistriesToDelete))]
-        //public void DeleteTimeReport_ThrowsInternalServerErrorException(RegistriesDelete registries)
-        //{
-        //    //Arrange
-        //    User dbUser = new User
-        //    {
-        //        UserId = 1,
-        //        UserName = "Bengt",
-        //        Password = "bengt123",
-        //        EMail = "Bengt@bengt.se",
-        //        Role = "User"
-        //    };
+            //Assert
+            Assert.IsType<ActionResult<HttpResponse>>(result);
+            Assert.Equal((int)HttpStatusCode.Forbidden, (result.Result as ObjectResult).StatusCode);
+        }
 
-        //    Mock<IUserRepository> userRepoMock = new Mock<IUserRepository>();
-        //    userRepoMock.Setup(u => u.GetById(It.IsAny<int>())).Returns(dbUser);
+        [Theory]
+        [MemberData(nameof(GetRegistriesToDelete))]
+        public void DeleteTimeReport_ThrowsInternalServerErrorException(RegistriesDelete registries)
+        {
+           //Arrange
+            Registry reg1 = new Registry
+            {
+                RegistryId = 1,
+                TaskId = 1,
+                UserId = 1,
+                Hours = 2,
+                Created = new DateTime(2021 - 01 - 04),
+                Date = new DateTime(2021 - 01 - 04),
+                Invoice = InvoiceType.Invoicable
+            };
+            List<Registry> mockedRegistries = new List<Registry>{ reg1 };
 
-        //    Mock<IRegistryRepository> registryRepoMock = new Mock<IRegistryRepository>();
-        //    registryRepoMock.Setup(r => r.Delete(It.IsAny<Registry>()));
-        //    registryRepoMock.Setup(r => r.Save());
+            Mock<IRegistryRepository> registryRepoMock = new Mock<IRegistryRepository>();
+            registryRepoMock.Setup(r => r.GetById(1)).Returns(reg1);
+            registryRepoMock.Setup(r => r.Delete(It.IsAny<object>())).Throws<Exception>();
 
-        //    Mock<IUnitOfWork> mockUOF = new Mock<IUnitOfWork>();
-        //    mockUOF.Setup(uow => uow.UserRepository).Returns(userRepoMock.Object);
-        //    mockUOF.Setup(uow => uow.RegistryRepository).Returns(registryRepoMock.Object);
+            Mock<IUnitOfWork> mockUOF = new Mock<IUnitOfWork>();
+            mockUOF.Setup(uow => uow.RegistryRepository).Returns(registryRepoMock.Object);
 
-        //    var controller = new ReportingController(mockUOF.Object, httpContextAccessorMock);  
-        //    //Act
-        //    var result = controller.DeleteTimeReport(registries);
+            var controller = new ReportingController(mockUOF.Object, httpContextAccessorMock);
 
-        //    //Assert
-        //    Assert.IsType<ActionResult<HttpResponse>>(result);
-        //    Assert.Equal((int)HttpStatusCode.InternalServerError, (result.Result as StatusCodeResult).StatusCode);
-        //}
+            //Act
+            var result = controller.DeleteTimeReport(registries);
 
+            //Assert
+            Assert.IsType<ActionResult<HttpResponse>>(result);
+            Assert.Equal((int)HttpStatusCode.InternalServerError, (result.Result as ObjectResult).StatusCode);
+        }
     }
 }
