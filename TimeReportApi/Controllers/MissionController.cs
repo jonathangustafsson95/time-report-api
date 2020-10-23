@@ -159,9 +159,9 @@ namespace TimeReportApi.Controllers
 
                 if (unitOfWork.MissionRepository.Exists(missionId))
                 {
-                unitOfWork.FavoriteMissionRepository.Insert(new FavoriteMission() { UserId = user.UserId, MissionId = missionId});
-                unitOfWork.FavoriteMissionRepository.Save();
-                return Ok();
+                    unitOfWork.FavoriteMissionRepository.Insert(new FavoriteMission() { UserId = user.UserId, MissionId = missionId});
+                    unitOfWork.FavoriteMissionRepository.Save();
+                    return Ok();
                 }
                 else
                   throw new Exception();

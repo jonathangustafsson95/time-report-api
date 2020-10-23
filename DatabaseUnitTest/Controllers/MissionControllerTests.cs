@@ -30,6 +30,7 @@ namespace Database_UnitTest.Controllers
             httpContextAccessorMock.HttpContext = A.Fake<HttpContext>();
             httpContextAccessorMock.HttpContext.User = A.Fake<ClaimsPrincipal>();
             A.CallTo(() => httpContextAccessorMock.HttpContext.User.Claims).Returns(new List<Claim> { userIdClaim });
+        
         }
 
         [Theory]
@@ -285,16 +286,19 @@ namespace Database_UnitTest.Controllers
             Mock<ITaskRepository> taskRepoMock = new Mock<ITaskRepository>();
             taskRepoMock.Setup(t => t.GetById(It.IsAny<int>())).Returns(dbTask);
             taskRepoMock.Setup(t => t.Exists(It.IsAny<int>())).Returns(exists);
+
             Mock<ICustomerRepository> customerRepoMock = new Mock<ICustomerRepository>();
             customerRepoMock.Setup(c => c.GetById(It.IsAny<int>())).Returns(dbCustomer);
+
             Mock<IMissionMemberRepository> missionMemberRepoMock = new Mock<IMissionMemberRepository>();
+            //missionMemberRepoMock.Setup(c => c.GetAllByUserId(It.IsAny<int>())).Returns(/*afafasda*/);
 
             Mock<IUnitOfWork> mockUOF = new Mock<IUnitOfWork>();
             mockUOF.Setup(uow => uow.UserRepository).Returns(userRepoMock.Object);
             mockUOF.Setup(uow => uow.MissionRepository).Returns(missionRepoMock.Object);
             mockUOF.Setup(uow => uow.TaskRepository).Returns(taskRepoMock.Object);
             mockUOF.Setup(uow => uow.CustomerRepository).Returns(customerRepoMock.Object);
-            //mockUOF.Setup(uow => uow.FavoriteMissionRepository).Returns(favoriteMissionRepoMock.Object);
+            mockUOF.Setup(uow => uow.MissionMemberRepository).Returns(missionMemberRepoMock.Object);
 
             var controller = new MissionController(mockUOF.Object, httpContextAccessorMock);
 
