@@ -231,8 +231,8 @@ namespace Database_UnitTest.Controllers
             }
         }
         [Theory]
-        [MemberData(nameof(GetData), parameters: 2)]
-        public void GetUserMissions(int id, bool exists, int expected)
+        [MemberData(nameof(GetUserMissionsData), parameters: 2)]
+        public void GetUserMissions(int id, bool exists, ActionResult<List<MissionTaskViewModel>> expected,int expCode)
         {
             //Arrange
             User dbUser = new User
@@ -294,7 +294,7 @@ namespace Database_UnitTest.Controllers
             mockUOF.Setup(uow => uow.MissionRepository).Returns(missionRepoMock.Object);
             mockUOF.Setup(uow => uow.TaskRepository).Returns(taskRepoMock.Object);
             mockUOF.Setup(uow => uow.CustomerRepository).Returns(customerRepoMock.Object);
-            //mockUOF.Setup(uow => uow.FavoriteMissionRepository).Returns(favoriteMissionRepoMock.Object);
+            mockUOF.Setup(uow => uow.MissionMemberRepository).Returns(missionMemberRepoMock.Object);
 
             var controller = new MissionController(mockUOF.Object, httpContextAccessorMock);
 
@@ -303,11 +303,20 @@ namespace Database_UnitTest.Controllers
             var result = controller.GetUserMissions(id);
 
             //Assert
-            Assert.IsAssignableFrom<MissionTaskViewModel>(dbMissionTaskViewModel);
-
-            //Assert.IsInstanceOfType()
+            //Assert.IsAssignableFrom<MissionTaskViewModel>(dbMissionTaskViewModel);
+            //var model = ((ActionResult<List<MissionTaskViewModel>>)result).Value as List<MissionTaskViewModel>;
+            if (expected.GetType() !=  StatusCodes.Status500InternalServerError.GetType())
+            {
+                //Assert.IsAssignableFrom(result.GetType(),expected);
+                Assert.IsType(expected.GetType(), result);
+            }
+            else
+            {
+                Assert.Equal(expCode, (result.Result as StatusCodeResult).StatusCode);
+            }
             //Assert.IsType<ActionResult<HttpResponse>>(result) ;
             //Assert.Equal(dbMissionTaskViewModel, result);
+            //Assert.IsType<ActionResult<List<MissionTaskViewModel>>>(model);
         }
         //[Theory]
         //[MemberData(nameof(GetData), parameters: 2)]
@@ -481,10 +490,12 @@ namespace Database_UnitTest.Controllers
 
         public static IEnumerable<object[]> GetUserMissionsData(int numTests)
         {
+            List<MissionTaskViewModel> listOfExpected = new List<MissionTaskViewModel>();
+           
             var allData = new List<object[]>
             {
-                new object[] { 1,true ,(int)HttpStatusCode.OK },
-                new object[] { 99,false, (int)HttpStatusCode.InternalServerError },
+                new object[] { 1,true , listOfExpected,4},
+                new object[] { 99,false,listOfExpected, (int)HttpStatusCode.InternalServerError },
             };
 
             return allData.Take(numTests);
