@@ -70,7 +70,7 @@ namespace time_report_api.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
+                return StatusCode(500, new { message = "Invalid DateTime" });
             }
         }
 
@@ -154,7 +154,7 @@ namespace time_report_api.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
+                return StatusCode(500, new { message = "Invalid DateTime" });
             }
         }
 
@@ -214,7 +214,7 @@ namespace time_report_api.Controllers
                 }
             catch (Exception)
             {
-                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
+                return StatusCode(500, new { message = "Invalid DateTime" });
             }
         }
     }
