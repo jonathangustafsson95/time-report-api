@@ -32,47 +32,36 @@ namespace Database_UnitTest.Controllers
             httpContextAccessorMock.HttpContext = A.Fake<HttpContext>();
             httpContextAccessorMock.HttpContext.User = A.Fake<ClaimsPrincipal>();
             A.CallTo(() => httpContextAccessorMock.HttpContext.User.Claims).Returns(new List<Claim> { userIdClaim });
-
         }
-        //        [Theory]
-        //        [MemberData(nameof(GetData), parameters: 2)]
-        //        public void GetStatsInternVsCustomer(DateTime startDate)
-        //        {
+        [Theory]
+        [MemberData(nameof(GetInternalCustomerData), parameters: 1)]
+        public void GetStatsInternVsCustomer(DateTime startDate,object expected)
+        {
+            List<Registry> dbRegistries = new List<Registry>();
+            Mock<IRegistryRepository> registryRepoMock = new Mock<IRegistryRepository>();
+            registryRepoMock.Setup(r => r.GetRegistriesByDate(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<int>())).Returns(dbRegistries);
 
-        //        }
+            Mock<IUnitOfWork> mockUOF = new Mock<IUnitOfWork>();
+            mockUOF.Setup(uow => uow.RegistryRepository).Returns(registryRepoMock.Object);
+           
+            var controller = new StatisticsController(mockUOF.Object, httpContextAccessorMock);
+
+            //Act
+            var result = controller.GetStatsInternVsCustomer(startDate);
+
+            if (expected.GetType() != StatusCodes.Status500InternalServerError.GetType())
+            {
+                Assert.IsType(expected.GetType(), result.Value);
+            }
+            else
+            {
+                Assert.Equal(expected, (result.Result as ObjectResult).StatusCode);
+            }
+        }
         //[Theory]
-        //[MemberData(nameof(GetData), parameters: 1)]
+        //[MemberData(nameof(GetData), parameters: 2)]
         //public void GetStatsCustomerVsCustomer(DateTime date)
         //{
-        //    Customer dbCustomer = new Customer
-        //    {
-        //        Name = "DHL",
-        //        Created = new DateTime(2020, 8, 5)
-        //    };
-        //    Mission dbMission = new Mission
-        //    {
-        //        Created = new DateTime(2020, 8, 5),
-        //        Description = "Project1 for DHL",
-        //        Finished = null,
-        //        MissionName = "DHL Project1",
-        //        Color = "#F0D87B",
-        //        Start = new DateTime(2020, 8, 6),
-        //        Status = 1,
-        //        UserId = 1,
-        //        CustomerId = 1
-        //    };
-        //    List<Task> dbTasks = new List<Task> { new Task { TaskId = 1, } };
-        //    Mock<IRegistryRepository> regiRepoMock = new Mock<IRegistryRepository>();
-        //    regiRepoMock.Setup(r => r.GetRegistriesByTask(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<int>())).Returns(dbRegistries);
-        //    Mock<ICustomerRepository> customerRepoMock = new Mock<ICustomerRepository>();
-        //    customerRepoMock.Setup(c => c.GetById(It.IsAny<int>())).Returns(dbCustomer);
-        //    Mock<IMissionRepository> missionRepoMock = new Mock<IMissionRepository>();
-        //    missionRepoMock.Setup(m => m.GetById(It.IsAny<int>())).Returns(dbMission);
-        //    Mock<ITaskRepository> taskRepoMock = new Mock<ITaskRepository>();
-        //    taskRepoMock.Setup(r => r.GetAllByMissionId(It.IsAny<int>())).Returns(dbTasks);
-
-
-
 
         //}
         [Theory]
