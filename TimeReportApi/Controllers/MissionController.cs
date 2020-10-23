@@ -340,7 +340,11 @@ namespace TimeReportApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-    public List<TaskViewModel> GetAllTasks(int missionId)
+        /// <summary>
+        /// This method returns a  list of TaskViewModekl which contains the mission´s tasks 
+        /// </summary>
+        /// <returns>A list of TaskViewModel.</returns>
+        private List<TaskViewModel> GetAllTasks(int missionId)
     {
         List<TaskViewModel> tasksViewModelList = new List<TaskViewModel>();
         foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(missionId))
@@ -356,7 +360,6 @@ namespace TimeReportApi.Controllers
             tasksViewModelList.Add(taskVM);
         }
             return tasksViewModelList;
-
     }
     }
 }
