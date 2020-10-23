@@ -142,7 +142,7 @@ namespace time_report_api.Controllers
 
         [HttpGet]
         [Route("TaskStats/{missionId:int}")]
-        public ActionResult<List<TaskStatsViewModel>> getTaskStats(int missionId)
+        public ActionResult<List<TaskStatsViewModel>> GetTaskStats(int missionId)
         {
             try
             {
