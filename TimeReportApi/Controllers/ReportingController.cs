@@ -16,7 +16,7 @@ using System.Globalization;
 namespace TimeReportApi.Controllers
 {
     /// <summary>
-    /// Controller for handlings rerporting events.
+    /// Controller for handling rerporting events.
     /// </summary>
     [Route("api/[controller]")]
     [Authorize]
@@ -29,7 +29,7 @@ namespace TimeReportApi.Controllers
         {
             this.unitOfWork = unitOfWork;
             int userId = Int32.Parse(httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == "userId").Value);
-            user = unitOfWork.UserRepository.GetById(userId);
+            user = new User { UserId = userId };
         }
 
         /// <summary>
@@ -48,27 +48,29 @@ namespace TimeReportApi.Controllers
                 for (int i = 0; i < newRegistries.RegistriesToReport.Count; i++)
                 {
                     if (newRegistries.RegistriesToReport[i].UserId != user.UserId)
-                        throw new Exception("You are trying to edit someone elses registries!");
+                        throw new AccessViolationException("You can not edit someone elses registries.");
 
-                    // En int kan aldrig  vara  null, så om vi skickar nya registries
-                    // bör vi hantera det på något sätt i JSON, typ  sätta regID  till 0?
                     if (newRegistries.RegistriesToReport[i].RegistryId == 0)
                     {
-                        // Add new registry
                         unitOfWork.RegistryRepository.Insert(newRegistries.RegistriesToReport[i]);
                     }
                     else 
                     {
-                        // Change  a existing registry
                         unitOfWork.RegistryRepository.Update(newRegistries.RegistriesToReport[i]);
                     }
                 }
                 unitOfWork.RegistryRepository.Save();
                 return Ok();
             }
+
+            catch(AccessViolationException e)
+            {
+                return StatusCode(403, new { message = e.Message });
+            }
+            
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An error occured when trying to communicate with the database." });
             }
         }
 
@@ -87,16 +89,22 @@ namespace TimeReportApi.Controllers
                 for (int i = 0; i < registryIdsToDelete.RegistriesToDelete.Count; i++)
                 {
                     if (unitOfWork.RegistryRepository.GetById(registryIdsToDelete.RegistriesToDelete[i]).UserId != user.UserId)
-                        throw new Exception("You are trying to delete someone elses registries!");
+                        throw new AccessViolationException("You can not delete someone elses registries.");
 
                     unitOfWork.RegistryRepository.Delete(unitOfWork.RegistryRepository.GetById(registryIdsToDelete.RegistriesToDelete[i]).RegistryId);
                 }
                 unitOfWork.RegistryRepository.Save();
                 return Ok();
             }
-            catch (Exception e)
+
+            catch (AccessViolationException e)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(403, new { message = e.Message });
+            }
+            
+            catch (Exception)
+            {
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
 
@@ -118,11 +126,11 @@ namespace TimeReportApi.Controllers
                 List<Registry> weekRegistries = unitOfWork.RegistryRepository.GetRegistriesByDate(startDate, endDate, user.UserId);
                 return (ConvertRegistriesToViewModel(weekRegistries));
             }
-            catch (Exception e)
+            
+            catch (Exception)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
-
         }
 
         /// <summary>
@@ -140,9 +148,9 @@ namespace TimeReportApi.Controllers
                 List<Registry> weekRegistries = unitOfWork.RegistryRepository.GetRegistriesByDate(dateTime, dateTime.AddDays(1), user.UserId);
                 return (ConvertRegistriesToViewModel(weekRegistries));
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
 
         }
@@ -227,9 +235,9 @@ namespace TimeReportApi.Controllers
             {
                 return (ConvertRegistriesToViewModel(unitOfWork.RegistryRepository.GetLatestRegistries(nrOfRegistries, user.UserId)));
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
 
@@ -272,9 +280,9 @@ namespace TimeReportApi.Controllers
                 }
                 return weekTemplates;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
 
@@ -334,9 +342,9 @@ namespace TimeReportApi.Controllers
                 }
                 return missionTaskViewModel;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
     }
