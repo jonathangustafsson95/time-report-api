@@ -34,8 +34,10 @@ namespace TimeReportApi.Controllers
         /// <returns> A list of MissionTaskViewModel items. </returns>
         [HttpGet]
         [Route("SearchMission/{searchString}")]
-        public IEnumerable<MissionTaskViewModel> GetAllMissionsBySearchString(string searchString)
+        public ActionResult<IEnumerable<MissionTaskViewModel>> GetAllMissionsBySearchString(string searchString)
         {
+            try
+            {
             string lowerCaseSearchString = searchString.ToLower();
             List<Mission> missionList = unitOfWork.MissionRepository.Search<Mission>(x => x.MissionName.ToLower(), lowerCaseSearchString);
             List<Customer> customerList = unitOfWork.CustomerRepository.Search<Customer>(x => x.Name.ToLower(), lowerCaseSearchString);
@@ -57,7 +59,6 @@ namespace TimeReportApi.Controllers
                     }
                 }
             }
-
             missionList.Concat(missionsLinkedToCustomerID);
 
             List<MissionTaskViewModel> missionTasksViewModelList = new List<MissionTaskViewModel>();
@@ -65,20 +66,21 @@ namespace TimeReportApi.Controllers
 
             foreach (var mission in missionList)
             {
-                List<TaskViewModel> taskViewModelList = new List<TaskViewModel>();
+                    //GetAllTasks(mission.MissionId);
+                //List<TaskViewModel> taskViewModelList = new List<TaskViewModel>();
 
-                foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
-                {
-                    TaskViewModel taskVM = new TaskViewModel
-                    {
-                        TaskId = task.TaskId,
-                        MissionId = task.MissionId,
-                        UserId = task.UserId,
-                        Name = task.Name,
-                        Description = task.Description,
-                    };
-                    taskViewModelList.Add(taskVM);
-                }
+                //foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
+                //{
+                //    TaskViewModel taskVM = new TaskViewModel
+                //    {
+                //        TaskId = task.TaskId,
+                //        MissionId = task.MissionId,
+                //        UserId = task.UserId,
+                //        Name = task.Name,
+                //        Description = task.Description,
+                //    };
+                //    taskViewModelList.Add(taskVM);
+                //}
 
                 MissionTaskViewModel missionsVM = new MissionTaskViewModel
                 {
@@ -88,7 +90,7 @@ namespace TimeReportApi.Controllers
                     StartDate = mission.Start,
                     Description = mission.Description,
                     Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).Name,
-                    Tasks = taskViewModelList,
+                    Tasks = GetAllTasks(mission.MissionId),
                     isMember = false,
 
                 };
@@ -100,6 +102,12 @@ namespace TimeReportApi.Controllers
                 missionTasksViewModelList.Add(missionsVM);
             }
             return missionTasksViewModelList;
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
+            }
+
         }
 
         /// <summary>
@@ -155,6 +163,8 @@ namespace TimeReportApi.Controllers
             {
                 return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
+
+
         }
 
         /// <summary>
@@ -238,20 +248,20 @@ namespace TimeReportApi.Controllers
                 {
                     Mission mission = unitOfWork.MissionRepository.GetById(favoriteMissionList[i].MissionId);
                     Customer customer = unitOfWork.CustomerRepository.GetAll().FirstOrDefault(n => n.CustomerId == mission.CustomerId);
-                    List<TaskViewModel>tasksViewModelList = new List<TaskViewModel>();
+                    List<TaskViewModel>tasksViewModelList =GetAllTasks(mission.MissionId);
 
-                    foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
-                    {
-                        TaskViewModel taskVM = new TaskViewModel
-                        {
-                            TaskId = task.TaskId,
-                            MissionId = task.MissionId,
-                            UserId = task.UserId,
-                            Name = task.Name,
-                            Description = task.Description,
-                        };
-                        tasksViewModelList.Add(taskVM);
-                    }
+                    //foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
+                    //{
+                    //    TaskViewModel taskVM = new TaskViewModel
+                    //    {
+                    //        TaskId = task.TaskId,
+                    //        MissionId = task.MissionId,
+                    //        UserId = task.UserId,
+                    //        Name = task.Name,
+                    //        Description = task.Description,
+                    //    };
+                    //    tasksViewModelList.Add(taskVM);
+                    //}
                     mvmList.Add(new MissionViewModel().ConvertToViewModel(mission, customer,tasksViewModelList));
                 }
                 
@@ -276,7 +286,6 @@ namespace TimeReportApi.Controllers
             try
             {
                
-
                 List<MissionMember> missionMemberList = unitOfWork.MissionMemberRepository.GetAllByUserId(user.UserId);
                 List<MissionTaskViewModel> missionTaskViewModel = new List<MissionTaskViewModel>();
                 List<TaskViewModel> tasksViewModelList;
@@ -293,20 +302,20 @@ namespace TimeReportApi.Controllers
                 for (int i = 0; i < missionMemberList.Count; i++)
                 {
                     Mission mission = unitOfWork.MissionRepository.GetById(missionMemberList[i].MissionId);
-                    tasksViewModelList = new List<TaskViewModel>();
+                    tasksViewModelList = GetAllTasks(mission.MissionId);
 
-                    foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
-                    {
-                        TaskViewModel taskVM = new TaskViewModel
-                        {
-                            TaskId = task.TaskId,
-                            MissionId = task.MissionId,
-                            UserId = task.UserId,
-                            Name = task.Name,
-                            Description = task.Description,
-                        };
-                        tasksViewModelList.Add(taskVM);
-                    }
+                    //foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
+                    //{
+                    //    TaskViewModel taskVM = new TaskViewModel
+                    //    {
+                    //        TaskId = task.TaskId,
+                    //        MissionId = task.MissionId,
+                    //        UserId = task.UserId,
+                    //        Name = task.Name,
+                    //        Description = task.Description,
+                    //    };
+                    //    tasksViewModelList.Add(taskVM);
+                    //}
 
                     MissionTaskViewModel missionsVM = new MissionTaskViewModel
                     {
@@ -344,21 +353,21 @@ namespace TimeReportApi.Controllers
                 if (!unitOfWork.MissionRepository.Exists(missionId))
                     throw new Exception();
                 Mission mission = unitOfWork.MissionRepository.GetById(missionId);
-                List<TaskViewModel> tasksViewModelList = new List<TaskViewModel>();
+                List<TaskViewModel> tasksViewModelList = GetAllTasks(mission.MissionId);
                 List<UserViewModel> usersVM = new List<UserViewModel>();
 
-                foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
-                {
-                    TaskViewModel taskVM = new TaskViewModel
-                    {
-                        TaskId = task.TaskId,
-                        MissionId = task.MissionId,
-                        UserId = task.UserId,
-                        Name = task.Name,
-                        Description = task.Description,
-                    };
-                    tasksViewModelList.Add(taskVM);
-                }
+                //foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(mission.MissionId))
+                //{
+                //    TaskViewModel taskVM = new TaskViewModel
+                //    {
+                //        TaskId = task.TaskId,
+                //        MissionId = task.MissionId,
+                //        UserId = task.UserId,
+                //        Name = task.Name,
+                //        Description = task.Description,
+                //    };
+                //    tasksViewModelList.Add(taskVM);
+                //}
 
                 List<MissionMember> missionMembers = unitOfWork.MissionMemberRepository.GetAllByMissionId(missionId);
                 foreach (MissionMember missionMember in missionMembers)
@@ -392,6 +401,24 @@ namespace TimeReportApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+    public List<TaskViewModel> GetAllTasks(int missionId)
+    {
+            List<TaskViewModel> tasksViewModelList = new List<TaskViewModel>();
+        foreach (Task task in unitOfWork.TaskRepository.GetAllByMissionId(missionId))
+        {
+            TaskViewModel taskVM = new TaskViewModel
+            {
+                TaskId = task.TaskId,
+                MissionId = task.MissionId,
+                UserId = task.UserId,
+                Name = task.Name,
+                Description = task.Description,
+            };
+            tasksViewModelList.Add(taskVM);
+        }
+            return tasksViewModelList;
+
+    }
     }
 }
 
