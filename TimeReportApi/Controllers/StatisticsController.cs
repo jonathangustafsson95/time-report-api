@@ -187,7 +187,7 @@ namespace time_report_api.Controllers
                     }
                     else
                     {
-                        endDateForTaskCheck = task.Finished ?? default(DateTime);
+                        endDateForTaskCheck = task.Finished ?? default;
                     }
 
                     List<Registry> tasksRegistries = unitOfWork.RegistryRepository.GetRegistriesByTask(task.Start, endDateForTaskCheck, task.TaskId);

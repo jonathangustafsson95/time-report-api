@@ -14,7 +14,7 @@ namespace TimeReportApi.Models.ViewModel
         public DateTime StartDate { get; set; }
         public string Description { get; set; }
         public string Customer { get; set; }
-        public bool isMember { get; set; }
+        public bool IsMember { get; set; }
         public List<TaskViewModel> Tasks { get; set; }
         public List<UserViewModel> Users { get; set; }
 
