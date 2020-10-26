@@ -376,7 +376,7 @@ namespace Database_UnitTest.Controllers
         }
         [Theory]
         [MemberData(nameof(GetFavoriteMissionData), parameters: 1)]
-        public void GetFavoriteMissions_Validation_Test(int userId, object expected)
+        public void GetFavoriteMissions_Validation_Test( object expected)
         {
             Mission dbMission = new Mission();
             List < Customer > dbCustomer= new List<Customer>();
@@ -490,8 +490,8 @@ namespace Database_UnitTest.Controllers
         {
             var allData = new List<object[]>
             {
-                new object[] {1,new List<MissionViewModel>()},
-                new object[] {99,(int)HttpStatusCode.InternalServerError } 
+                new object[] {new List<MissionViewModel>()},
+                new object[] {(int)HttpStatusCode.InternalServerError } 
             };
 
             return allData.Take(numTests);

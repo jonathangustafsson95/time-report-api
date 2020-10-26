@@ -23,7 +23,7 @@ namespace Database_UnitTest.Controllers
 {
     public class StatisticControllerTest
     {
-        private IHttpContextAccessor httpContextAccessorMock;
+        private readonly IHttpContextAccessor httpContextAccessorMock;
         public StatisticControllerTest()
         {
             int userId = 1;
