@@ -19,10 +19,10 @@ namespace TimeReportApi
 
                 try
                 {
-                    seed1.Initialize(services);
-                    seed2.Initialize(services);
-                    seed3.Initialize(services);
-                    seed4.Initialize(services);
+                    Seed1.Initialize(services);
+                    Seed2.Initialize(services);
+                    Seed3.Initialize(services);
+                    Seed4.Initialize(services);
                 }
                 catch (Exception ex)
                 {

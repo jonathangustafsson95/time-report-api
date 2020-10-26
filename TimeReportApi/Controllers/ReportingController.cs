@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using DataAccessLayer.UnitOfWork;
 using CommonLibrary.Model;
 using TimeReportApi.Models;
-using DataAccessLayer;
-using System.Security.Claims;
 using TimeReportApi.Models.ViewModel;
 using System.Globalization;
 

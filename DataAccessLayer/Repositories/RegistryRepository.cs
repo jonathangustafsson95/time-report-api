@@ -14,8 +14,6 @@ namespace DataAccessLayer.Repositories
         {
 
         }
-
-        // GetByID får ju bara ut en reg? 
         public List<Registry> GetAllByUserId(int id)
         {
             IEnumerable<Registry> all = GetAll();

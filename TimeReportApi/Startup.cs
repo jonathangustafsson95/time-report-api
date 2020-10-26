@@ -28,8 +28,6 @@ namespace TimeReportApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            // För att kalla på api med headers genom ajax
             services.AddCors(options =>
                 options.AddPolicy(name: BulbasaurPolicy,
                      builder =>
@@ -70,7 +68,7 @@ namespace TimeReportApi
             });
             services.AddHttpContextAccessor();
         }
-        //options.UseSqlServer(connection, b => b.MigrationsAssembly("time report api")));*/
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -78,7 +76,7 @@ namespace TimeReportApi
             {
                 app.UseDeveloperExceptionPage();
             }
-            // API anrop genom headers med ajax
+
             app.UseCors(BulbasaurPolicy);
 
             app.UseHttpsRedirection();

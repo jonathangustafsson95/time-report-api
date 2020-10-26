@@ -6,7 +6,6 @@ using DataAccessLayer.UnitOfWork;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using TimeReportApi.Models;
 using TimeReportApi.Models.ViewModel;
 
@@ -288,7 +287,7 @@ namespace TimeReportApi.Controllers
                 return missionTaskViewModel;
             
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }

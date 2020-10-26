@@ -22,18 +22,9 @@ namespace DataAccessLayer.Repositories
         {
             return _table.ToList();
         }
-        //public void GetAllById(int id)
-        //{
-            
-        //}
         public T GetById(object id)
         {
             return _table.Find(id);
-        }
-
-        public T GetById(object firstId, object secondId)
-        {
-            return _table.Find(firstId, secondId);
         }
         public void Insert(T obj)
         {
@@ -64,20 +55,10 @@ namespace DataAccessLayer.Repositories
             T model = _table.Find(id);
             return model != null;
         }
-
-        public bool Exists(object firstId, object secondId)
-        {
-            T model = _table.Find(firstId, secondId);
-            return model != null;
-        }
         public List<T> Search<T>(Func<T, string> getKey, string searchString)
         {
             IEnumerable<T> list = (IEnumerable<T>)GetAll();
             return list.Where(x => getKey(x).Contains(searchString)).ToList();
         }
-      
-
-
-
     }
 }

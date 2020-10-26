@@ -43,8 +43,7 @@ namespace Database_UnitTest.Controllers
                 UserId = 1,
                 UserName = "Bengt",
                 Password = "bengt123",
-                EMail = "Bengt@bengt.se",
-                Role = "User"
+                EMail = "Bengt@bengt.se"
             };
 
             Mock<IUserRepository> userRepoMock = new Mock<IUserRepository>();
@@ -89,8 +88,7 @@ namespace Database_UnitTest.Controllers
                 UserId = 1,
                 UserName = "Bengt",
                 Password = "bengt123",
-                EMail = "Bengt@bengt.se",
-                Role = "User"
+                EMail = "Bengt@bengt.se"
             };
             Mission dbMission = new Mission
             {
@@ -147,8 +145,7 @@ namespace Database_UnitTest.Controllers
                 UserId = 1,
                 UserName = "Bengt",
                 Password = "bengt123",
-                EMail = "Bengt@bengt.se",
-                Role = "User"
+                EMail = "Bengt@bengt.se"
             };
 
             Mock<IUserRepository> userRepoMock = new Mock<IUserRepository>();
@@ -193,8 +190,7 @@ namespace Database_UnitTest.Controllers
                 UserId = 1,
                 UserName = "Bengt",
                 Password = "bengt123",
-                EMail = "Bengt@bengt.se",
-                Role = "User"
+                EMail = "Bengt@bengt.se"
             };
 
             Mock<IUserRepository> userRepoMock = new Mock<IUserRepository>();
@@ -240,8 +236,7 @@ namespace Database_UnitTest.Controllers
                 UserId = 1,
                 UserName = "Bengt",
                 Password = "bengt123",
-                EMail = "Bengt@bengt.se",
-                Role = "User"
+                EMail = "Bengt@bengt.se"
             };
             Mission dbMission = new Mission
             {
@@ -428,8 +423,7 @@ namespace Database_UnitTest.Controllers
                 UserId = 1,
                 UserName = "Bengt",
                 Password = "bengt123",
-                EMail = "Bengt@bengt.se",
-                Role = "User"
+                EMail = "Bengt@bengt.se"
             };
             Customer dbCustomer = new Customer();
             Mission dbMission = new Mission { MissionId = 1, CustomerId = 1 };

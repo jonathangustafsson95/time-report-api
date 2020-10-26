@@ -81,14 +81,6 @@ namespace DatabaseUnitTest
         }
 
         [TestMethod]
-        public void GetByIdComposite()
-        {
-            SeedInMemory(1);
-            var item = _unitOfWork.MissionMemberRepository.GetById(1, 1);
-            Assert.Equal(_testMissionMember,item);
-        }
-
-        [TestMethod]
         public void UpdateRepositoryTest()
         {
             _testUserObject.EMail = "newEmail";
@@ -129,13 +121,6 @@ namespace DatabaseUnitTest
         {
             SeedInMemory(1);
             var actual=_unitOfWork.UserRepository.Exists(_testUserObject.UserId);
-            Assert.True(actual);
-        }
-        [TestMethod]
-        public void ExistsTestComposite()
-        {
-            SeedInMemory(1);
-            var actual = _unitOfWork.MissionMemberRepository.Exists(_testMissionMember.MissionId,_testMissionMember.UserId);
             Assert.True(actual);
         }
 

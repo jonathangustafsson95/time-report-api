@@ -4,12 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Data.Model
 {
-    public static class seed2
+    public static class Seed2
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {

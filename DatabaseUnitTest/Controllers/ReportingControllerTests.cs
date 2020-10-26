@@ -19,7 +19,7 @@ namespace DatabaseUnitTest.Controllers
 {
     public class ReportingControllerTests
     {
-        private IHttpContextAccessor httpContextAccessorMock;
+        private readonly IHttpContextAccessor httpContextAccessorMock;
         public ReportingControllerTests()
         {
             int userId = 1;
@@ -562,7 +562,7 @@ namespace DatabaseUnitTest.Controllers
             //Assert
             Assert.IsType<ActionResult<List<WeekTemplateViewModel>>>(result);
             registryRepoMock.Verify(r => r.GetRegistriesByDate(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<int>()), Times.Exactly(5));
-            Assert.Equal(1, result.Value.Count);
+            Assert.Single(result.Value);
         }
         
         [Theory]
@@ -659,7 +659,7 @@ namespace DatabaseUnitTest.Controllers
 
             //Assert
             Assert.IsType<ActionResult<List<MissionTaskViewModel>>>(result);
-            Assert.Equal(1, result.Value.Count);
+            Assert.Single(result.Value);
         }
         
         [Fact]
