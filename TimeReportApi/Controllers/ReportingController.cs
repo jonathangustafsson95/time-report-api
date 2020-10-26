@@ -291,7 +291,7 @@ namespace TimeReportApi.Controllers
         /// </summary>
         /// <param name="date"></param>
         /// <returns>An int representing the week number.</returns>
-        public int GetWeekNumber(DateTime date)
+        private int GetWeekNumber(DateTime date)
         {
             CultureInfo cultureInfo = CultureInfo.CurrentCulture;
             return cultureInfo.Calendar.GetWeekOfYear(date, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
