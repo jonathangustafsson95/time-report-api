@@ -23,8 +23,6 @@ namespace Database_UnitTest.Controllers
     public class MissionControllerTests
     {
         private IHttpContextAccessor httpContextAccessorMock;
-
-
         public MissionControllerTests()
         {
             int userId = 1;
@@ -35,10 +33,9 @@ namespace Database_UnitTest.Controllers
             A.CallTo(() => httpContextAccessorMock.HttpContext.User.Claims).Returns(new List<Claim> { userIdClaim });
         
         }
-
         [Theory]
         [MemberData(nameof(GetData), parameters: 2)]
-        public void AddMissionMember(int id, bool exists, int expected)
+        public void AddMissionMember_Validation_Test(int id, bool exists, int expected)
         {
             //Arrange
             User dbUser = new User
@@ -52,7 +49,6 @@ namespace Database_UnitTest.Controllers
 
             Mock<IUserRepository> userRepoMock = new Mock<IUserRepository>();
             userRepoMock.Setup(u => u.GetById(It.IsAny<int>())).Returns(dbUser);
-            //får man göra så?
             Mock<IMissionRepository> missionRepoMock = new Mock<IMissionRepository>();
             missionRepoMock.Setup(r => r.Exists(It.IsAny<int>())).Returns(exists);
 
@@ -85,7 +81,7 @@ namespace Database_UnitTest.Controllers
         }
         [Theory]
         [MemberData(nameof(GetData), parameters: 2)]
-        public void DeleteFavoriteMission(int id, bool exists, int expected)
+        public void DeleteFavoriteMission_Validation_Test(int id, bool exists, int expected)
         {
             //Arrange
             User dbUser = new User
@@ -115,9 +111,6 @@ namespace Database_UnitTest.Controllers
             Mock<IMissionRepository> missionRepoMock = new Mock<IMissionRepository>();
             missionRepoMock.Setup(r => r.Exists(It.IsAny<int>())).Returns(exists);
 
-            Mock<IMissionMemberRepository> missionMemberRepoMock = new Mock<IMissionMemberRepository>();
-            missionMemberRepoMock.Setup(r => r.Exists(It.IsAny<int>())).Returns(exists);
-
             Mock<IFavoriteMissionRepository> favortieRepoMock = new Mock<IFavoriteMissionRepository>();
             favortieRepoMock.Setup(f => f.Delete(It.IsAny<User>(), It.IsAny<FavoriteMission>()));
             favortieRepoMock.Setup(f => f.Update(It.IsAny<FavoriteMission>()));
@@ -125,9 +118,8 @@ namespace Database_UnitTest.Controllers
 
             Mock<IUnitOfWork> mockUOF = new Mock<IUnitOfWork>();
             mockUOF.Setup(uow => uow.UserRepository).Returns(userRepoMock.Object);
-            //mockUOF.Setup(uow => uow.MissionRepository).Returns(missionRepoMock.Object);
+            mockUOF.Setup(uow => uow.MissionRepository).Returns(missionRepoMock.Object);
             mockUOF.Setup(uow => uow.FavoriteMissionRepository).Returns(favortieRepoMock.Object);
-            mockUOF.Setup(uow => uow.MissionMemberRepository).Returns(missionMemberRepoMock.Object);
 
             var controller = new MissionController(mockUOF.Object, httpContextAccessorMock);
 
@@ -147,7 +139,7 @@ namespace Database_UnitTest.Controllers
         }
         [Theory]
         [MemberData(nameof(GetData), parameters: 2)]
-        public void DeleteMissionMember(int id, bool exists, int expected)
+        public void DeleteMissionMember_Validation_Test(int id, bool exists, int expected)
         {
             //Arrange
             User dbUser = new User
@@ -161,7 +153,6 @@ namespace Database_UnitTest.Controllers
 
             Mock<IUserRepository> userRepoMock = new Mock<IUserRepository>();
             userRepoMock.Setup(u => u.GetById(It.IsAny<int>())).Returns(dbUser);
-            //får man göra så?
             Mock<IMissionRepository> missionRepoMock = new Mock<IMissionRepository>();
             missionRepoMock.Setup(r => r.Exists(It.IsAny<int>())).Returns(exists);
 
@@ -194,7 +185,7 @@ namespace Database_UnitTest.Controllers
 
         [Theory]
         [MemberData(nameof(GetData), parameters: 2)]
-        public void AddFavoriteMission(int id, bool exists, int expected)
+        public void AddFavoriteMission_Validation_Test(int id, bool exists, int expected)
         {
             //Arrange
             User dbUser = new User
@@ -208,8 +199,10 @@ namespace Database_UnitTest.Controllers
 
             Mock<IUserRepository> userRepoMock = new Mock<IUserRepository>();
             userRepoMock.Setup(u => u.GetById(It.IsAny<int>())).Returns(dbUser);
+
             Mock<IMissionRepository> missionRepoMock = new Mock<IMissionRepository>();
             missionRepoMock.Setup(r => r.Exists(It.IsAny<int>())).Returns(exists);
+
             Mock<IFavoriteMissionRepository> favoriteMissionRepoMock = new Mock<IFavoriteMissionRepository>();
             favoriteMissionRepoMock.Setup(r => r.Insert(It.IsAny<FavoriteMission>()));
             favoriteMissionRepoMock.Setup(r => r.Update(It.IsAny<FavoriteMission>()));
@@ -239,7 +232,7 @@ namespace Database_UnitTest.Controllers
         }
         [Theory]
         [MemberData(nameof(GetUserMissionsData), parameters: 2)]
-        public void GetUserMissions(int id, bool exists, ActionResult<List<MissionTaskViewModel>> expected,int expCode)
+        public void GetUserMissions_Validation_Test(int id, bool exists, ActionResult<List<MissionTaskViewModel>> expected,int expCode)
         {
             //Arrange
             User dbUser = new User
@@ -286,9 +279,10 @@ namespace Database_UnitTest.Controllers
 
             Mock<IUserRepository> userRepoMock = new Mock<IUserRepository>();
             userRepoMock.Setup(u => u.GetById(It.IsAny<int>())).Returns(dbUser);
+
             Mock<IMissionRepository> missionRepoMock = new Mock<IMissionRepository>();
-            //missionRepoMock.Setup(r => r.Exists(It.IsAny<int>())).Returns(exists);
             missionRepoMock.Setup(m => m.GetById(It.IsAny<int>())).Returns(dbMission);
+
             Mock<ITaskRepository> taskRepoMock = new Mock<ITaskRepository>();
             taskRepoMock.Setup(t => t.GetById(It.IsAny<int>())).Returns(dbTask);
             taskRepoMock.Setup(t => t.Exists(It.IsAny<int>())).Returns(exists);
@@ -297,7 +291,6 @@ namespace Database_UnitTest.Controllers
             customerRepoMock.Setup(c => c.GetById(It.IsAny<int>())).Returns(dbCustomer);
 
             Mock<IMissionMemberRepository> missionMemberRepoMock = new Mock<IMissionMemberRepository>();
-            //missionMemberRepoMock.Setup(c => c.GetAllByUserId(It.IsAny<int>())).Returns(/*afafasda*/);
 
             Mock<IUnitOfWork> mockUOF = new Mock<IUnitOfWork>();
             mockUOF.Setup(uow => uow.UserRepository).Returns(userRepoMock.Object);
@@ -309,28 +302,21 @@ namespace Database_UnitTest.Controllers
             var controller = new MissionController(mockUOF.Object, httpContextAccessorMock);
 
             //Act
-            //ActionResult<List<MissionTaskViewModel>> viewResult = controller.GetUserMissions(id);
             var result = controller.GetUserMissions(id);
 
             //Assert
-            //Assert.IsAssignableFrom<MissionTaskViewModel>(dbMissionTaskViewModel);
-            //var model = ((ActionResult<List<MissionTaskViewModel>>)result).Value as List<MissionTaskViewModel>;
             if (expected.GetType() !=  StatusCodes.Status500InternalServerError.GetType())
             {
-                //Assert.IsAssignableFrom(result.GetType(),expected);
                 Assert.IsType(expected.GetType(), result);
             }
             else
             {
                 Assert.Equal(expCode, (result.Result as StatusCodeResult).StatusCode);
             }
-            //Assert.IsType<ActionResult<HttpResponse>>(result) ;
-            //Assert.Equal(dbMissionTaskViewModel, result);
-            //Assert.IsType<ActionResult<List<MissionTaskViewModel>>>(model);
         }
         [Theory]
         [MemberData(nameof(GetAllMissionBySearchData),parameters:2)]
-        public void GetAllMissionsBySearchStringType(ActionResult<IEnumerable<MissionTaskViewModel>> expected, int expCode)
+        public void GetAllMissionsBySearchString_Validation_Test(ActionResult<IEnumerable<MissionTaskViewModel>> expected, int expCode)
         {
             //Arrange
             Mission dbMission = new Mission
@@ -366,10 +352,11 @@ namespace Database_UnitTest.Controllers
             };
             string searchString = "";
             Mock<IMissionRepository> missionRepoMock = new Mock<IMissionRepository>();
-            //missionRepoMock.Setup(r => r.Exists(It.IsAny<int>())).Returns(exists);
             missionRepoMock.Setup(m => m.GetById(It.IsAny<int>())).Returns(dbMission);
+
             Mock<ICustomerRepository> customerRepoMock = new Mock<ICustomerRepository>();
             customerRepoMock.Setup(c => c.GetById(It.IsAny<int>())).Returns(dbCustomer);
+
             Mock<ITaskRepository> taskRepoMock = new Mock<ITaskRepository>();
             taskRepoMock.Setup(t => t.GetById(It.IsAny<int>())).Returns(dbTask);
 
@@ -380,11 +367,9 @@ namespace Database_UnitTest.Controllers
 
             var controller = new MissionController(mockUOF.Object, httpContextAccessorMock);
             //Act
-
             var result = controller.GetAllMissionsBySearchString(searchString);
 
             //Assert
-
             if (expected.GetType() != StatusCodes.Status500InternalServerError.GetType())
             {
                 Assert.IsType(expected.GetType(), result);
@@ -394,47 +379,10 @@ namespace Database_UnitTest.Controllers
                 Assert.Equal(expCode, (result.Result as StatusCodeResult).StatusCode);
             }
         }
-        //[Theory]
-        //[MemberData(nameof(GetData), parameters: 2)]
-        //public void GetFavoriteMissions(int userId, Mission mission, List<Customer> customers, List<FavoriteMission> favoriteMissions, List<MissionViewModel> expected)
-        //{
-        //    //Arrange
-        //    //User dbUser = new User
-        //    //{
-        //    //    UserId = 1,
-        //    //    UserName = "Bengt",
-        //    //    Password = "bengt123",
-        //    //    EMail = "Bengt@bengt.se",
-        //    //    Role = "User"
-        //    //};
-        //    List<MissionViewModel> dbMissionViewModels = new List<MissionViewModel>
-        //    {
-        //        new MissionViewModel
-        //        {
-        //            UserId = 1,
-        //            MissionId = 1,
-        //            CustomerId=1
-        //        },
-        //            new MissionViewModel
-        //        {
-        //            UserId = 1,
-        //            MissionId = 2,
-        //            CustomerId=1
-        //        }
-        //    };
-        //    //Mock<IUserRepository> userRepoMock = new Mock<IUserRepository>();
-        //    //userRepoMock.Setup(u => u.GetById(It.IsAny<int>())).Returns(dbUser);
-        //    //får man göra så?
-        //    Mock<IMissionRepository> missionRepoMock = new Mock<IMissionRepository>();
-        //    missionRepoMock.Setup(r => r.GetById(It.IsAny<int>())).Returns(mission);
-
-        //    Mock<ICustomerRepository> customerRepoMock = new Mock<ICustomerRepository>();
-        //    customerRepoMock.Setup(r => r.GetAll()).Returns(customers);
         [Theory]
         [MemberData(nameof(GetFavoriteMissionData), parameters: 1)]
-        public void GetFavoriteMissions(int userId, object expected)
+        public void GetFavoriteMissions_Validation_Test(int userId, object expected)
         {
-            
             Mission dbMission = new Mission();
             List < Customer > dbCustomer= new List<Customer>();
             List<FavoriteMission> dbFavoriteMission = new List<FavoriteMission>();
@@ -472,7 +420,7 @@ namespace Database_UnitTest.Controllers
         }
         [Theory]
         [MemberData(nameof(GetSpecificMissionData), parameters: 1)]
-        public void GetSpecificMission(int id, bool exists, object expected)
+        public void GetSpecificMission_Validation_Test(int id, bool exists, object expected)
         {
             //Arrange
             User dbUser = new User
@@ -554,16 +502,6 @@ namespace Database_UnitTest.Controllers
 
             return allData.Take(numTests);
         }
-        //public static IEnumerable<object[]> test(int numTests)
-        //{
-        //    var allData = new List<object[]>
-        //    {
-        //        new object[] {1,},
-        //        new object[] {99,(int)HttpStatusCode.InternalServerError }
-        //    };
-
-        //    return allData.Take(numTests);
-        //}
         public static IEnumerable<object[]> GetUserMissionsData(int numTests)
         {
             List<MissionTaskViewModel> listOfExpected = new List<MissionTaskViewModel>();

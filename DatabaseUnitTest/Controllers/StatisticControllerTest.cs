@@ -35,7 +35,7 @@ namespace Database_UnitTest.Controllers
         }
         [Theory]
         [MemberData(nameof(GetInternalCustomerData), parameters: 2)]
-        public void GetStatsInternVsCustomer(DateTime startDate,object expected)
+        public void GetStatsInternVsCustomer_Validation_Test(DateTime startDate,object expected)
         {
             List<Registry> dbRegistries = new List<Registry>();
             Mock<IRegistryRepository> registryRepoMock = new Mock<IRegistryRepository>();
@@ -60,7 +60,7 @@ namespace Database_UnitTest.Controllers
         }
         [Theory]
         [MemberData(nameof(GetCustomerVsCustomerData), parameters: 2)]
-        public void GetStatsCustomerVsCustomer(DateTime date, object expected)
+        public void GetStatsCustomerVsCustomer_Validation_Test(DateTime date, object expected)
         {
             Customer dbCustomer = new Customer
             {
@@ -126,7 +126,7 @@ namespace Database_UnitTest.Controllers
         }
         [Theory]
     [MemberData(nameof(GetTasksStatsData), parameters: 2)]
-    public void GetTaskStats(int missionId,bool exists, object expected)
+    public void GetTaskStats_Validation_Test(int missionId,bool exists, object expected)
         {
             //Arrange
             List<Task> dbTasks = new List<Task> { new Task { TaskId = 1, } };

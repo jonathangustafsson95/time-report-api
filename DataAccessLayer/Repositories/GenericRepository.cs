@@ -75,16 +75,7 @@ namespace DataAccessLayer.Repositories
             IEnumerable<T> list = (IEnumerable<T>)GetAll();
             return list.Where(x => getKey(x).Contains(searchString)).ToList();
         }
-        public List<T> Search<T>(Func<T, int> getKey, int searchId)
-        {
-            IEnumerable<T> list = (IEnumerable<T>)GetAll();
-            return list.Where(x => getKey(x).Equals(searchId)).ToList();
-        }
-        public List<T> Search<T>( Func<T, DateTime> getKey, DateTime searchDate)
-        {
-            IEnumerable<T> list = (IEnumerable<T>)GetAll();
-            return list.Where(x => getKey(x).Equals(searchDate)).ToList();
-        }
+      
 
 
 

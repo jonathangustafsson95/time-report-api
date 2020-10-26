@@ -43,7 +43,6 @@ namespace TimeReportApi
             );
             services.AddControllers();
             services.AddDbContext<BulbasaurDevContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BulbasaurDev"), b => b.MigrationsAssembly("TimeReportApi")));
-            //services.AddSwaggerGen();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

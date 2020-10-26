@@ -9,7 +9,5 @@ namespace TimeReportApi.Models.ViewModel
     {
         public string CustomerName { get; set; }
         public double Hours { get; set; }
-
-
     }
 }
