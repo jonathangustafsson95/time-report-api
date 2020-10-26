@@ -17,7 +17,7 @@ namespace CommonLibrary.Model
         public int CustomerId { get; set; }
         public string MissionName { get; set; }
         public string Color { get; set; }
-        public string Description { get; set; }//ha kvar? enum/string
+        public string Description { get; set; }
         public DateTime Start { get; set; }
         public DateTime? Finished { get; set; }
         public DateTime Created { get; set; }

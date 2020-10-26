@@ -44,7 +44,7 @@ namespace DatabaseUnitTest
         private readonly Registry _anotherTestRegistryObject=new Registry(){RegistryId = 2,UserId = 1,Created = new DateTime(2010,05,28) ,
             Date = new DateTime(2019,09,02), Hours = 15,Invoice = InvoiceType.Invoicable,TaskId = 1};
         private readonly MissionMember _testMissionMember=new MissionMember(){MissionId = 1,UserId = 1};
-
+        private readonly Customer _Customer = new Customer() { CustomerId=1, Name="ICA", Created= new DateTime(2020, 07, 02) };
 
         public GenericRepositoriesTest()
         {
@@ -59,6 +59,7 @@ namespace DatabaseUnitTest
                 _unitOfWork.UserRepository.Insert(_testUserObject);
                 _unitOfWork.RegistryRepository.Insert(_testRegistryObject);
                 _unitOfWork.MissionMemberRepository.Insert(_testMissionMember);
+                _unitOfWork.CustomerRepository.Insert(_Customer);
                 _unitOfWork.UserRepository.Save();
             }
             else
@@ -103,17 +104,15 @@ namespace DatabaseUnitTest
             Assert.Equal(allUsers, allUsersTestList);
         }
 
-        //[TestMethod]
-        //public void DeleteTest()
-        //{
-        //    SeedInMemory(1);
-        //    _unitOfWork.UserRepository.Delete(_testUserObject.UserId);
-        //    //unitOfWork.MissionMemberRepository.Delete(testMissionMember.missionId,testMissionMember.userId);
-        //    //unitOfWork.RegistryRepository.Delete(testRegistryObject.registryId);
-        //    _unitOfWork.UserRepository.Save();
-        //    var allUsersTestList = _unitOfWork.UserRepository.GetAll();
-        //    Assert.Empty(allUsersTestList);
-        //}
+        [TestMethod]
+        public void DeleteTest()
+        {
+            SeedInMemory(1);
+            _unitOfWork.CustomerRepository.Delete(_testUserObject.UserId);
+            _unitOfWork.CustomerRepository.Save();
+            var allCustomerTestList = _unitOfWork.CustomerRepository.GetAll();
+            Assert.Empty(allCustomerTestList);
+        }
 
         [TestMethod]
         public void DeleteTestComposite()
@@ -149,26 +148,6 @@ namespace DatabaseUnitTest
             var userInTest = result[0];
             Assert.Equal("blabla",userInTest.UserName);
         }
-
-        [TestMethod]
-        public void SearchByIdTest()
-        {
-            SeedInMemory(2);
-            var listOfUsers = _unitOfWork.UserRepository.GetAll();
-            List<User> result = _unitOfWork.UserRepository.Search<User>(x => x.UserId, 1);
-            var userInTest = result[0];
-            Assert.Equal(_testUserObject.UserId, userInTest.UserId);
-        }
-        [TestMethod]
-        public void SearchByDateTest()
-        {
-            SeedInMemory(2);
-            var listOfRegistries = _unitOfWork.RegistryRepository.GetAll();
-            List<Registry> result = _unitOfWork.RegistryRepository.Search<Registry>(getKey: x => x.Date,new DateTime(2019 , 09,02));
-            var regiInTest = result[0];
-            Assert.Equal(_anotherTestRegistryObject.Date, regiInTest.Date);
-        }
-
     }
    
 

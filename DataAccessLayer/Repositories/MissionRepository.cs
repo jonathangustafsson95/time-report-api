@@ -15,25 +15,6 @@ namespace DataAccessLayer.Repositories
         {
 
         }
-        public List<Mission> GetAllByUserId(int id)
-        {
-            IEnumerable<Mission> all = GetAll();
-            IEnumerable<Mission> allByUserById = from a in all
-                                                       where a.UserId == id
-                                                       select a;
-            return allByUserById != null ? allByUserById.ToList() : new List<Mission>();
-
-        }
-        public List<Mission> GetAllByMissionId(int id)
-        {
-            IEnumerable<Mission> all = GetAll();
-            IEnumerable<Mission> allByMissionById = from a in all
-                                                          where a.MissionId == id
-                                                          select a;
-            return allByMissionById != null ? allByMissionById.ToList() : new List<Mission>();
-
-        }
-
         public List<Mission> GetAllByCustomerId(int id)
         {
             IEnumerable<Mission> all = GetAll();
@@ -41,8 +22,6 @@ namespace DataAccessLayer.Repositories
                                                     where a.CustomerId == id
                                                     select a;
             return allByCustomerId != null ? allByCustomerId.ToList() : new List<Mission>();
-
         }
-
     }
 }
