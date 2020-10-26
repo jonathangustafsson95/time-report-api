@@ -12,10 +12,12 @@ using TimeReportApi.Models;
 using TimeReportApi.Models.ViewModel;
 using System.Security.Cryptography.X509Certificates;
 using System.Globalization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace time_report_api.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class StatisticsController : ControllerBase
     {

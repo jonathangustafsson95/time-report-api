@@ -14,6 +14,7 @@ using TimeReportApi.Models.ViewModel;
 namespace TimeReportApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class MissionController : ControllerBase
     {
