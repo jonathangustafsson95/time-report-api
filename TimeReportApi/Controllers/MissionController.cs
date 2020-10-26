@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CommonLibrary.Model;
 using DataAccessLayer.UnitOfWork;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -194,7 +195,7 @@ namespace TimeReportApi.Controllers
         {
             try
             {
-                if (unitOfWork.MissionMemberRepository.Exists(missionId))
+                if (unitOfWork.MissionRepository.Exists(missionId))
                 {
                     unitOfWork.FavoriteMissionRepository.Delete(user.UserId, missionId);
                     unitOfWork.FavoriteMissionRepository.Save();

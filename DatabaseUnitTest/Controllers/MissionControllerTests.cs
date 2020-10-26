@@ -115,8 +115,8 @@ namespace Database_UnitTest.Controllers
             Mock<IMissionRepository> missionRepoMock = new Mock<IMissionRepository>();
             missionRepoMock.Setup(r => r.Exists(It.IsAny<int>())).Returns(exists);
 
-            Mock<IMissionMemberRepository> missionMemberRepoMock = new Mock<IMissionMemberRepository>();
-            missionMemberRepoMock.Setup(r => r.Exists(It.IsAny<int>())).Returns(exists);
+            //Mock<IMissionMemberRepository> missionMemberRepoMock = new Mock<IMissionMemberRepository>();
+            //missionMemberRepoMock.Setup(r => r.Exists(It.IsAny<int>())).Returns(exists);
 
             Mock<IFavoriteMissionRepository> favortieRepoMock = new Mock<IFavoriteMissionRepository>();
             favortieRepoMock.Setup(f => f.Delete(It.IsAny<User>(), It.IsAny<FavoriteMission>()));
@@ -125,9 +125,9 @@ namespace Database_UnitTest.Controllers
 
             Mock<IUnitOfWork> mockUOF = new Mock<IUnitOfWork>();
             mockUOF.Setup(uow => uow.UserRepository).Returns(userRepoMock.Object);
-            //mockUOF.Setup(uow => uow.MissionRepository).Returns(missionRepoMock.Object);
+            mockUOF.Setup(uow => uow.MissionRepository).Returns(missionRepoMock.Object);
             mockUOF.Setup(uow => uow.FavoriteMissionRepository).Returns(favortieRepoMock.Object);
-            mockUOF.Setup(uow => uow.MissionMemberRepository).Returns(missionMemberRepoMock.Object);
+            //mockUOF.Setup(uow => uow.MissionMemberRepository).Returns(missionMemberRepoMock.Object);
 
             var controller = new MissionController(mockUOF.Object, httpContextAccessorMock);
 
