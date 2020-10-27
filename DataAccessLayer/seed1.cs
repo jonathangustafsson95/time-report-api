@@ -4,12 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Data.Model
 {
-    public static class seed1
+    public static class Seed1
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
@@ -31,35 +29,30 @@ namespace Data.Model
                             UserName = "Bengt",
                             Password = "bengt123",
                             EMail = "Bengt@bengt.se",
-                            Role = "User"
                         },
                         new User
                         {
                             UserName = "Inger",
                             Password = "inger123",
                             EMail = "Inger@inger.se",
-                            Role = "User"
                         },
                         new User
                         {
                             UserName = "Rolf",
                             Password = "rolf123",
                             EMail = "Rolf@rolf.se",
-                            Role = "User"
                         },
                         new User
                         {
                             UserName = "Anki",
                             Password = "anki123",
                             EMail = "Anki@anki.se",
-                            Role = "User"
                         },
                         new User
                         {
                             UserName = "Rudolf",
                             Password = "rudolf123",
                             EMail = "Rudolf@rudolf.se",
-                            Role = "Projectleader"
                         }
                     );
                 };

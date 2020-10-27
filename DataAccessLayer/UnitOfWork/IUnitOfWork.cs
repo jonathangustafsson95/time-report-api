@@ -19,7 +19,6 @@ namespace DataAccessLayer.UnitOfWork
         IRegistryRepository RegistryRepository { get; }
         ITaskRepository TaskRepository { get; }
         IUserRepository UserRepository { get; }
-
         void Save();
     }
 }

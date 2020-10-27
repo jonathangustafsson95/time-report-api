@@ -20,10 +20,10 @@ namespace DatabaseUnitTest.Controllers
 {
     public class SystemControllerTests
     {
-        private IHttpContextAccessor httpContextAccessorMock;
-        private Mock<IUserRepository> userRepositoryMock;
-        private Mock<IUnitOfWork> mockUOF;
-        private Mock<IConfiguration> configuration;
+        private readonly IHttpContextAccessor httpContextAccessorMock;
+        private readonly Mock<IUserRepository> userRepositoryMock;
+        private readonly Mock<IUnitOfWork> mockUOF;
+        private readonly Mock<IConfiguration> configuration;
 
         public SystemControllerTests()
         {
@@ -51,8 +51,7 @@ namespace DatabaseUnitTest.Controllers
                 {
                     UserName = "Bengt",
                     Password = "bengt123",
-                    EMail = "Bengt@bengt.se",
-                    Role = "User"
+                    EMail = "Bengt@bengt.se"
                 },
             };
         }

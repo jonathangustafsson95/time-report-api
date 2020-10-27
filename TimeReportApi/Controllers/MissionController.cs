@@ -6,7 +6,6 @@ using DataAccessLayer.UnitOfWork;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using TimeReportApi.Models;
 using TimeReportApi.Models.ViewModel;
 
@@ -77,13 +76,13 @@ namespace TimeReportApi.Controllers
                     Description = mission.Description,
                     Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).Name,
                     Tasks = GetAllTasks(mission.MissionId),
-                    isMember = false,
+                    IsMember = false,
 
                 };
 
                 if (mmList.FirstOrDefault(n => n.MissionId == mission.MissionId) != null)
                 {
-                    missionsVM.isMember = true;
+                    missionsVM.IsMember = true;
                 };
                 missionTasksViewModelList.Add(missionsVM);
             }
@@ -280,7 +279,7 @@ namespace TimeReportApi.Controllers
                         StartDate = mission.Start,
                         Description = mission.Description,
                         Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).Name,
-                        isMember = true,
+                        IsMember = true,
                         Tasks = tasksViewModelList
                     };
                     missionTaskViewModel.Add(missionsVM);
@@ -288,7 +287,7 @@ namespace TimeReportApi.Controllers
                 return missionTaskViewModel;
             
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
@@ -331,7 +330,7 @@ namespace TimeReportApi.Controllers
                     StartDate = mission.Start,
                     Description = mission.Description,
                     Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).Name,
-                    isMember = true,
+                    IsMember = true,
                     Tasks = tasksViewModelList,
                     Users = usersVM
                 };

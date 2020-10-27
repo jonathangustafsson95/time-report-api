@@ -22,7 +22,7 @@ namespace Database_UnitTest.Controllers
 {
     public class MissionControllerTests
     {
-        private IHttpContextAccessor httpContextAccessorMock;
+        private readonly IHttpContextAccessor httpContextAccessorMock;
         public MissionControllerTests()
         {
             int userId = 1;
@@ -43,8 +43,7 @@ namespace Database_UnitTest.Controllers
                 UserId = 1,
                 UserName = "Bengt",
                 Password = "bengt123",
-                EMail = "Bengt@bengt.se",
-                Role = "User"
+                EMail = "Bengt@bengt.se"
             };
 
             Mock<IUserRepository> userRepoMock = new Mock<IUserRepository>();
@@ -89,8 +88,7 @@ namespace Database_UnitTest.Controllers
                 UserId = 1,
                 UserName = "Bengt",
                 Password = "bengt123",
-                EMail = "Bengt@bengt.se",
-                Role = "User"
+                EMail = "Bengt@bengt.se"
             };
             Mission dbMission = new Mission
             {
@@ -147,8 +145,7 @@ namespace Database_UnitTest.Controllers
                 UserId = 1,
                 UserName = "Bengt",
                 Password = "bengt123",
-                EMail = "Bengt@bengt.se",
-                Role = "User"
+                EMail = "Bengt@bengt.se"
             };
 
             Mock<IUserRepository> userRepoMock = new Mock<IUserRepository>();
@@ -193,8 +190,7 @@ namespace Database_UnitTest.Controllers
                 UserId = 1,
                 UserName = "Bengt",
                 Password = "bengt123",
-                EMail = "Bengt@bengt.se",
-                Role = "User"
+                EMail = "Bengt@bengt.se"
             };
 
             Mock<IUserRepository> userRepoMock = new Mock<IUserRepository>();
@@ -240,8 +236,7 @@ namespace Database_UnitTest.Controllers
                 UserId = 1,
                 UserName = "Bengt",
                 Password = "bengt123",
-                EMail = "Bengt@bengt.se",
-                Role = "User"
+                EMail = "Bengt@bengt.se"
             };
             Mission dbMission = new Mission
             {
@@ -381,7 +376,7 @@ namespace Database_UnitTest.Controllers
         }
         [Theory]
         [MemberData(nameof(GetFavoriteMissionData), parameters: 1)]
-        public void GetFavoriteMissions_Validation_Test(int userId, object expected)
+        public void GetFavoriteMissions_Validation_Test(object expected)
         {
             Mission dbMission = new Mission();
             List < Customer > dbCustomer= new List<Customer>();
@@ -428,8 +423,7 @@ namespace Database_UnitTest.Controllers
                 UserId = 1,
                 UserName = "Bengt",
                 Password = "bengt123",
-                EMail = "Bengt@bengt.se",
-                Role = "User"
+                EMail = "Bengt@bengt.se"
             };
             Customer dbCustomer = new Customer();
             Mission dbMission = new Mission { MissionId = 1, CustomerId = 1 };
@@ -496,8 +490,8 @@ namespace Database_UnitTest.Controllers
         {
             var allData = new List<object[]>
             {
-                new object[] {1,new List<MissionViewModel>()},
-                new object[] {99,(int)HttpStatusCode.InternalServerError } 
+                new object[] {new List<MissionViewModel>()},
+                new object[] {(int)HttpStatusCode.InternalServerError } 
             };
 
             return allData.Take(numTests);

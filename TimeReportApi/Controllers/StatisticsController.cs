@@ -13,6 +13,7 @@ using TimeReportApi.Models.ViewModel;
 using System.Security.Cryptography.X509Certificates;
 using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
+using Task = CommonLibrary.Model.Task;
 
 namespace time_report_api.Controllers
 {
@@ -175,45 +176,45 @@ namespace time_report_api.Controllers
             {
                 if (unitOfWork.MissionRepository.Exists(missionId))
                 {
-                List<TaskStatsViewModel> tsVMList = new List<TaskStatsViewModel>();
-                double actualHours = 0;
-                DateTime endDateForTaskCheck = new DateTime();
-                List<CommonLibrary.Model.Task> taskList = unitOfWork.TaskRepository.GetAllByMissionId(missionId);
-                foreach (var task in taskList)
-                {
-                    if (task.Finished == null)
+                    List<TaskStatsViewModel> tsVMList = new List<TaskStatsViewModel>();
+                    double actualHours = 0;
+                    DateTime endDateForTaskCheck = new DateTime();
+                    List<Task> taskList = unitOfWork.TaskRepository.GetAllByMissionId(missionId);
+                    foreach (var task in taskList)
                     {
-                        endDateForTaskCheck = DateTime.Now;
-                    }
-                    else
-                    {
-                        endDateForTaskCheck = task.Finished ?? default(DateTime);
+                        if (task.Finished == null)
+                        {
+                            endDateForTaskCheck = DateTime.Now;
+                        }
+                        else
+                        {
+                            endDateForTaskCheck = task.Finished ?? default;
+                        }
+
+                        List<Registry> tasksRegistries = unitOfWork.RegistryRepository.GetRegistriesByTask(task.Start, endDateForTaskCheck, task.TaskId);
+                        foreach (var registry in tasksRegistries)
+                        {
+                            actualHours += registry.Hours;
+                        }
+
+                        TaskStatsViewModel tsVM = new TaskStatsViewModel
+                        {
+                            TaskId = task.TaskId,
+                            TaskName = task.Name,
+                            EstimatedHours = task.EstimatedHour,
+                            ActualHours = actualHours
+                        };
+                        tsVMList.Add(tsVM);
+                        actualHours = 0;
                     }
 
-                    List<Registry> tasksRegistries = unitOfWork.RegistryRepository.GetRegistriesByTask(task.Start, endDateForTaskCheck, task.TaskId);
-                    foreach (var registry in tasksRegistries)
-                    {
-                        actualHours += registry.Hours;
-                    }
-
-                    TaskStatsViewModel tsVM = new TaskStatsViewModel
-                    {
-                        TaskId = task.TaskId,
-                        TaskName = task.Name,
-                        EstimatedHours = task.EstimatedHour,
-                        ActualHours = actualHours
-                    };
-                    tsVMList.Add(tsVM);
-                    actualHours = 0;
+                    return tsVMList;
                 }
-
-                return tsVMList;
-            }
                 else
                 {
                     throw new Exception();
                 }
-                }
+            }
             catch (Exception)
             {
                 return StatusCode(500, new { message = "Invalid DateTime" });

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using DataAccessLayer.UnitOfWork;
@@ -11,10 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using TimeReportApi.Models;
-using DataAccessLayer;
 using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Cors;
 
 namespace TimeReportApi.Controllers
 {
@@ -32,6 +26,12 @@ namespace TimeReportApi.Controllers
             _config = config;
         }
 
+        /// <summary>
+        /// This method handles user log ins and returns a Ok response if 
+        /// credentials exist in database.
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns>response with token and user details.</returns>
         [HttpPost]
         [AllowAnonymous]
         [Route("Login")]
@@ -48,7 +48,7 @@ namespace TimeReportApi.Controllers
                     response = Ok(new
                     {
                         token = tokenString,
-                        userDetails = user,
+                        userDetails = new User() { UserId = user.UserId, UserName = user.UserName },
                     });
                 };
 
@@ -60,12 +60,24 @@ namespace TimeReportApi.Controllers
             }
         }
 
+        /// <summary>
+        /// This method is a helper method which returns a user, null if the 
+        /// user doesn't exist in the database.
+        /// </summary>
+        /// <param name="loginCredentials"></param>
+        /// <returns>A user</returns>
         private User AuthenticateUser(User loginCredentials)
         {
             User user = unitOfWork.UserRepository.GetByName(loginCredentials.UserName).SingleOrDefault(x => x.UserName == loginCredentials.UserName && x.Password == loginCredentials.Password);
             return user;
         }
 
+        /// <summary>
+        /// This method generates a token with claims in it. It uses 
+        /// parameters from appsettings file.
+        /// </summary>
+        /// <param name="userInfo"></param>
+        /// <returns>Tokenstring</returns>
         private string GenerateJWTToken(User userInfo)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:SecretKey"]));
@@ -74,7 +86,6 @@ namespace TimeReportApi.Controllers
             {
                 new Claim(JwtRegisteredClaimNames.Sub, userInfo.UserName),
                 new Claim("userName", userInfo.UserName.ToString()),
-                new Claim("role", userInfo.Role),
                 new Claim("userId", userInfo.UserId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
@@ -82,7 +93,7 @@ namespace TimeReportApi.Controllers
             issuer: _config["Jwt:Issuer"],
             audience: _config["Jwt:Audience"],
             claims: claims,
-            expires: DateTime.Now.AddMinutes(30),
+            expires: DateTime.Now.AddMinutes(30), //30 minutes for token validity
             signingCredentials: credentials
             );
             return new JwtSecurityTokenHandler().WriteToken(token);
