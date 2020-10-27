@@ -14,6 +14,13 @@ namespace DataAccessLayer.Repositories
         {
 
         }
+
+        /// <summary>
+        /// This method gets all user with a specific username.
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns> A list of all users with the specific username.  </returns>
+
         public List<User> GetByName(string userName)
         {
             IEnumerable<User> all = GetAll();

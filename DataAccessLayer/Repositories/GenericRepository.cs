@@ -55,6 +55,7 @@ namespace DataAccessLayer.Repositories
             T model = _table.Find(id);
             return model != null;
         }
+
         public List<T> Search<T>(Func<T, string> getKey, string searchString)
         {
             IEnumerable<T> list = (IEnumerable<T>)GetAll();

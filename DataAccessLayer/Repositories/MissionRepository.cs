@@ -15,6 +15,13 @@ namespace DataAccessLayer.Repositories
         {
 
         }
+
+        /// <summary>
+        /// This method gets all missions linked to a given customer.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns> A list of all missions linked to a given customer. </returns>
+
         public List<Mission> GetAllByCustomerId(int id)
         {
             IEnumerable<Mission> all = GetAll();

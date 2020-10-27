@@ -14,6 +14,13 @@ namespace DataAccessLayer.Repositories
         {
 
         }
+
+        /// <summary>
+        /// This method gets all registries ever made by a given user.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns> A list of all registries for the given user. </returns>
+
         public List<Registry> GetAllByUserId(int id)
         {
             IEnumerable<Registry> all = GetAll();
