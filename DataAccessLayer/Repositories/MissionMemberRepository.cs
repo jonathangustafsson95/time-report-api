@@ -15,6 +15,13 @@ namespace DataAccessLayer.Repositories
         {
 
         }
+
+        /// <summary>
+        /// This method gets all the missions that a given user is a member of.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns> A list of all missionmember-rows for the given user. </returns>
+
         public List<MissionMember> GetAllByUserId(int id)
         {
             IEnumerable<MissionMember> all = GetAll();
@@ -24,6 +31,13 @@ namespace DataAccessLayer.Repositories
             return allByUserById != null ? allByUserById.ToList() : new List<MissionMember>();
 
         }
+
+        /// <summary>
+        /// This method gets all members of a mission. 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns> A list of all missionmember-rows for the given mission. </returns>
+
         public List<MissionMember> GetAllByMissionId(int id)
         {
             IEnumerable<MissionMember> all = GetAll();

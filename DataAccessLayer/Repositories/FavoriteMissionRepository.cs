@@ -13,6 +13,11 @@ namespace DataAccessLayer.Repositories
         {
         }
 
+        /// <summary>
+        /// This method gets all favorite missions for a given user.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns> A list of all favorite missions for the given user. </returns>
         public List<FavoriteMission> GetFavoriteMissionsById(int id)
         {
             IEnumerable<FavoriteMission> allFavoriteMissions = GetAll().Where(i => i.UserId == id);
