@@ -14,6 +14,7 @@ namespace DataAccessLayer.Repositories
         {
 
         }
+
         public List<Registry> GetAllByUserId(int id)
         {
             IEnumerable<Registry> all = GetAll();

@@ -55,6 +55,14 @@ namespace DataAccessLayer.Repositories
             T model = _table.Find(id);
             return model != null;
         }
+        /// <summary>
+        /// This method takes a function getKey that returns a string which is used to set on which 
+        /// class property the list is going to be filtered on based on the 
+        /// searchKey parameter.
+        /// </summary>
+        /// <param name="getKey"></param>
+        /// <param name="searchString"></param>
+        /// <returns> A list of objects that matches the search string. </returns>
         public List<T> Search<T>(Func<T, string> getKey, string searchString)
         {
             IEnumerable<T> list = (IEnumerable<T>)GetAll();
