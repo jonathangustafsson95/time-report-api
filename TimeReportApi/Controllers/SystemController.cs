@@ -93,7 +93,7 @@ namespace TimeReportApi.Controllers
             issuer: _config["Jwt:Issuer"],
             audience: _config["Jwt:Audience"],
             claims: claims,
-            expires: DateTime.Now.AddMinutes(5), //5 minutes for token validity
+            expires: DateTime.Now.AddMinutes(30), //minutes for token validity
             signingCredentials: credentials
             );
             return new JwtSecurityTokenHandler().WriteToken(token);

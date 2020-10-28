@@ -77,11 +77,11 @@ namespace TimeReportApi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(BulbasaurPolicy);
-
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(BulbasaurPolicy);
 
             app.UseAuthentication();
 
