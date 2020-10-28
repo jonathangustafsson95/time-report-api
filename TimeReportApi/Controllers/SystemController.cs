@@ -39,7 +39,6 @@ namespace TimeReportApi.Controllers
         {
             try
             {
-
                 IActionResult response = Unauthorized(new { message = "Invalid credentials..." });
                 User user = AuthenticateUser(login);
                 if (user != null)
@@ -93,7 +92,7 @@ namespace TimeReportApi.Controllers
             issuer: _config["Jwt:Issuer"],
             audience: _config["Jwt:Audience"],
             claims: claims,
-            expires: DateTime.Now.AddMinutes(30), //30 minutes for token validity
+            expires: DateTime.Now.AddMinutes(5), //5 minutes for token validity
             signingCredentials: credentials
             );
             return new JwtSecurityTokenHandler().WriteToken(token);
