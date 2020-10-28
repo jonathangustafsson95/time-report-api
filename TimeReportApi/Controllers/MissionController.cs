@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TimeReportApi.Models;
 using TimeReportApi.Models.ViewModel;
+using CommonLibrary.ErrorMessage;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -40,7 +41,6 @@ namespace TimeReportApi.Controllers
             try
             {
                 List<MissionTaskViewModel> missionTasksViewModelList = new List<MissionTaskViewModel>();
-
                 if (searchString.Trim().Length == 0)
                     return missionTasksViewModelList;
 
@@ -93,7 +93,7 @@ namespace TimeReportApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
+                return StatusCode(StatusCodes.Status500InternalServerError,ErrorMessage.DatabaseCommunicationError);
             }
         }
 
@@ -115,7 +115,7 @@ namespace TimeReportApi.Controllers
                     return Ok();
                 }
                 else
-                    throw new ArgumentException("Mission does not exist");
+                    throw new ArgumentException(ErrorMessage.MissionDoesNotExistError);
 
             }
             catch (ArgumentException e)
