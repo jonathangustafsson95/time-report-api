@@ -68,7 +68,7 @@ namespace Database_UnitTest.Controllers
 
             //Assert
             Assert.IsType<ActionResult<HttpResponse>>(result);
-            if (expected == StatusCodes.Status500InternalServerError)
+            if (expected == StatusCodes.Status400BadRequest)
             {
                 Assert.Equal(expected, (result.Result as ObjectResult).StatusCode);
             }
@@ -126,7 +126,7 @@ namespace Database_UnitTest.Controllers
 
             //Assert
             Assert.IsType<ActionResult<HttpResponse>>(result);
-            if (expected == StatusCodes.Status500InternalServerError)
+            if (expected == StatusCodes.Status400BadRequest)
             {
                 Assert.Equal(expected, (result.Result as ObjectResult).StatusCode);
             }
@@ -170,7 +170,7 @@ namespace Database_UnitTest.Controllers
 
             //Assert
             Assert.IsType<ActionResult<HttpResponse>>(result);
-            if (expected == StatusCodes.Status500InternalServerError)
+            if (expected == StatusCodes.Status400BadRequest)
             {
                 Assert.Equal(expected, (result.Result as ObjectResult).StatusCode);
             }
@@ -216,14 +216,13 @@ namespace Database_UnitTest.Controllers
 
             //Assert
             Assert.IsType<ActionResult<HttpResponse>>(result);
-            if(expected==StatusCodes.Status500InternalServerError)
+            if(expected==StatusCodes.Status400BadRequest)
             {
                 Assert.Equal(expected, (result.Result as ObjectResult).StatusCode);
             }
             else
             {
                 Assert.Equal(expected, (result.Result as StatusCodeResult).StatusCode);
-
             }
         }
         [Theory]
@@ -310,8 +309,8 @@ namespace Database_UnitTest.Controllers
             }
         }
         [Theory]
-        [MemberData(nameof(GetAllMissionBySearchData),parameters:2)]
-        public void GetAllMissionsBySearchString_Validation_Test(ActionResult<IEnumerable<MissionTaskViewModel>> expected, int expCode)
+        [MemberData(nameof(GetAllMissionBySearchData),parameters:3)]
+        public void GetAllMissionsBySearchString_Validation_Test(string searchString, object expected)
         {
             //Arrange
             Mission dbMission = new Mission
@@ -331,6 +330,8 @@ namespace Database_UnitTest.Controllers
                 Name = "DHL",
                 Created = new DateTime(2020, 8, 5)
             };
+            List<Customer> dbCustomers = new List<Customer>();
+            dbCustomers.Add(dbCustomer);
             Task dbTask = new Task
             {
                 UserId = 1,
@@ -345,12 +346,12 @@ namespace Database_UnitTest.Controllers
                 Start = new DateTime(2020, 10, 6),
                 Finished = null
             };
-            string searchString = "";
             Mock<IMissionRepository> missionRepoMock = new Mock<IMissionRepository>();
             missionRepoMock.Setup(m => m.GetById(It.IsAny<int>())).Returns(dbMission);
 
             Mock<ICustomerRepository> customerRepoMock = new Mock<ICustomerRepository>();
             customerRepoMock.Setup(c => c.GetById(It.IsAny<int>())).Returns(dbCustomer);
+            customerRepoMock.Setup(c => c.Search<Customer>(It.IsAny<Func<Customer,string>>(), It.IsAny<string>())).Returns(dbCustomers);
 
             Mock<ITaskRepository> taskRepoMock = new Mock<ITaskRepository>();
             taskRepoMock.Setup(t => t.GetById(It.IsAny<int>())).Returns(dbTask);
@@ -369,9 +370,13 @@ namespace Database_UnitTest.Controllers
             {
                 Assert.IsType(expected.GetType(), result);
             }
+            else if(searchString== "  ")
+            {
+                Assert.Equal(expected, result.Value.Count());
+            }
             else
             {
-                Assert.Equal(expCode, (result.Result as StatusCodeResult).StatusCode);
+                Assert.Equal(expected, (result.Result as StatusCodeResult).StatusCode);
             }
         }
         [Theory]
@@ -471,7 +476,7 @@ namespace Database_UnitTest.Controllers
             var allData = new List<object[]>
             {
                 new object[] { 1,true ,(int)HttpStatusCode.OK },
-                new object[] { 99,false, (int)HttpStatusCode.InternalServerError },
+                new object[] { 99,false, (int)HttpStatusCode.BadRequest },
             };
 
             return allData.Take(numTests);
@@ -511,13 +516,13 @@ namespace Database_UnitTest.Controllers
         }
         public static IEnumerable<object[]> GetAllMissionBySearchData(int numTests)
         {
-            IEnumerable<MissionTaskViewModel> listOfExpected = new List<MissionTaskViewModel>();
+            ActionResult<IEnumerable<MissionTaskViewModel>> listOfExpected = new List<MissionTaskViewModel>();
 
 
             var allData = new List<object[]>
             {
-                new object[] { listOfExpected,4},
-                new object[] { listOfExpected,(int)HttpStatusCode.InternalServerError },
+                new object[] { "DHL", listOfExpected},
+                new object[] { "  ", 0}
             };
 
             return allData.Take(numTests);

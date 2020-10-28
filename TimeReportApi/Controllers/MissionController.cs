@@ -39,60 +39,62 @@ namespace TimeReportApi.Controllers
         {
             try
             {
-            string lowerCaseSearchString = searchString.ToLower();
-            List<Mission> missionList = unitOfWork.MissionRepository.Search<Mission>(x => x.MissionName.ToLower(), lowerCaseSearchString);
-            List<Customer> customerList = unitOfWork.CustomerRepository.Search<Customer>(x => x.Name.ToLower(), lowerCaseSearchString);
-            List<Mission> missionsLinkedToCustomerID = new List<Mission>();
+                List<MissionTaskViewModel> missionTasksViewModelList = new List<MissionTaskViewModel>();
 
-            foreach (var customer in customerList)
-            {
-                List<Mission> allByCustomerId = unitOfWork.MissionRepository.GetAllByCustomerId(customer.CustomerId);
-                missionsLinkedToCustomerID.Concat(allByCustomerId);
-            }
+                if (searchString.Trim().Length == 0)
+                    return missionTasksViewModelList;
 
-            foreach (var missionMission in missionList)
-            {
-                foreach (var customerMission in missionsLinkedToCustomerID)
+                string lowerCaseSearchString = searchString.ToLower();
+                List<Mission> missionList = unitOfWork.MissionRepository.Search<Mission>(x => x.MissionName.ToLower(), lowerCaseSearchString);
+                List<Customer> customerList = unitOfWork.CustomerRepository.Search<Customer>(x => x.Name.ToLower(), lowerCaseSearchString);
+                List<Mission> missionsLinkedToCustomerID = new List<Mission>();
+
+                foreach (var customer in customerList)
                 {
-                    if (missionMission.MissionId == customerMission.MissionId)
+                    List<Mission> allByCustomerId = unitOfWork.MissionRepository.GetAllByCustomerId(customer.CustomerId);
+                    missionsLinkedToCustomerID.Concat(allByCustomerId);
+                }
+
+                foreach (var missionMission in missionList)
+                {
+                    foreach (var customerMission in missionsLinkedToCustomerID)
                     {
-                        missionList.Remove(missionMission);
+                        if (missionMission.MissionId == customerMission.MissionId)
+                        {
+                            missionList.Remove(missionMission);
+                        }
                     }
                 }
-            }
-            missionList.Concat(missionsLinkedToCustomerID);
+                missionList.Concat(missionsLinkedToCustomerID);
 
-            List<MissionTaskViewModel> missionTasksViewModelList = new List<MissionTaskViewModel>();
-            List<MissionMember> mmList = unitOfWork.MissionMemberRepository.GetAllByUserId(user.UserId);
+                List<MissionMember> mmList = unitOfWork.MissionMemberRepository.GetAllByUserId(user.UserId);
 
-            foreach (var mission in missionList)
-            {
-                MissionTaskViewModel missionsVM = new MissionTaskViewModel
+                foreach (var mission in missionList)
                 {
-                    MissionName = mission.MissionName,
-                    MissionId = mission.MissionId,
-                    MissionColor = mission.Color,
-                    StartDate = mission.Start,
-                    Description = mission.Description,
-                    Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).Name,
-                    Tasks = GetAllTasks(mission.MissionId),
-                    IsMember = false,
+                    MissionTaskViewModel missionsVM = new MissionTaskViewModel
+                    {
+                        MissionName = mission.MissionName,
+                        MissionId = mission.MissionId,
+                        MissionColor = mission.Color,
+                        StartDate = mission.Start,
+                        Description = mission.Description,
+                        Customer = unitOfWork.CustomerRepository.GetById(mission.CustomerId).Name,
+                        Tasks = GetAllTasks(mission.MissionId),
+                        IsMember = false,
+                    };
 
-                };
-
-                if (mmList.FirstOrDefault(n => n.MissionId == mission.MissionId) != null)
-                {
-                    missionsVM.IsMember = true;
-                };
-                missionTasksViewModelList.Add(missionsVM);
-            }
-            return missionTasksViewModelList;
+                    if (mmList.FirstOrDefault(n => n.MissionId == mission.MissionId) != null)
+                    {
+                        missionsVM.IsMember = true;
+                    };
+                    missionTasksViewModelList.Add(missionsVM);
+                }
+                return missionTasksViewModelList;
             }
             catch (Exception)
             {
                 return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
-
         }
 
         /// <summary>
@@ -113,15 +115,18 @@ namespace TimeReportApi.Controllers
                     return Ok();
                 }
                 else
-                    throw new Exception();
+                    throw new ArgumentException("Mission does not exist");
 
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, e.Message);
             }
             catch (Exception)
             {
                 return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
             }
         }
-
         /// <summary>
         /// This method deletes a member from the database when called. Which
         /// user to link to the missionmember-row in the database-table is received
@@ -142,7 +147,11 @@ namespace TimeReportApi.Controllers
                     return Ok();
                 }
                 else
-                    throw new Exception();
+                    throw new ArgumentException("Mission does not exist");
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode(400, e.Message);
             }
             catch (Exception)
             {
@@ -173,7 +182,11 @@ namespace TimeReportApi.Controllers
                     return Ok();
                 }
                 else
-                    throw new Exception();
+                    throw new ArgumentException("Mission does not exist");
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest,e.Message);
             }
             catch (Exception)
             {
@@ -202,10 +215,13 @@ namespace TimeReportApi.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new ArgumentException("Mission does not exist");
                 }
             }
-
+            catch (ArgumentException e)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, e.Message);
+            }
             catch (Exception)
             {
                 return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
