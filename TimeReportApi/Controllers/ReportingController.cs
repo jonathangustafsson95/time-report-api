@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using DataAccessLayer.UnitOfWork;
 using CommonLibrary.Model;
+using CommonLibrary.ErrorMessage;
 using TimeReportApi.Models;
 using TimeReportApi.Models.ViewModel;
 using System.Globalization;
@@ -46,7 +47,7 @@ namespace TimeReportApi.Controllers
                 for (int i = 0; i < newRegistries.RegistriesToReport.Count; i++)
                 {
                     if (newRegistries.RegistriesToReport[i].UserId != user.UserId)
-                        throw new AccessViolationException("You can not edit someone elses registries.");
+                        throw new AccessViolationException(ErrorMessage.InvalidEditingRights);
 
                     if (newRegistries.RegistriesToReport[i].RegistryId == 0)
                     {
@@ -68,7 +69,7 @@ namespace TimeReportApi.Controllers
             
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An error occured when trying to communicate with the database." });
+                return StatusCode(StatusCodes.Status500InternalServerError,ErrorMessage.DatabaseCommunicationError);
             }
         }
 
@@ -87,7 +88,7 @@ namespace TimeReportApi.Controllers
                 for (int i = 0; i < registryIdsToDelete.RegistriesToDelete.Count; i++)
                 {
                     if (unitOfWork.RegistryRepository.GetById(registryIdsToDelete.RegistriesToDelete[i]).UserId != user.UserId)
-                        throw new AccessViolationException("You can not delete someone elses registries.");
+                        throw new AccessViolationException(ErrorMessage.InvalidDeletingRights);
 
                     unitOfWork.RegistryRepository.Delete(unitOfWork.RegistryRepository.GetById(registryIdsToDelete.RegistriesToDelete[i]).RegistryId);
                 }
@@ -102,7 +103,7 @@ namespace TimeReportApi.Controllers
             
             catch (Exception)
             {
-                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
+                return StatusCode(500, new { message = ErrorMessage.DatabaseCommunicationError });
             }
         }
 
@@ -127,7 +128,7 @@ namespace TimeReportApi.Controllers
             
             catch (Exception)
             {
-                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
+                return StatusCode(500, new { message = ErrorMessage.DatabaseCommunicationError });
             }
         }
 
@@ -148,7 +149,7 @@ namespace TimeReportApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
+                return StatusCode(500, new { message = ErrorMessage.DatabaseCommunicationError });
             }
 
         }
@@ -235,7 +236,7 @@ namespace TimeReportApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
+                return StatusCode(500, new { message = ErrorMessage.DatabaseCommunicationError });
             }
         }
 
@@ -280,7 +281,7 @@ namespace TimeReportApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
+                return StatusCode(500, new { message = ErrorMessage.DatabaseCommunicationError });
             }
         }
 
@@ -342,7 +343,7 @@ namespace TimeReportApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
+                return StatusCode(500, new { message = ErrorMessage.DatabaseCommunicationError });
             }
         }
     }

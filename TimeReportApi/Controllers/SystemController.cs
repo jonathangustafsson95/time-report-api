@@ -9,6 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using CommonLibrary.ErrorMessage;
 
 namespace TimeReportApi.Controllers
 {
@@ -39,7 +40,7 @@ namespace TimeReportApi.Controllers
         {
             try
             {
-                IActionResult response = Unauthorized(new { message = "Invalid credentials..." });
+                IActionResult response = Unauthorized(new { message = ErrorMessage.InvalidCredential});
                 User user = AuthenticateUser(login);
                 if (user != null)
                 {
@@ -55,7 +56,7 @@ namespace TimeReportApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
+                return StatusCode(500, new { message = ErrorMessage.DatabaseCommunicationError });
             }
         }
 

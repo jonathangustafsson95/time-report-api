@@ -461,7 +461,7 @@ namespace Database_UnitTest.Controllers
             //Act
             var result = controller.GetSpecificMission(id);
             //Assert
-            if (expected.GetType() != StatusCodes.Status500InternalServerError.GetType())
+            if (expected.GetType() != StatusCodes.Status400BadRequest.GetType())
             {
                 Assert.IsType(expected.GetType(), result.Value);
             }

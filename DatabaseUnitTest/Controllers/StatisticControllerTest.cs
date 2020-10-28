@@ -49,7 +49,7 @@ namespace Database_UnitTest.Controllers
             //Act
             var result = controller.GetStatsInternVsCustomer(startDate);
 
-            if (expected.GetType() != StatusCodes.Status500InternalServerError.GetType())
+            if (expected.GetType() != StatusCodes.Status400BadRequest.GetType())
             {
                 Assert.IsType(expected.GetType(), result.Value);
             }
@@ -115,7 +115,7 @@ namespace Database_UnitTest.Controllers
 
             //Assert
 
-            if (expected.GetType() != StatusCodes.Status500InternalServerError.GetType())
+            if (expected.GetType() != StatusCodes.Status400BadRequest.GetType())
             {
                 Assert.IsType(expected.GetType(), result.Value);
             }
@@ -176,7 +176,7 @@ namespace Database_UnitTest.Controllers
 
             //Assert
 
-            if (expected.GetType() != StatusCodes.Status500InternalServerError.GetType())
+            if (expected.GetType() != StatusCodes.Status400BadRequest.GetType())
             {
                 Assert.IsType(expected.GetType(), result.Value);
             }
@@ -191,7 +191,7 @@ namespace Database_UnitTest.Controllers
             var allData = new List<object[]>
             {
                 new object[] { 1,true,tsVMList },
-                new object[] {1,false,(int)HttpStatusCode.InternalServerError },
+                new object[] {1,false,(int)HttpStatusCode.BadRequest },
             };
             return allData.Take(numTests);
         }
@@ -202,7 +202,7 @@ namespace Database_UnitTest.Controllers
             var allData = new List<object[]>
             {
                 new object[] { new DateTime(2020,10,23) ,new List<StatisticCustomerInternalViewModel>() },
-                new object[] {currentDate.AddDays(360) , (int)HttpStatusCode.InternalServerError },
+                new object[] {currentDate.AddDays(360) , (int)HttpStatusCode.BadRequest },
             };
 
             return allData.Take(numTests);
@@ -213,7 +213,7 @@ namespace Database_UnitTest.Controllers
             var allData = new List<object[]>
             {
                 new object[] { new DateTime(2020,10,23) ,new List<CustomerVsCustomerStatsViewModel>() },
-                new object[] { currentDate.AddDays(360), (int)HttpStatusCode.InternalServerError },
+                new object[] { currentDate.AddDays(360), (int)HttpStatusCode.BadRequest },
             };
 
             return allData.Take(numTests);

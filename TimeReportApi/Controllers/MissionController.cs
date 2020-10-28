@@ -124,7 +124,7 @@ namespace TimeReportApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An error occured when trying to communicate with the database." });
             }
         }
         /// <summary>
@@ -147,7 +147,7 @@ namespace TimeReportApi.Controllers
                     return Ok();
                 }
                 else
-                    throw new ArgumentException("Mission does not exist");
+                    throw new ArgumentException(ErrorMessage.MissionDoesNotExistError);
             }
             catch (ArgumentException e)
             {
@@ -155,7 +155,7 @@ namespace TimeReportApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
+                return StatusCode(500, ErrorMessage.DatabaseCommunicationError);
             }
 
 
@@ -182,7 +182,7 @@ namespace TimeReportApi.Controllers
                     return Ok();
                 }
                 else
-                    throw new ArgumentException("Mission does not exist");
+                    throw new ArgumentException(ErrorMessage.MissionDoesNotExistError);
             }
             catch (ArgumentException e)
             {
@@ -190,7 +190,7 @@ namespace TimeReportApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
+                return StatusCode(500, ErrorMessage.DatabaseCommunicationError);
             }
         }
 
@@ -215,7 +215,7 @@ namespace TimeReportApi.Controllers
                 }
                 else
                 {
-                    throw new ArgumentException("Mission does not exist");
+                    throw new ArgumentException(ErrorMessage.MissionDoesNotExistError);
                 }
             }
             catch (ArgumentException e)
@@ -224,7 +224,7 @@ namespace TimeReportApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
+                return StatusCode(500, ErrorMessage.DatabaseCommunicationError);
             }
         }
 
@@ -254,7 +254,7 @@ namespace TimeReportApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
+                return StatusCode(500, ErrorMessage.DatabaseCommunicationError);
             }
         }
 
@@ -305,7 +305,7 @@ namespace TimeReportApi.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, new { message = "An error occured when trying to communicate with the database." });
+                return StatusCode(500, ErrorMessage.DatabaseCommunicationError);
             }
         }
 
@@ -321,7 +321,7 @@ namespace TimeReportApi.Controllers
             try
             {
                 if (!unitOfWork.MissionRepository.Exists(missionId))
-                    throw new Exception();
+                    throw new ArgumentException(ErrorMessage.MissionDoesNotExistError);
                 Mission mission = unitOfWork.MissionRepository.GetById(missionId);
                 List<TaskViewModel> tasksViewModelList = GetAllTasks(mission.MissionId);
                 List<UserViewModel> usersVM = new List<UserViewModel>();
@@ -352,9 +352,9 @@ namespace TimeReportApi.Controllers
                 };
                 return missionVM;
             }
-            catch (Exception)
+            catch (ArgumentException e)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(StatusCodes.Status400BadRequest, e.Message);
             }
         }
         /// <summary>

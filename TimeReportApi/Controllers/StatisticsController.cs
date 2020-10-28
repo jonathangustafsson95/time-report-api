@@ -13,6 +13,7 @@ using TimeReportApi.Models.ViewModel;
 using System.Security.Cryptography.X509Certificates;
 using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
+using CommonLibrary.ErrorMessage;
 using Task = CommonLibrary.Model.Task;
 
 namespace time_report_api.Controllers
@@ -48,7 +49,7 @@ namespace time_report_api.Controllers
             try
             {
                 if (startDate > DateTime.Now)
-                    throw new Exception();
+                    throw new ArgumentException();
                 DateTime firstDayOfMonth = new DateTime(startDate.Year, startDate.Month, 1);
                 float internalHours = 0, customerHours = 0;
                 List<StatisticCustomerInternalViewModel> listStatistic = new List<StatisticCustomerInternalViewModel>();
@@ -71,9 +72,9 @@ namespace time_report_api.Controllers
                 listStatistic.Reverse();
                 return listStatistic;
             }
-            catch (Exception)
+            catch (ArgumentException)
             {
-                return StatusCode(500, new { message = "Invalid DateTime" });
+                return StatusCode(400, ErrorMessage.InvalidDateTime);
             }
         }
 
@@ -92,7 +93,7 @@ namespace time_report_api.Controllers
             try
             {
                 if (date > DateTime.Now) 
-                    throw new Exception();
+                    throw new ArgumentException();
                 DateTime firstDayOfMonth = new DateTime(date.Year, date.Month, 1);
                 DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
 
@@ -155,9 +156,9 @@ namespace time_report_api.Controllers
                 });
                 return CVSCViewModelList;
             }
-            catch (Exception)
+            catch (ArgumentException)
             {
-                return StatusCode(500, new { message = "Invalid DateTime" });
+                return StatusCode(400, ErrorMessage.InvalidDateTime);
             }
         }
 
@@ -212,12 +213,12 @@ namespace time_report_api.Controllers
                 }
                 else
                 {
-                    throw new Exception();
+                    throw new ArgumentException();
                 }
             }
-            catch (Exception)
+            catch (ArgumentException)
             {
-                return StatusCode(500, new { message = "Invalid DateTime" });
+                return StatusCode(400, ErrorMessage.InvalidDateTime);
             }
         }
     }
