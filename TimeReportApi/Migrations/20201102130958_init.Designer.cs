@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace TimeReportApi.Migrations
 {
     [DbContext(typeof(BulbasaurDevContext))]
-    [Migration("20201102091258_seed")]
-    partial class seed
+    [Migration("20201102130958_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

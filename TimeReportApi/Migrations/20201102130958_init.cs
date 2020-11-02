@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TimeReportApi.Migrations
 {
-    public partial class newseed : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,8 +29,7 @@ namespace TimeReportApi.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserName = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
-                    EMail = table.Column<string>(nullable: true),
-                    Role = table.Column<string>(nullable: true)
+                    EMail = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
