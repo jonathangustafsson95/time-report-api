@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CommonLibrary;
-using CommonLibrary.Model;
-using Data.Model;
 using DataAccessLayer.IRepositories;
-using DataAccessLayer.IReppositories;
-using DataAccessLayer.Repositories;
 
 namespace DataAccessLayer.UnitOfWork
 {

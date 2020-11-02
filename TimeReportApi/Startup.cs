@@ -7,7 +7,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using DataAccessLayer;
 using DataAccessLayer.UnitOfWork;
-using TimeReportApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -59,12 +58,6 @@ namespace TimeReportApi
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SecretKey"])),
                     ClockSkew = TimeSpan.Zero
                 };
-
-                services.AddAuthorization(config =>
-                {
-                    config.AddPolicy(Policies.projectLeader, Policies.ProjectLeaderPolicy());
-                    config.AddPolicy(Policies.user, Policies.UserPolicy());
-                });
             });
             services.AddHttpContextAccessor();
         }

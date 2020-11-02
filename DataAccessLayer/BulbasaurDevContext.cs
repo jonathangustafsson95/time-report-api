@@ -1,7 +1,5 @@
 ﻿using CommonLibrary.Model;
-using Data.Model;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace DataAccessLayer
 {

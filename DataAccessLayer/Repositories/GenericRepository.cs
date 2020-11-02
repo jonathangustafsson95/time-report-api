@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DataAccessLayer.IRepositories;
 using Microsoft.EntityFrameworkCore;
-using DataAccessLayer;
 using DataAccessLayer.IReppositories;
-using Microsoft.AspNetCore.Mvc;
 
 namespace DataAccessLayer.Repositories
 {

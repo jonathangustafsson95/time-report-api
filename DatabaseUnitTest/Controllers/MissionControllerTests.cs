@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using CommonLibrary.Model;
 using DataAccessLayer.IRepositories;
 using DataAccessLayer.UnitOfWork;
@@ -8,14 +7,12 @@ using Moq;
 using TimeReportApi.Controllers;
 using TimeReportApi.Models;
 using Xunit;
-using Xunit.Extensions;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using FakeItEasy;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Storage;
 using TimeReportApi.Models.ViewModel;
 
 namespace Database_UnitTest.Controllers
