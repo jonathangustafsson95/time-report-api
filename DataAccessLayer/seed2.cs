@@ -49,6 +49,18 @@ namespace Data.Model
                         },
                         new Mission
                         {
+                            Created = new DateTime(2020, 9, 5),
+                            Description = "Project3 for DHL",
+                            Finished = new DateTime(2020, 10, 1),
+                            MissionName = "DHL Project3",
+                            Color = "#5B8D76",
+                            Start = new DateTime(2020, 8, 6),
+                            Status = 1,
+                            UserId = 1,
+                            CustomerId = 1
+                        },
+                        new Mission
+                        {
                             Created = new DateTime(2020, 8, 5),
                             Description = "Project1 for Nike",
                             Finished = null,
@@ -70,6 +82,18 @@ namespace Data.Model
                             Status = 1,
                             UserId = 1,
                             CustomerId = 2
+                        }, 
+                        new Mission
+                        {
+                            Created = new DateTime(2020, 8, 5),
+                            Description = "Project3 for Nike",
+                            Finished = null,
+                            MissionName = "Nike Project3",
+                            Color = "#E26B9D",
+                            Start = new DateTime(2020, 8, 6),
+                            Status = 1,
+                            UserId = 1,
+                            CustomerId = 2
                         },
                         new Mission
                         {
@@ -85,10 +109,34 @@ namespace Data.Model
                         },
                         new Mission
                         {
+                            Created = new DateTime(2020, 8, 5),
+                            Description = "Project2 for Ikea",
+                            Finished = null,
+                            MissionName = "Project2 Ikea",
+                            Color = "#7BB6F0",
+                            Start = new DateTime(2020, 8, 6),
+                            Status = 1,
+                            UserId = 1,
+                            CustomerId = 3
+                        },
+                        new Mission
+                        {
                             Created = new DateTime(2020, 9, 5),
                             Description = "Project1 for ICA",
                             Finished = new DateTime(2020, 10, 1),
                             MissionName = "Project1 ICA",
+                            Color = "#F0D87B",
+                            Start = new DateTime(2020, 8, 6),
+                            Status = 1,
+                            UserId = 1,
+                            CustomerId = 4
+                        },
+                        new Mission
+                        {
+                            Created = new DateTime(2020, 9, 5),
+                            Description = "Project2 for ICA",
+                            Finished = new DateTime(2020, 10, 1),
+                            MissionName = "Project2 ICA",
                             Color = "#F0D87B",
                             Start = new DateTime(2020, 8, 6),
                             Status = 1,

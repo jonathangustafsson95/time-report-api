@@ -31,10 +31,10 @@ namespace Data.Model
                             Status = 0,
                             ActualHours = null,
                             Created = new DateTime(2020, 10, 5),
-                            Description = "Implementation",
+                            Description = "Meeting with customer",
                             EstimatedHour = 8.30,
                             Invoice = InvoiceType.Invoicable,
-                            Name = "Task1",
+                            Name = "Meeting with customer",
                             Start = new DateTime(2020, 10, 6),
                             Finished = null
                         },
@@ -45,52 +45,122 @@ namespace Data.Model
                             Status = 0,
                             ActualHours = null,
                             Created = new DateTime(2020, 11, 5),
-                            Description = "Meeting",
-                            EstimatedHour = 8.30,
-                            Invoice = InvoiceType.NotInvoicable,
-                            Name = "Task2",
-                            Start = new DateTime(2020, 12, 6),
-                            Finished = new DateTime(2020, 12, 7)
-                        },
-                        new Task
-                        {
-                            UserId = 3,
-                            MissionId = 2,
-                            Status = 0,
-                            ActualHours = null,
-                            Created = new DateTime(2020, 12, 8),
-                            Description = "Design",
-                            EstimatedHour = 8.30,
-                            Invoice = InvoiceType.NotInvoicable,
-                            Name = "Task1",
-                            Start = new DateTime(2020, 12, 9),
-                            Finished = new DateTime(2020, 12, 10)
-                        },
-                        new Task
-                        {
-                            UserId = 3,
-                            MissionId = 2,
-                            Status = 0,
-                            ActualHours = null,
-                            Created = new DateTime(2020, 12, 8),
-                            Description = "Support",
-                            EstimatedHour = 8.30,
-                            Invoice = InvoiceType.NotInvoicable,
-                            Name = "Task2",
-                            Start = new DateTime(2020, 12, 9),
-                            Finished = new DateTime(2020, 12, 10)
-                        },
-                        new Task
-                        {
-                            UserId = 1,
-                            MissionId = 3,
-                            Status = 0,
-                            ActualHours = null,
-                            Created = new DateTime(2020, 10, 5),
                             Description = "Analysis",
                             EstimatedHour = 8.30,
+                            Invoice = InvoiceType.NotInvoicable,
+                            Name = "Analysis",
+                            Start = new DateTime(2020, 12, 6),
+                            Finished = new DateTime(2020, 12, 7)
+                        },
+                        new Task
+                        {
+                            UserId = 1,
+                            MissionId = 1,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Design",
+                            EstimatedHour = 8.30,
                             Invoice = InvoiceType.Invoicable,
-                            Name = "Task1 ",
+                            Name = "Design",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 2,
+                            MissionId = 1,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 11, 5),
+                            Description = "Implementation",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.NotInvoicable,
+                            Name = "Implementation",
+                            Start = new DateTime(2020, 12, 6),
+                            Finished = new DateTime(2020, 12, 7)
+                        },
+                        new Task
+                        {
+                            UserId = 1,
+                            MissionId = 1,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Support",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Support",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 1,
+                            MissionId = 2,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Meeting with customer",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Meeting with customer",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 2,
+                            MissionId = 2,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 11, 5),
+                            Description = "Analysis",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.NotInvoicable,
+                            Name = "Analysis",
+                            Start = new DateTime(2020, 12, 6),
+                            Finished = new DateTime(2020, 12, 7)
+                        },
+                        new Task
+                        {
+                            UserId = 1,
+                            MissionId = 2,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Design",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Design",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 2,
+                            MissionId = 2,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 11, 5),
+                            Description = "Implementation",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.NotInvoicable,
+                            Name = "Implementation",
+                            Start = new DateTime(2020, 12, 6),
+                            Finished = new DateTime(2020, 12, 7)
+                        },
+                        new Task
+                        {
+                            UserId = 1,
+                            MissionId = 2,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Support",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Support",
                             Start = new DateTime(2020, 10, 6),
                             Finished = null
                         },
@@ -100,45 +170,129 @@ namespace Data.Model
                             MissionId = 3,
                             Status = 0,
                             ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Meeting with customer",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Meeting with customer",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 2,
+                            MissionId = 3,
+                            Status = 0,
+                            ActualHours = null,
                             Created = new DateTime(2020, 11, 5),
-                            Description = "Design",
+                            Description = "Analysis",
                             EstimatedHour = 8.30,
                             Invoice = InvoiceType.NotInvoicable,
-                            Name = "Task2",
+                            Name = "Analysis",
                             Start = new DateTime(2020, 12, 6),
                             Finished = new DateTime(2020, 12, 7)
                         },
                         new Task
                         {
-                            UserId = 3,
-                            MissionId = 4,
+                            UserId = 1,
+                            MissionId = 3,
                             Status = 0,
                             ActualHours = null,
-                            Created = new DateTime(2020, 12, 8),
-                            Description = "Development",
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Design",
                             EstimatedHour = 8.30,
-                            Invoice = InvoiceType.NotInvoicable,
-                            Name = "Task1",
-                            Start = new DateTime(2020, 12, 9),
-                            Finished = new DateTime(2020, 12, 10)
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Design",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
                         },
                         new Task
                         {
-                            UserId = 3,
-                            MissionId = 4,
+                            UserId = 2,
+                            MissionId = 3,
                             Status = 0,
                             ActualHours = null,
-                            Created = new DateTime(2020, 12, 8),
-                            Description = "Test",
+                            Created = new DateTime(2020, 11, 5),
+                            Description = "Implementation",
                             EstimatedHour = 8.30,
                             Invoice = InvoiceType.NotInvoicable,
-                            Name = "Task2",
-                            Start = new DateTime(2020, 12, 9),
-                            Finished = new DateTime(2020, 12, 10)
+                            Name = "Implementation",
+                            Start = new DateTime(2020, 12, 6),
+                            Finished = new DateTime(2020, 12, 7)
                         },
                         new Task
                         {
-                            UserId = 5,
+                            UserId = 1,
+                            MissionId = 3,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Support",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Support",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 1,
+                            MissionId = 4,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Meeting with customer",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Meeting with customer",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 2,
+                            MissionId = 4,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 11, 5),
+                            Description = "Analysis",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.NotInvoicable,
+                            Name = "Analysis",
+                            Start = new DateTime(2020, 12, 6),
+                            Finished = new DateTime(2020, 12, 7)
+                        },
+                        new Task
+                        {
+                            UserId = 1,
+                            MissionId = 4,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Design",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Design",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 2,
+                            MissionId = 4,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 11, 5),
+                            Description = "Implementation",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.NotInvoicable,
+                            Name = "Implementation",
+                            Start = new DateTime(2020, 12, 6),
+                            Finished = new DateTime(2020, 12, 7)
+                        },
+                        new Task
+                        {
+                            UserId = 1,
                             MissionId = 5,
                             Status = 0,
                             ActualHours = null,
@@ -146,51 +300,429 @@ namespace Data.Model
                             Description = "Support",
                             EstimatedHour = 8.30,
                             Invoice = InvoiceType.Invoicable,
-                            Name = "Task1",
+                            Name = "Support",
                             Start = new DateTime(2020, 10, 6),
                             Finished = null
                         },
                         new Task
                         {
-                            UserId = 5,
+                            UserId = 1,
+                            MissionId = 5,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Meeting with customer",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Meeting with customer",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 2,
                             MissionId = 5,
                             Status = 0,
                             ActualHours = null,
                             Created = new DateTime(2020, 11, 5),
-                            Description = "Design",
+                            Description = "Analysis",
                             EstimatedHour = 8.30,
                             Invoice = InvoiceType.NotInvoicable,
-                            Name = "Task2",
+                            Name = "Analysis",
                             Start = new DateTime(2020, 12, 6),
                             Finished = new DateTime(2020, 12, 7)
                         },
                         new Task
                         {
-                            UserId = 4,
-                            MissionId = 6,
+                            UserId = 1,
+                            MissionId = 5,
                             Status = 0,
                             ActualHours = null,
-                            Created = new DateTime(2020, 12, 8),
-                            Description = "Meeting",
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Design",
                             EstimatedHour = 8.30,
-                            Invoice = InvoiceType.NotInvoicable,
-                            Name = "Task1",
-                            Start = new DateTime(2020, 12, 9),
-                            Finished = new DateTime(2020, 12, 10)
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Design",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
                         },
                         new Task
                         {
-                            UserId = 4,
+                            UserId = 2,
+                            MissionId = 5,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 11, 5),
+                            Description = "Implementation",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.NotInvoicable,
+                            Name = "Implementation",
+                            Start = new DateTime(2020, 12, 6),
+                            Finished = new DateTime(2020, 12, 7)
+                        },
+                        new Task
+                        {
+                            UserId = 1,
+                            MissionId = 5,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Support",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Support",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 1,
                             MissionId = 6,
                             Status = 0,
                             ActualHours = null,
-                            Created = new DateTime(2020, 12, 8),
-                            Description = "Design",
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Meeting with customer",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Meeting with customer",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 2,
+                            MissionId = 6,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 11, 5),
+                            Description = "Analysis",
                             EstimatedHour = 8.30,
                             Invoice = InvoiceType.NotInvoicable,
-                            Name = "Task2",
-                            Start = new DateTime(2020, 12, 9),
-                            Finished = new DateTime(2020, 12, 10)
+                            Name = "Analysis",
+                            Start = new DateTime(2020, 12, 6),
+                            Finished = new DateTime(2020, 12, 7)
+                        },
+                        new Task
+                        {
+                            UserId = 1,
+                            MissionId = 6,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Design",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Design",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 2,
+                            MissionId = 6,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 11, 5),
+                            Description = "Implementation",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.NotInvoicable,
+                            Name = "Implementation",
+                            Start = new DateTime(2020, 12, 6),
+                            Finished = new DateTime(2020, 12, 7)
+                        },
+                        new Task
+                        {
+                            UserId = 1,
+                            MissionId = 6,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Support",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Support",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 1,
+                            MissionId = 7,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Meeting with customer",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Meeting with customer",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 2,
+                            MissionId = 7,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 11, 5),
+                            Description = "Analysis",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.NotInvoicable,
+                            Name = "Analysis",
+                            Start = new DateTime(2020, 12, 6),
+                            Finished = new DateTime(2020, 12, 7)
+                        },
+                        new Task
+                        {
+                            UserId = 1,
+                            MissionId = 7,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Design",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Design",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 2,
+                            MissionId = 7,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 11, 5),
+                            Description = "Implementation",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.NotInvoicable,
+                            Name = "Implementation",
+                            Start = new DateTime(2020, 12, 6),
+                            Finished = new DateTime(2020, 12, 7)
+                        },
+                        new Task
+                        {
+                            UserId = 1,
+                            MissionId =7,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Support",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Support",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 1,
+                            MissionId = 8,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Meeting with customer",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Meeting with customer",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 2,
+                            MissionId = 8,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 11, 5),
+                            Description = "Analysis",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.NotInvoicable,
+                            Name = "Analysis",
+                            Start = new DateTime(2020, 12, 6),
+                            Finished = new DateTime(2020, 12, 7)
+                        },
+                        new Task
+                        {
+                            UserId = 1,
+                            MissionId = 8,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Design",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Design",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 2,
+                            MissionId = 8,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 11, 5),
+                            Description = "Implementation",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.NotInvoicable,
+                            Name = "Implementation",
+                            Start = new DateTime(2020, 12, 6),
+                            Finished = new DateTime(2020, 12, 7)
+                        },
+                        new Task
+                        {
+                            UserId = 1,
+                            MissionId = 8,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Support",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Support",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 1,
+                            MissionId = 9,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Meeting with customer",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Meeting with customer",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 2,
+                            MissionId = 9,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 11, 5),
+                            Description = "Analysis",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.NotInvoicable,
+                            Name = "Analysis",
+                            Start = new DateTime(2020, 12, 6),
+                            Finished = new DateTime(2020, 12, 7)
+                        },
+                        new Task
+                        {
+                            UserId = 1,
+                            MissionId = 9,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Design",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Design",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 2,
+                            MissionId = 9,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 11, 5),
+                            Description = "Implementation",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.NotInvoicable,
+                            Name = "Implementation",
+                            Start = new DateTime(2020, 12, 6),
+                            Finished = new DateTime(2020, 12, 7)
+                        },
+                        new Task
+                        {
+                            UserId = 1,
+                            MissionId = 9,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Support",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Support",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 1,
+                            MissionId = 10,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Meeting with customer",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Meeting with customer",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 2,
+                            MissionId = 10,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 11, 5),
+                            Description = "Analysis",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.NotInvoicable,
+                            Name = "Analysis",
+                            Start = new DateTime(2020, 12, 6),
+                            Finished = new DateTime(2020, 12, 7)
+                        },
+                        new Task
+                        {
+                            UserId = 1,
+                            MissionId = 10,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Design",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Design",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
+                        },
+                        new Task
+                        {
+                            UserId = 2,
+                            MissionId = 10,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 11, 5),
+                            Description = "Implementation",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.NotInvoicable,
+                            Name = "Implementation",
+                            Start = new DateTime(2020, 12, 6),
+                            Finished = new DateTime(2020, 12, 7)
+                        },
+                        new Task
+                        {
+                            UserId = 1,
+                            MissionId = 10,
+                            Status = 0,
+                            ActualHours = null,
+                            Created = new DateTime(2020, 10, 5),
+                            Description = "Support",
+                            EstimatedHour = 8.30,
+                            Invoice = InvoiceType.Invoicable,
+                            Name = "Support",
+                            Start = new DateTime(2020, 10, 6),
+                            Finished = null
                         }
                     );
                 }
